@@ -75,7 +75,14 @@ GitHub：https://github.com/cao-zha/caozha-order
 ### 界面预览
 
 
+**产品的下单表单页面：**
+
+
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/0624/221753_c713f1d6_7397417.png "6.png")
+
+
+**后台管理功能页面：**
+
 
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/0624/221713_3e7c8db4_7397417.png "1.png")
 
