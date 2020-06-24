@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>订单调用代码 - Powered by __CAOZHA-SYS-NAME__ __CAOZHA-SYS-VERSION__</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="__CAOZHA-LAYUIMINI__/lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="__CAOZHA-LAYUIMINI__/css/public.css" media="all">
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+    <script src="__CAOZHA-STATIC__/js/jquery-3.4.1.min.js"></script>
+    <script src="__CAOZHA-LAYUIMINI__/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+    <script src="__CAOZHA-STATIC__/js/all.js"></script>
+    <link rel="stylesheet" href="__CAOZHA-STATIC__/css/style.css" media="all">
+</head>
+<body>
+<form class="layui-form layuimini-form caozha-view-form">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">产品名称：</label>
+        <div class="layui-input-block">
+            {$product.pro_name}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">下单页面网址：</label>
+        <div class="layui-input-block">
+            <input type="text" name="url" value="{$order_url}"
+                   class="layui-input" style="width: 80%;float: left"> <a class="layui-btn data-count-view" lay-event="view" style="float: left;margin-left: 10px;" onclick="window.open('{$order_url}');">预览</a>
+
+        </div>
+    </div>
+
+
+    <div class="layui-form-item layui-form-text" style="margin-top: 15px;">
+        <label class="layui-form-label required">调用代码：</label>
+        <div class="layui-input-block">
+            <textarea name="js_code" class="layui-textarea" style="height: 150px;">
+<script>document.write('<iframe src="{$order_url}" width="100%" frameborder="0" scrolling="no" onload="this.height=this.contentWindow.document.documentElement.scrollHeight"></iframe>');</script>
+            </textarea>
+            <tip>复制上面代码，放到网页中要显示的位置即可。</tip>
+        </div>
+    </div>
+
+</form>
+</body>
+</html>

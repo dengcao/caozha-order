@@ -1,0 +1,65 @@
+/**
+*author: caozha.com
+*/
+.olivedrab{color: olivedrab;}
+.hese{color:#FF5722;}
+
+.cz-float-left{float: left;}
+.cz-toolbar-search{width:160px;position:relative;margin-left: 5px;}
+.cz-toolbar-search .cz-toolbar-search-input{height:30px;width:157px;padding:0 28px 0 5px;}
+.cz-toolbar-search .cz-toolbar-search-btn{position: absolute;left: 128px;cursor: pointer;background:none;border:0px;padding:0px 5px;height: 32px;}
+
+/*修改layui 确认框 第二个按钮颜色*/
+body .layui-layer .layui-layer-btn .layui-layer-btn0 {height: 36px;line-height: 36px;}
+body .layui-layer .layui-layer-btn .layui-layer-btn1 {background: #FFFFFF;height: 36px;line-height: 36px;}
+body .layui-layer .layui-layer-btn a {border-color: rgb(201, 201, 201);}
+
+/*查看layui表单为纯展示*/
+body .caozha-view-form .layui-form-item{margin-bottom: 0px;}
+body .caozha-view-form .layui-form-item .layui-form-label{color:#312520;font-weight: bolder;}
+body .caozha-view-form .layui-form-item .layui-input-block{line-height: 36px;color:#5d513c;margin-right: 1px;}
+body .caozha-view-form > .layui-form-item > .layui-form-label{width: 110px !important;}
+body .caozha-view-form > .layui-form-item > .layui-input-block {margin-left: 140px !important;}
+
+/*修改layui表单展示*/
+body .caozha-edit-form .layui-form-item .layui-input-block{height:50px;}
+body .caozha-edit-form .layui-form-text{height:120px;}
+
+/*系统设置页面*/
+body .web-config-form > .layui-form-item > .layui-form-label {width: 150px !important;}
+body .web-config-form > .layui-form-item > .layui-input-block {margin-left: 190px !important;}
+
+/*分类列表*/
+.table-list td,.table-list th{}
+.table-list thead th{ height:35px; background:#eef3f7; border-bottom:1px solid #d5dfe8; font-weight:normal}
+.table-list tbody td,.table-list .btn{border-bottom: #eee 1px solid;padding: 7px 0;}
+div.btn{background:#f6f6f6; padding:6px 12px 0 12px; height:30px;line-height:30px}
+.table-list tr:hover,.table-list table tbody tr:hover{ background:#fbffe4}
+.nHover tr:hover,.nHover tr:hover td{ background:none}
+.table-list .input-text-c{ padding:0; height:18px}
+.input-text-c{border:1px solid #A7A6AA;height:18px;padding:2px 0 0; text-align:center}
+.td-line{border:1px solid #eee}
+.td-line td,.td-line th{border:1px solid #eee}
+.button{background:#ddd;height:24px; border-top:0;border-left:0; border-bottom:1px solid #666; border-right:1px solid #666; padding:3px 6px; margin-right:5px}
+.table-list tr.on,.table-list tr.on td,.table-list tr.on th,.table-list td.on,.table-list th.on{background:#fdf9e5;}
+a.close-own{display:block; width:16px; height:16px;position: absolute;outline:none;right:7px; top:8px; text-indent:200px; overflow: hidden}
+a.close-own:hover{background-position: left -46px}
+/*表格表单*/
+.table_form{font-size:13px;color: #444;}
+.caozha-nav-tool{padding: 2px 0px 12px 0px;}
+
+.layui-form2{margin: 10px auto;}
+.layui-form2 input.layui-input{width: 250px;}
+.layui-form2 .layui-form-label{display: inline-block;}
+.layui-form2 input.layui-input,.x-so input.layui-btn{display: inline-block;}
+.layui-form2 .layui-btn{height: 37px;}
+.layui-form2 .cz-select .layui-input{width: 100px;}
+
+/*layer皮肤定义*/
+body .layui-layer-title{color:#fff; border: none;}
+
+body .caozha-layer-1 .layui-layer-title{background:#23262e;}
+/*body .caozha-layer-1 .layui-layer-btn{border-top:1px solid #fff}*/
+body .caozha-layer-1 .layui-layer-btn0{border-color: #23262e;}
+body .caozha-layer-1 .layui-layer-btn a{background:#23262e;}
+body .layui-layer-btn .layui-layer-btn1{background:#fff;}

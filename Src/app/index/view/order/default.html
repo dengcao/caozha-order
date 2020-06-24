@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta content="IE=10.000" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="MobileOptimized" content="320">
+    <meta name="format-detection" content="telephone=no">
+    <meta charset="UTF-8">
+    <title>下单 - {$product.pro_name}</title>
+    <link rel="stylesheet" href="__CAOZHA-STATIC__/order/default/style.css" type="text/css">
+    <script src="__CAOZHA-ADMIN-STATIC__/caozha/js/jquery-3.4.1.min.js"></script>
+    <script>var caozha_static="__CAOZHA-STATIC__";</script>
+    <script type="text/javascript" src="__CAOZHA-STATIC__/order/default/time.lesser.js"></script>
+    <script type="text/javascript" src="__CAOZHA-STATIC__/order/default/check.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            var sku_ul=$('.sku_ul');
+            sku_ul.find('a').click(function(){
+                var _this=$(this);
+                var price=_this.attr('data-price');
+                $('#item_price').text(price);
+                $('#amount').val(price);
+                sku_ul.find('a').attr('class','');
+                _this.attr('class','sku_cur');
+            });
+        });
+    </script>
+    <style type="text/css">#fahuo ul li{overflow: hidden;height: 24px;}</style>
+</head>
+<body>
+<style inject="" type="text/css">.ec-form-fields{background:#f5f5f5;padding:15px;border-top:1px solid #edeef5;border-bottom:1px solid #edeef5;display:inline-block;width:100%}.radio-group>li{display:inline-block;list-style:none;font-size:16px;line-height:16px;border-radius:4px;color:#333;margin-right:10px;margin-bottom:10px;cursor:pointer}.radio-group>li .radio-icon{display:inline-block;vertical-align:bottom;height:18px;width:18px;border-radius:100%;border:2px solid #ccc;margin-right:3px;pointer-events:none}.radio-group>li.active .radio-icon:before{content:"";display:block;width:10px;height:10px;margin:2px;background-color:#cf294f;border-radius:100%}.radio-btn-group>li{display:inline-block;float:left;list-style:none;font-size:16px;padding:0 15px;line-height:34px;border:1px solid #edeef5;text-align:center;border-radius:4px;color:#333;margin-right:10px;margin-bottom:10px;cursor:pointer;background:#fff;text-overflow:ellipsis;overflow:hidden}.radio-btn-group>li.active{color:#cf2a4f;border-color:#cf2a4f}.ec-form-item{margin-bottom:20px;position:relative}.ec-form-item .coupon-label{background:url("http://vd.lolask.com/images/coupon-icon.svg") no-repeat 100%;margin-bottom:10px;font-size:16px;display:inline-block;padding-right:26px;line-height:22px}.ec-form-item #couponTotalPrice{font-size:22px;color:#cf294f;padding-right:3px;line-height:22px}.ec-form-item .ec-label{text-align:left;vertical-align:middle;float:left;font-size:14px;color:#485c6a;line-height:1;padding:11px 0;width:60px}.ec-form-item .ec-content{line-height:36px;position:relative;font-size:14px;margin-left:61px}.ec-form-item .select-area>select{width:100%;height:36px;border:0}.ec-form-item .ec-validate{position:absolute}.ec-form-item .select-wrapper{display:inline-block;width:33%;margin-left:0;padding-right:5px}.ec-spinner{border:1px solid #c5c5c5;text-align:center;border-radius:2px}.ec-spinner:after,.ec-spinner:before{content:"";display:table;clear:both}.ec-spinner .left,.ec-spinner .right,.ec-spinner>input{float:left;display:block;height:34px;line-height:34px;font-style:normal}.ec-spinner .left,.ec-spinner .right{width:32px;font-size:18px;cursor:pointer}.ec-spinner .left.disabled,.ec-spinner .right.disabled{color:#c5c5c5}.ec-spinner .left{border-right:1px solid #c5c5c5}.ec-spinner .right{border-left:1px solid #c5c5c5}.ec-spinner>input{width:52px;padding:5px;text-align:center}.is-required:before,.required-placeholder:before{content:"*";color:#ff4949;margin-right:4px}.required-placeholder:before{opacity:0},</style>
+<div id="ec-form-wrapper">
+    <a name="wx_order"></a>
+    <div class="preview-phone">
+        <form id="form" name="form" class="ec-form-fields" method="post" action="{:url('index/order/save')}" onsubmit="return check()">
+            <input type="hidden" name="pro_name" id="pro_name" value="{$product.pro_name}">
+            <input type="hidden" name="pro_sign" id="pro_sign" value="{$product.pro_sign}">
+            <input type="hidden" name="pro_url" id="pro_url" value="">
+            <input type="hidden" name="from_url" id="from_url" value="">
+            <input type="hidden" name="pro_options" id="pro_options" value="">
+            <input type="hidden" name="addresss" id="addresss" value="">
+            <input type="hidden" name="payment" id="payment" value="1">
+            <input type="hidden" name="quantity" id="quantity" value="1">
+            <input type="hidden" name="amount" id="amount" value="0">
+            <div class="item-group add">
+                <div class="row">
+                    <label for="name">产品</label>
+                    <ul class="sku_ul item-group">
+                        {php}
+                        $pro_options=explode("\n",$product->pro_options);
+                        $pro_options_arr2str="";
+                        foreach($pro_options as $key=>$val) {
+                            $val_arr=explode("||",$val);
+                            if($val_arr[2]==1){
+                                $classname="sku_cur active";
+                                echo '<script>pro_amount="'.$val_arr[1].'";</script>';
+                            }else{
+                                $classname="";
+                            }
+                            echo '<li><a style="line-height: 36px;font-size: 18px;" data-price="'.$val_arr[1].'" class="'.$classname.'" >'.$val_arr[0].'</a></li>';
+                            $pro_options_arr2str.='"'.$val_arr[0].'",';
+                        }
+                        {/php}
+                    </ul>
+                </div>
+                <div class="row row_area ec-content">
+                    <label for="name">金额</label>
+                    <div style="display: block;height: 36px;padding-top: 12px;">
+                        <span class="i_pri" style="font-size: 16px;">￥<span id="item_price">168</span></span>
+                    </div>
+                </div>
+                <p class="row">
+                    <label for="name">姓名</label>
+                    <input name="realname" id="realname" class="block input required" tabindex="1" type="text">
+                </p>
+                <p class="row">
+                    <label for="tel">手机</label>
+                    <input type="text" name="tel" id="tel" class="block input required digits" check-to="手机格式错误" tabindex="2" style="ime-mode:Disabled">
+                </p>
+                <p class="row">
+                    <label for="province">地区</label>
+                    <select class="select " id="s_province" name="s_province" tabindex="3" >
+                        <option value="">选省份</option>
+                    </select>
+                    <select class="select " id="s_city" name="s_city" tabindex="4" >
+                        <option value="">选城市</option>
+                    </select>
+                    <select class="select" id="s_county" name="s_county" tabindex="5"  >
+                        <option value="">选地区</option>
+                    </select>
+                    <script class="resources library" src="__CAOZHA-STATIC__/order/default/area.js"></script>
+                    <script type="text/javascript">_init_area();</script>
+                </p>
+                <div id="show"></div>
+                <p class="row row_area">
+                    <label for="address">地址</label>
+                    <input name="addr" id="addr" class="input" placeholder="请填写详细地址如街道门牌信息" tabindex="6" type="text">
+                </p>
+                <div class="row row_area ec-content">
+                    <label for="address">付款</label>
+                    <div style="display: block;height: 36px;padding-top: 12px;">
+                        <ul class="radio-group" style="float: left;">
+                            <li class="active">
+                                <span class="radio-icon"></span>货到付款
+                            </li>
+                        </ul>
+                        <span style="color: #cf2a4f;font-size: 14px;">验货满意后付款</span>
+                    </div>
+                </div>
+                <p class="row row_area" style="padding-bottom:0px; margin-bottom:0px;">
+                    <label for="address">备注</label><textarea id="remarks" style="height: 60px;" name="remarks" class="block input" placeholder="" tabindex="6" type="text"></textarea>
+                </p>
+            </div>
+            <div class="ec-content" style="padding-top: 20px;">
+                <ul class="radio-group" style="float: left;">
+                    <li class="active"><span class="radio-icon"></span>请确保联系手机、邮寄地址等信息准确无误</li>
+                </ul>
+            </div>
+
+            <input type="submit" class="c_txt orange_bg" id="buy_now" style="cursor:pointer; padding-top:0px; margin-top:20px; padding-bottom:0px; margin-bottom:0px;" value="提交订单">
+
+            <div id="fahuo">
+                <script>
+                    var pro_options=new Array({$pro_options_arr2str|raw});
+                    var surname=new Array("张","李","赵","刘","周","王","秦","朱","吴","谭","钱","邓","钟","罗","施","杨","朴","方","孙","黄","韩","陈","冯");
+                    var tel_1=new Array("130","132","131","158","188","139","186","138","182","183","133","166","189","136","134","152");
+
+                    function get_pro_options(){
+                        return pro_options[Math.floor(Math.random()*pro_options.length)];
+                    }
+
+                    function getSurname(){
+                        return surname[Math.floor(Math.random()*surname.length)];
+                    }
+
+                    function getTel_1(){
+                        return tel_1[Math.floor(Math.random()*tel_1.length)];
+                    }
+
+                    document.writeln("<ul>");
+                    for (i = 0; i < 20; i++) {
+                        document.writeln("<li><span>[最新购买]：<\/span>"+getSurname()+"**（"+getTel_1()+"****"+(Math.floor(Math.random()*8999)+1000)+"）在"+(Math.floor(Math.random()*30)+1)+"分钟前订购了 "+get_pro_options()+" <font color=\'#FF0000\'>√<\/font><\/li>");
+                    }
+                    document.writeln("<\/ul>");
+                </script>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    $(function(){
+        function scollDown(id,time){
+            var liHeight=$("#"+id+" ul li").height();
+            var time=time||2500;
+            setInterval(function(){
+                $("#"+id+" ul").prepend($("#"+id+" ul li:last").css("height","0px").animate({
+                    height:liHeight+"px"
+                },"slow"));
+            },time);
+        }
+        scollDown("fahuo",3000);
+
+        $("#amount").val(pro_amount);
+        $('#item_price').text(pro_amount);
+    });
+</script>
+</body>
+</html>

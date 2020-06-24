@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>修改 - Powered by __CAOZHA-SYS-NAME__ __CAOZHA-SYS-VERSION__</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="__CAOZHA-LAYUIMINI__/lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="__CAOZHA-LAYUIMINI__/css/public.css" media="all">
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+        {if 1==$product.tips_type}.tips_url{display: none}{/if}
+        {if 2==$product.tips_type}.tips_text{display: none}{/if}
+    </style>
+    <script src="__CAOZHA-STATIC__/js/jquery-3.4.1.min.js"></script>
+    <script src="__CAOZHA-LAYUIMINI__/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+    <script src="__CAOZHA-STATIC__/js/all.js"></script>
+    <link rel="stylesheet" href="__CAOZHA-STATIC__/css/style.css" media="all">
+
+</head>
+<body>
+<form class="layui-form layuimini-form">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">产品名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="pro_name" lay-verify="required" lay-reqtext="请输入产品名称" placeholder="请输入产品名称" value="{$product.pro_name}"
+                   class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">产品标识符</label>
+        <div class="layui-input-block">
+            <input type="text" name="pro_sign" lay-verify="required" placeholder="请输入标识符" value="{$product.pro_sign}"
+                   class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label required">订购选项</label>
+        <div class="layui-input-block">
+            <textarea name="pro_options" lay-verify="required" class="layui-textarea" placeholder="">{$product.pro_options}</textarea>
+            <tip>填写格式：选项描述||价格||是否选中（1为选中）</tip>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">审核状态</label>
+        <div class="layui-input-block">
+            <select name="status" lay-verify="required" lay-reqtext="请选择状态">
+                <option value=""></option>
+                {foreach $product_status as $key=>$vo }
+                <option value="{$key}"{if $key==$product.status} selected{/if}>{$vo}</option>
+                {/foreach}
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">排序</label>
+        <div class="layui-input-block">
+            <input type="text" name="listorder" lay-verify="required" lay-reqtext="请输入排序号，必须数字" placeholder="请输入排序号，必须数字，值越大越靠前" value="{$product.listorder}" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">订单模板</label>
+        <div class="layui-input-block">
+            <select name="templates" lay-verify="required" lay-reqtext="请选择订单页模板">
+                <option value=""></option>
+                {foreach $order_templates as $key=>$vo }
+                <option value="{$vo}"{if $vo==$product.templates} selected{/if}>{$vo}</option>
+                {/foreach}
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">提醒类型</label>
+        <div class="layui-input-block">
+            <select name="tips_type" lay-verify="required" lay-reqtext="请选择" lay-filter="tips_type">
+                <option value=""></option>
+                <option value="1"{if 1==$product.tips_type} selected{/if}>弹出成功对话框</option>
+                <option value="2"{if 2==$product.tips_type} selected{/if}>跳转URL</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item tips_text">
+        <label class="layui-form-label">对话框提示语</label>
+        <div class="layui-input-block">
+            <input type="text" name="tips_text" placeholder="" value="{$product.tips_text}" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item tips_url">
+        <label class="layui-form-label">跳转的URL</label>
+        <div class="layui-input-block">
+            <input type="text" name="tips_url" placeholder="" value="{$product.tips_url}" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">浏览数</label>
+        <div class="layui-input-block">
+            <input type="number" name="hits" lay-verify="required" lay-reqtext="请输入浏览数" placeholder="请输入浏览数" value="{$product.hits}" class="layui-input">
+        </div>
+    </div>
+
+
+    <div class="layui-form-item" style="display: none">
+        <div class="layui-input-block">
+            <button type="submit" class="layui-btn caozha-submit" lay-submit="" lay-filter="saveBtn">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary caozha-reset">重置</button>
+        </div>
+    </div>
+    <input type="hidden" name="pro_id" value="{$product.pro_id}">
+
+</form>
+<script>
+    layui.use(['form','laydate'], function () {
+
+        var form = layui.form,
+            layer = layui.layer;
+
+        layer_skin(layer);
+
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+
+            $.ajax({
+                type: "post",
+                url: '{:url(\'admin/product/editSave\')}',
+                data: data.field,
+                dataType: "json",
+                async: false,
+                success: function (res) {
+                    if (res.code == 1) {
+                        layer.msg(res.msg, {icon: 1});
+                        setTimeout(function(){
+                            // 关闭弹出层
+                            //layer.close(index);
+                            var iframeIndex = parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(iframeIndex);
+                            parent.location.reload();
+                        },800);
+                    } else {
+                        layer.msg(res.msg, {icon: 2});
+                    }
+                },
+                complete: function (res) {
+                }
+            });
+
+            return false;
+        });
+
+        form.on('select(tips_type)', function(data){
+            if(data.value==1){
+                $(".tips_text").show();
+                $(".tips_url").hide();
+            }else if(data.value==2){
+                $(".tips_text").hide();
+                $(".tips_url").show();
+            }
+        });
+
+    });
+
+</script>
+</body>
+</html>

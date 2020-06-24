@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>订单回收站 - Powered by __CAOZHA-SYS-NAME__ __CAOZHA-SYS-VERSION__</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="__CAOZHA-LAYUIMINI__/lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="__CAOZHA-LAYUIMINI__/css/public.css" media="all">
+    <script src="__CAOZHA-STATIC__/js/jquery-3.4.1.min.js"></script>
+    <script src="__CAOZHA-LAYUIMINI__/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+    <script src="__CAOZHA-STATIC__/js/all.js"></script>
+    <link rel="stylesheet" href="__CAOZHA-STATIC__/css/style.css" media="all">
+    <style type="text/css">
+        body .layui-table-cell{
+            padding:5px 0px;
+            height:auto;
+            line-height: 130%;
+            overflow:visible;
+            text-overflow:inherit;
+            white-space:normal;
+            word-break: break-all;}
+    </style>
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+
+        <div class="layui-collapse">
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title">搜索<i class="layui-icon layui-colla-icon"></i></h2>
+                <div class="layui-colla-content layui-show">
+                    <div class="layui-row">
+                        <form class="layui-form layui-col-md12 layui-form2" method="get">
+
+                            <input type="text" name="keyword" value="" placeholder="请输入关键词" autocomplete="off"
+                                   class="layui-input">
+
+                            <div class="layui-input-inline cz-select">
+                                <select class="layui-inline" name="status">
+                                    <option value="">订单状态</option>
+                                    {foreach $order_status as $key=>$vo }
+                                    <option value="{$key}">{$vo}</option>
+                                    {/foreach}
+                                </select>
+                            </div>
+
+                            <div class="layui-input-inline cz-select">
+                                <select class="layui-inline" name="payment">
+                                    <option value="">付款方式</option>
+                                    {foreach $order_payment as $key=>$vo }
+                                    <option value="{$key}">{$vo}</option>
+                                    {/foreach}
+                                </select>
+                            </div>
+
+                            <button class="layui-btn" lay-submit="" lay-filter="search"><i class="layui-icon"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-btn-container">
+                <button class="layui-btn layui-btn-sm data-add-btn" lay-event="recover"> 恢复订单</button>
+                <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="permanently_del"> 彻底删除</button>
+            </div>
+        </script>
+
+        <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+
+        <script type="text/html" id="currentTableBar">
+            <a class="layui-btn layui-btn-xs layui-btn-primary data-count-view" lay-event="view">详情</a>
+        </script>
+
+
+    </div>
+</div>
+<script>
+    var export_url="{:url('admin/order/get')}?is_del=1&is_export=1";//导出excel的URL
+
+    layui.use(['form', 'element', 'table'], function () {
+        var form = layui.form,
+            table = layui.table;
+
+        layer_skin(layer);
+
+        var lement = layui.element;//面包导航
+
+        table.render({
+            elem: '#currentTableId',
+            url: '{:url(\'admin/order/get\')}?is_del=1',
+            parseData: function (res) { //res 即为原始返回的数据
+                return {
+                    "code": "0", //解析接口状态 res.status
+                    "msg": "", //解析提示文本 res.message
+                    "count": res.total, //解析数据长度
+                    "data": res.data //解析数据列表
+                };
+            },
+            toolbar: '#toolbarDemo',
+            defaultToolbar: ['filter',{title:"导出",layEvent:"cz_export",icon:"layui-icon-export"},'print', {
+                title: '提示：双击可查看详情',
+                layEvent: 'LAYTABLE_TIPS',
+                icon: 'layui-icon-tips'
+            }],
+            even: false,//隔行背景
+            size: "",//sm （小尺寸）       lg （大尺寸）
+            cols: [[
+                {type: "checkbox", width: 40, align: "center"},
+                {field: 'order_id', width: 75, title: 'ID', sort: true},
+                {field: 'pro_name', Width: 180, title: '产品名称'},
+                {field: 'pro_options', Width: 280, title: '订购选项'},
+                {field: 'quantity', width: 70, align: "center", title: '数量'},
+                {field: 'amount', width: 90, align: "center", title: '总额'},
+                {field: 'realname', width: 90, title: '客户姓名'},
+                {field: 'tel', width: 130, align: "center", title: '客户电话',},
+                {field: 'addresss', Width: 200, title: '客户地址',},
+                {field: 'payment', width: 90, align: "center", title: '付款方式',},
+                {field: 'remarks', Width: 200, title: '客户备注',},
+                {field: 'status', width: 80, align: "center", title: '状态'},
+                {field: 'pro_url', Width: 200, title: '下单网址'},
+                {field: 'ip', width: 130, align: "center", title: '客户IP'},
+                {title: '操作', width: 80, toolbar: '#currentTableBar', align: "center"}
+            ]],
+            limits: [5, 10, 15, 20, 25, 50, 100, 200, 500, 1000],
+            limit: {$order_limit},
+            page: true,
+            skin: 'line',
+        });
+
+
+        /**
+         * toolbar监听事件
+         */
+        table.on('toolbar(currentTableFilter)', function (obj) {
+            if (obj.event === 'permanently_del') {
+                var todo_name ="彻底删除";
+            }else if (obj.event === 'recover') {
+                var todo_name ="恢复";
+            }else if (obj.event === 'cz_export') {
+                $(".layui-icon-export").after('<ul class="layui-table-tool-panel"><li onclick="export_to(this);" data-type="csv">导出 .csv 文件</li><li onclick="export_to(this);" data-type="xls">导出 .xls 文件</li><li onclick="export_to(this);" data-type="xlsx">导出 .xlsx 文件</li></ul>');
+                return false;
+            }else{
+                return false;
+            }
+
+            var checkStatus = table.checkStatus('currentTableId')
+                , data = checkStatus.data;
+            var order_id_arr = $.map(data, function (d) {
+                return d.order_id;
+            });
+            var order_id_str = order_id_arr.join(",");//转为字符串
+
+            if (order_id_str == "") {
+                layer.msg('请先选择要'+todo_name+'的订单。', {icon: 2});
+                return false;
+            }
+
+            caozha_alert = layer.confirm('确定要'+todo_name+'ID为[ ' + order_id_str + ' ]的订单吗？', {
+                btn: ['确认', '取消'],
+                btnAlign: 'c',
+                title: "操作提示"
+            }, function () {
+
+                $.ajax({
+                    type: "post",
+                    url: '{:url(\'admin/order/todo\')}',
+                    data: {order_id: order_id_str,act:obj.event},
+                    dataType: "json",
+                    async: false,
+                    success: function (todo_data) {
+                        if (todo_data.code == 1) {
+                            layer.msg(todo_data.msg, {icon: 1});
+                            //执行操作后重载
+                            table.reload('currentTableId', {
+                                // page: {
+                                //     curr: 1
+                                // }
+                            }, 'data');
+                        } else {
+                            layer.msg(todo_data.msg, {icon: 2});
+                        }
+                    }
+                });
+                layer.close(caozha_alert);//关闭
+
+            });
+
+
+        });
+
+        // 监听搜索操作
+        form.on('submit(search)', function (data) {
+            //data.field
+            table.reload('currentTableId', {
+                page: {
+                    curr: 1
+                }
+                , where: data.field //设定异步数据接口的额外参数
+
+            });
+            export_url=export_url+"&"+$.param(data.field);
+            return false;
+        });
+
+
+        //监听表格复选框选择
+        table.on('checkbox(currentTableFilter)', function (obj) {
+            console.log(obj)
+        });
+
+        //监听行双击事件
+        table.on('rowDouble(currentTableFilter)', function (obj) {
+            //console.log(obj.tr) //得到当前行元素对象
+            //console.log(obj.data) //得到当前行数据
+            //obj.del(); //删除当前行
+            //obj.update(fields) //修改当前行数据
+
+            var order_data = obj.data;
+
+            var index = layer.open({
+                title: '查看订单',
+                type: 2,
+                shade: 0.2,
+                maxmin: true,
+                shadeClose: true,
+                area: ['60%', '95%'],
+                content: '{:url(\'admin/order/view\')}?is_del=1&order_id=' + order_data.order_id,
+            });
+
+            return false;
+
+
+        });
+
+        //查看
+        table.on('tool(currentTableFilter)', function (obj) {
+            var order_data = obj.data;
+            if (obj.event === 'view') {
+
+                var index = layer.open({
+                    title: '查看订单',
+                    type: 2,
+                    shade: 0.2,
+                    maxmin: true,
+                    shadeClose: true,
+                    area: ['60%', '95%'],
+                    content: '{:url(\'admin/order/view\')}?is_del=1&order_id=' + order_data.order_id,
+                });
+                return false;
+
+            }
+        });
+
+
+    });
+
+
+    {literal}
+    function export_to(e){//导出excel
+        //console.log("获取到了当前定义的data-type：",e.dataset.type);
+
+        if(e.dataset.type=="csv"){
+            window.location.href=export_url+"&export_type=csv";
+        }else if(e.dataset.type=="xls"){
+            window.location.href=export_url+"&export_type=xls";
+        }else if(e.dataset.type=="xlsx"){
+            window.location.href=export_url+"&export_type=xlsx";
+        }
+        $(".layui-table-tool-panel").remove();
+
+    }
+    {/literal}
+</script>
+
+</body>
+</html>
