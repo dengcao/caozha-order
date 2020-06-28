@@ -21,6 +21,7 @@
             text-overflow:inherit;
             white-space:normal;
             word-break: break-all;}
+        .layui-form2 .cz-select2 .layui-input{width: 115px;}
     </style>
 </head>
 <body>
@@ -55,6 +56,28 @@
                                 </select>
                             </div>
 
+                            <div class="layui-inline">
+                                <label class="layui-form-label" style="width:60px;">下单时间</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" name="starttime" id="starttime" placeholder="开始时间" style="width: 150px;">
+                                </div>
+                                -
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" name="endtime" id="endtime" placeholder="结束时间" style="width: 150px;">
+                                </div>
+                            </div>
+
+                            <div class="layui-input-inline cz-select2">
+                                <select class="layui-inline" id="select_time" lay-filter="select_time">
+                                    <option value="">快捷选时间</option>
+                                    <option value='{php}echo date("Y-m-d",strtotime("-2 day")){/php} 00:00:00,{php}echo date("Y-m-d",strtotime("-2 day")){/php} 23:59:59'>前天</option>
+                                    <option value='{php}echo date("Y-m-d",strtotime("-1 day")){/php} 00:00:00,{php}echo date("Y-m-d",strtotime("-1 day")){/php} 23:59:59'>昨天</option>
+                                    <option value='{php}echo date("Y-m-d",time()){/php} 00:00:00,{php}echo date("Y-m-d",time()){/php} 23:59:59'>今天</option>
+                                    <option value='{php}echo date("Y-m-01", strtotime("-1 month")){/php} 00:00:00,{php}echo date("Y-m-t", strtotime("-1 month")){/php} 23:59:59'>上月</option>
+                                    <option value='{php}echo date("Y-m-01",time()){/php} 00:00:00,{php}echo date("Y-m-d",time()){/php} 23:59:59'>本月</option>
+                                </select>
+                            </div>
+
                             <button class="layui-btn" lay-submit="" lay-filter="search"><i class="layui-icon"></i>
                             </button>
                         </form>
@@ -84,9 +107,10 @@
 <script>
     var export_url="{:url('admin/order/get')}?is_export=1";//导出excel的URL
 
-    layui.use(['form', 'element', 'table'], function () {
+    layui.use(['form', 'element', 'table','laydate'], function () {
         var form = layui.form,
-            table = layui.table;
+            table = layui.table,
+            laydate = layui.laydate;
 
         layer_skin(layer);
 
@@ -263,6 +287,27 @@
             }
         });
 
+        //开始日期时间选择器
+        laydate.render({
+            elem: '#starttime'
+            ,type: 'datetime'
+        });
+
+        //结束日期时间选择器
+        laydate.render({
+            elem: '#endtime'
+            ,type: 'datetime'
+        });
+
+        //监听快捷选时间
+        form.on('select(select_time)', function(data){
+            // console.log(data.elem); //得到select原始DOM对象
+            // console.log(data.value); //得到被选中的值
+            // console.log(data.othis); //得到美化后的DOM对象
+            select_time=data.value.split(',');
+            inputtime(select_time[0],select_time[1]);
+        });
+
 
     });
 
@@ -281,6 +326,11 @@
 
     }
     {/literal}
+
+    function inputtime(t1,t2){
+            $("#starttime").val(t1);
+            $("#endtime").val(t2);
+     }
 </script>
 
 </body>

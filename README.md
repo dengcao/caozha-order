@@ -1,6 +1,6 @@
-# caozha-order 竞价页订单管理系统 1.0.0
+# caozha-order 竞价页订单管理系统 1.1.0
 
-caozha-order是一个通用的竞价页订单管理系统，基于开源的caozha-admin开发，可以快速调用竞价页的订单表单，支持订单管理、订单回收站、产品管理、订单批量导出（支持导出格式：.xls，.xlsx，.csv）、下单表单调用等功能。系统特点：易上手，零门槛，界面清爽极简，极便于二次开发。
+caozha-order是一个通用的竞价页订单管理系统，基于开源的caozha-admin开发，支持订单管理、订单回收站、产品管理、订单批量导出（支持导出格式：.xls，.xlsx，.csv）、竞价页的下单表单调用等功能。系统特点：易上手，零门槛，界面清爽极简，极便于二次开发。
 
 ### 系统功能
 
@@ -49,6 +49,21 @@ caozha-order是一个通用的竞价页订单管理系统，基于开源的caozh
 GitHub Wiki：[https://github.com/cao-zha/caozha-admin/wiki](https://github.com/cao-zha/caozha-admin/wiki)
 
 
+### 更新说明
+
+
+**版本1.0.0，主要更新：**
+
+1、新增：订单管理、订单回收站、产品管理、系统设置、管理员、权限组、系统日志、后台功能地图等功能。
+
+2、竞价页的下单表单调用。
+
+
+**版本1.1.0，主要更新：**
+
+新增：按下单日期时间搜索和导出订单。
+
+
 ### 特别鸣谢
 
 caozha-order使用了以下开源代码：
@@ -90,9 +105,9 @@ GitHub：https://github.com/cao-zha/caozha-order
 
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/0624/222933_565c78dc_7397417.png "2.png")
 
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0624/222940_7b9705a7_7397417.png "3.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0628/144907_7aca6b17_7397417.png "3.png")
 
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0624/222947_bf46e925_7397417.png "4.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0628/144916_43a44d8f_7397417.png "4.png")
 
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/0624/222954_6c54cc78_7397417.png "5.png")
 

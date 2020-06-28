@@ -150,6 +150,16 @@ class Order
                 $list = $list->where("realname|tel|addresss|remarks|pro_name|pro_options|pro_sign|wechat|qq|email|postal_code|admin_remarks|pro_url|from_url", "like", "%" . $action["keyword"] . "%");
             }
         }
+
+        $action["starttime"]=isset($action["starttime"])?$action["starttime"]:"";
+        $action["endtime"]=isset($action["endtime"])?$action["endtime"]:"";
+        if ($action["starttime"]) {
+            $list = $list->where('addtime','>=', $action["starttime"]);
+        }
+        if ($action["endtime"]) {
+        $list = $list->where('addtime','<=', $action["endtime"]);
+        }
+
         $action_arr = ['status', 'payment'];
         foreach ($action_arr as $value) {
             if (isset($action[$value])) {

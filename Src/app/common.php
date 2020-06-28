@@ -12,7 +12,7 @@
 //系统基础配置
 $GLOBALS["caozha_common_config"] = [
     "name" => "caozha-order",
-    "version" => "1.0.0",
+    "version" => "1.1.0",
 ];
 
 /**
