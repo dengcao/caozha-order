@@ -9,13 +9,22 @@
 
 namespace app\index\controller;
 
+use think\facade\View;
+
 class Index
 {
     public function index()
     {
-       return '<title>欢迎使用'.get_cz_name().' '.get_cz_version().'</title><style type="text/css">*{ padding: 0; margin: 0; } div{ padding: 4px 48px;} a{color:#2E5CD5;cursor: pointer;text-decoration: none} a:hover{text-decoration:underline; } body{ background: #fff; font-family: "Century Gothic","Microsoft yahei"; color: #333;font-size:14px;} h1{ font-size: 32px; font-weight: normal; margin-bottom: 12px; } p{ line-height: 1.6em; font-size: 18px }</style><div style="padding: 24px 48px;"> <h1>:) 欢迎使用</h1><p><br>'.get_cz_name().' '.get_cz_version().'<br><br>'.'后台管理地址：<a href="http://'.$_SERVER['HTTP_HOST'].url("admin/index/index").'" target="_blank">http://'.$_SERVER['HTTP_HOST'].url("admin/index/index").'</a> （账号：caozha &nbsp; 密码：123456）<br><br>草札官网：<a href="http://caozha.com" target="_blank">caozha.com</a><br><br>GitHub：<a href="https://github.com/cao-zha/caozha-order" target="_blank">https://github.com/cao-zha/caozha-order</a><br>Gitee：<a href="https://gitee.com/caozha/caozha-order" target="_blank">https://gitee.com/caozha/caozha-order</a></p></div>';
+       return '<title>欢迎使用'.get_cz_name().' '.get_cz_version().'</title><style type="text/css">*{ padding: 0; margin: 0; } div{ padding: 4px 48px;} a{color:#2E5CD5;cursor: pointer;text-decoration: none} a:hover{text-decoration:underline; } body{ background: #fff; font-family: "Century Gothic","Microsoft yahei"; color: #333;font-size:14px;} h1{ font-size: 32px; font-weight: normal; margin-bottom: 12px; } p{ line-height: 1.6em; font-size: 18px }</style><div style="padding: 24px 48px;"> <h1>:) 欢迎使用</h1><p><br>'.get_cz_name().' '.get_cz_version().'<br><br>'.'后台管理地址：<a href="http://'.$_SERVER['HTTP_HOST'].url("admin/index/index").'" target="_blank">http://'.$_SERVER['HTTP_HOST'].url("admin/index/index").'</a> （账号：caozha &nbsp; 密码：123456）<br><br>草札官网：<a href="http://caozha.com" target="_blank">caozha.com</a><br><br>GitHub：<a href="https://github.com/cao-zha/caozha-order" target="_blank">https://github.com/cao-zha/caozha-order</a><br>Gitee：<a href="https://gitee.com/caozha/caozha-order" target="_blank">https://gitee.com/caozha/caozha-order</a><br><br>查看演示：<a href="'.url("/index/index/demo/sign/iphone11").'"  target="_blank" style="color:red;font-weight: bold;">下单表单页（default）</a> &nbsp; &nbsp; <a href="'.url("/index/index/demo/sign/mi10").'"  target="_blank" style="color:red;font-weight: bold;">下单表单页（green）</a> &nbsp; &nbsp; <a href="'.url("/index/index/demo/sign/p40pro").'"  target="_blank" style="color:red;font-weight: bold;">下单表单页（orangered）</a> &nbsp; &nbsp; </p></div>';
     }
 
-
+    public function demo($sign)
+    {
+        View::assign([
+            'sign' => $sign,
+        ]);
+        // 模板输出
+        return View::fetch('index/demo');
+    }
 
 }

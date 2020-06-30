@@ -42,7 +42,6 @@
             <input type="hidden" name="from_url" id="from_url" value="">
             <input type="hidden" name="pro_options" id="pro_options" value="">
             <input type="hidden" name="addresss" id="addresss" value="">
-            <input type="hidden" name="payment" id="payment" value="1">
             <input type="hidden" name="quantity" id="quantity" value="1">
             <input type="hidden" name="amount" id="amount" value="0">
             <div class="item-group add">
@@ -69,7 +68,7 @@
                 <div class="row row_area ec-content">
                     <label for="name">金额</label>
                     <div style="display: block;height: 36px;padding-top: 12px;">
-                        <span class="i_pri" style="font-size: 16px;">￥<span id="item_price">168</span></span>
+                        <span class="i_pri" style="font-size: 16px;">￥<span id="item_price"></span></span>
                     </div>
                 </div>
                 <p class="row">
@@ -99,20 +98,34 @@
                     <label for="address">地址</label>
                     <input name="addr" id="addr" class="input" placeholder="请填写详细地址如街道门牌信息" tabindex="6" type="text">
                 </p>
-                <div class="row row_area ec-content">
+                <div class="row row_area ec-content"{if count($pro_payment)<1} style="display:none"{/if}>
                     <label for="address">付款</label>
                     <div style="display: block;height: 36px;padding-top: 12px;">
-                        <ul class="radio-group" style="float: left;">
-                            <li class="active">
-                                <span class="radio-icon"></span>货到付款
-                            </li>
-                        </ul>
-                        <span style="color: #cf2a4f;font-size: 14px;">验货满意后付款</span>
+<!--                        <ul class="radio-group" style="float: left;">-->
+<!--                            <li class="active">-->
+<!--                                <span class="radio-icon"></span>货到付款-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                        <span style="color: #cf2a4f;font-size: 14px;">验货满意后付款</span>-->
+                        <div class="radio-group" style="float: left;">
+                            {foreach $pro_payment as $key=>$vo }
+                            <span class="auto" style="margin-left: 10px;"><input type="radio"{if $key==$product.pro_payment_checked} checked{/if} name="payment" id="payment{$key}" value="{$key}" class="input-radio"><label for="payment{$key}">{$vo}</label></span>
+                            {/foreach}
+                        </div>
                     </div>
                 </div>
                 <p class="row row_area" style="padding-bottom:0px; margin-bottom:0px;">
                     <label for="address">备注</label><textarea id="remarks" style="height: 60px;" name="remarks" class="block input" placeholder="" tabindex="6" type="text"></textarea>
                 </p>
+
+            {if $product.is_captcha}
+            <p class="row">
+                <label for="tel">验证码</label>
+                <input type="text" name="captcha" id="captcha" placeholder="" class="block input required digits" style="width: 70px;display: inline;">
+                <img src="{:url('index/order/captcha')}" align="absmiddle" name="plKeyImg" class="plKeyImg" onclick="updateKey()" title="看不清楚,点击刷新" style="cursor: pointer" />
+            </p>
+            {/if}
+
             </div>
             <div class="ec-content" style="padding-top: 20px;">
                 <ul class="radio-group" style="float: left;">
@@ -125,7 +138,7 @@
             <div id="fahuo">
                 <script>
                     var pro_options=new Array({$pro_options_arr2str|raw});
-                    var surname=new Array("张","李","赵","刘","周","王","秦","朱","吴","谭","钱","邓","钟","罗","施","杨","朴","方","孙","黄","韩","陈","冯");
+                    var surname=new Array("张","李","赵","刘","周","王","秦","朱","吴","谭","钱","邓","钟","罗","施","杨","朴","方","孙","黄","韩","陈","冯","郑","卫","蒋","沈","韩","尤","许","何","吕","孔","曹","严","华","金","魏","陶","姜","谢","邹","章","苏","潘","葛","奚","范","彭","鲁","韦","马","苗","方","俞","袁","柳","史","唐","费","薛","雷","贺","汤");
                     var tel_1=new Array("130","132","131","158","188","139","186","138","182","183","133","166","189","136","134","152");
 
                     function get_pro_options(){

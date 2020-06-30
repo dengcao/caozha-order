@@ -1,4 +1,4 @@
-# caozha-order 竞价页订单管理系统 1.1.0
+# caozha-order 竞价页订单管理系统 1.3.0
 
 caozha-order是一个通用的竞价页订单管理系统，基于开源的caozha-admin开发，支持订单管理、订单回收站、产品管理、订单批量导出（支持导出格式：.xls，.xlsx，.csv）、竞价页的下单表单调用等功能。系统特点：易上手，零门槛，界面清爽极简，极便于二次开发。
 
@@ -20,9 +20,11 @@ caozha-order是一个通用的竞价页订单管理系统，基于开源的caozh
 
 8、订单回收站
 
-9、竞价页调用订单的表单
+9、内置3套不同风格的下单表单页面，支持调用或内嵌在竞价页上
 
 10、批量导出订单，支持导出格式：.xls，.xlsx，.csv等
+
+11、防护设置：支持下单页是否开启验证码，是否防恶意提交（可设置同个IP或手机号X分钟内只能提交N次订单）
 
 
 ### 安装使用
@@ -64,11 +66,23 @@ GitHub Wiki：[https://github.com/cao-zha/caozha-admin/wiki](https://github.com/
 新增：按下单日期时间搜索和导出订单。
 
 
+**版本1.2.0，主要更新：**
+
+新增：订单回收站。
+
+**版本1.3.0，主要更新：**
+
+1、新增了3套下单页模板。
+
+2、新增了防护设置：支持下单页是否开启验证码，是否防恶意提交（可设置同个IP或手机号X分钟内只能提交N次订单）
+
+3、修复了若干处BUG。
+
 ### 特别鸣谢
 
 caozha-order使用了以下开源代码：
 
-caozha-admin、ThinkPHP6.0.2、layui2.5.4、layuimini v2、font-awesome-4.7.0
+caozha-admin1.6.0、ThinkPHP6.0.2、layui2.5.4、layuimini v2、font-awesome-4.7.0
 
 特别致谢！
 
@@ -90,12 +104,19 @@ GitHub：https://github.com/cao-zha/caozha-order
 ### 界面预览
 
 
-**产品的下单表单页面：**
+**竞价页的下单表单页面：**
 
+风格一：
 
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0624/222905_562489b3_7397417.png "7.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0630/153646_fd08bd8e_7397417.png "7.png")
 
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0624/222912_894e99d4_7397417.png "8.png")
+风格二：
+
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0630/153654_93d9e77b_7397417.png "8.png")
+
+风格三：
+
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0630/153703_1c25fca2_7397417.png "9.png")
 
 
 **后台管理功能页面：**
@@ -111,5 +132,7 @@ GitHub：https://github.com/cao-zha/caozha-order
 
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/0624/222954_6c54cc78_7397417.png "5.png")
 
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0624/223004_d3fef772_7397417.png "6.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0630/153714_a11eb487_7397417.png "6.png")
+
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0630/154425_00892cdf_7397417.png "10.png")
 

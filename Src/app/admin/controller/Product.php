@@ -50,6 +50,7 @@ class Product
         View::assign([
             'product_status' => $this->product_status,
             'order_templates' => $this->getTemplates(),
+            'order_payment' => Config::get("app.order_payment"),
         ]);
         // 模板输出
         return View::fetch('product/add');
@@ -64,6 +65,11 @@ class Product
         $update_data=Request::param('','','filter_sql');//过滤注入
         $update_data["status"]=isset($update_data["status"])?$update_data["status"]:1;
         $update_data["tips_type"]=isset($update_data["tips_type"])?$update_data["tips_type"]:1;
+        $update_data["pro_payment_checked"]=isset($update_data["pro_payment_checked"])?$update_data["pro_payment_checked"]:0;
+        $update_data["pro_payment"]=isset($update_data["pro_payment"])?implode(",",$update_data["pro_payment"]):"";
+        $update_data["is_captcha"]=isset($update_data["is_captcha"])?$update_data["is_captcha"]:0;
+        $update_data["anti_time"]=is_numeric($update_data["anti_time"])?$update_data["anti_time"]:0;
+        $update_data["anti_num"]=is_numeric($update_data["anti_num"])?$update_data["anti_num"]:0;
 
         if(!$update_data["pro_sign"]){
             return json(array("code"=>0,"update_num"=>0,"msg"=>"标识符不能为空"));
@@ -100,6 +106,8 @@ class Product
             'product_status' => $this->product_status,
             'product'  => $product,
             'order_templates' => $this->getTemplates(),
+            'order_payment' => Config::get("app.order_payment"),
+            'pro_payment' => explode(",",$product->pro_payment),
         ]);
 
         // 模板输出
@@ -119,6 +127,11 @@ class Product
 
         $update_data["status"]=isset($update_data["status"])?$update_data["status"]:1;
         $update_data["tips_type"]=isset($update_data["tips_type"])?$update_data["tips_type"]:1;
+        $update_data["pro_payment_checked"]=isset($update_data["pro_payment_checked"])?$update_data["pro_payment_checked"]:0;
+        $update_data["pro_payment"]=isset($update_data["pro_payment"])?implode(",",$update_data["pro_payment"]):"";
+        $update_data["is_captcha"]=isset($update_data["is_captcha"])?$update_data["is_captcha"]:0;
+        $update_data["anti_time"]=is_numeric($update_data["anti_time"])?$update_data["anti_time"]:0;
+        $update_data["anti_num"]=is_numeric($update_data["anti_num"])?$update_data["anti_num"]:0;
 
         if(!$update_data["pro_sign"]){
             return json(array("code"=>0,"update_num"=>0,"msg"=>"标识符不能为空"));
@@ -129,7 +142,7 @@ class Product
             return json(array("code"=>0,"update_num"=>0,"msg"=>"产品标识符 ".$update_data["pro_sign"]." 已经存在，请换个再提交。"));
         }
 
-        $update_field=['pro_name','pro_options','pro_sign','hits','listorder','status','templates','tips_type','tips_text','tips_url'];//允许更新的字段
+        $update_field=['pro_name','pro_options','pro_sign','hits','listorder','status','templates','tips_type','tips_text','tips_url','pro_payment','pro_payment_checked','is_captcha','anti_time','anti_num'];//允许更新的字段
         $product=ProductModel::where("pro_id","=",$update_data["pro_id"])->findOrEmpty();
         if ($product->isEmpty()) {//数据不存在
             $update_result=false;
@@ -187,6 +200,9 @@ class Product
         })->withAttr('tips_type', function($value) {
             $tips_type = [1=>'弹框',2=>'跳转'];
             return $tips_type[$value];
+        })->withAttr('is_captcha', function($value) {
+            $is_captcha = [1=>'开启',0=>'关闭'];
+            return $is_captcha[$value];
         })->order('pro_id', 'desc');
 
         $action=Request::param('','','filter_sql');//过滤注入

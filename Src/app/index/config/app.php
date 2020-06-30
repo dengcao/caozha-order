@@ -31,4 +31,11 @@ return [
     'error_message'    => '页面错误！请稍后再试～',
     // 显示错误信息
     'show_error_msg'   => false,
+
+    "order_payment"=>array(//订单付款方式
+        "1"  =>  "货到付款",
+        "2"  =>  "款到发货",
+        "3"  =>  "在线支付",
+    ),
+
 ];

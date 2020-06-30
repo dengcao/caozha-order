@@ -41,8 +41,12 @@
     <div class="layui-form-item layui-form-text" style="margin-top: 15px;">
         <label class="layui-form-label required">调用代码：</label>
         <div class="layui-input-block">
-            <textarea name="js_code" class="layui-textarea" style="height: 150px;">
-<script>document.write('<iframe src="{$order_url}" width="100%" frameborder="0" scrolling="no" onload="this.height=this.contentWindow.document.documentElement.scrollHeight"></iframe>');</script>
+            <textarea name="js_code" class="layui-textarea" style="height: 190px;">
+<script>
+    var order_url="{$order_url}";
+    function getPageReferrer(){var ref="";if(document.referrer.length>0){ref=document.referrer}try{if(ref.length==0&&opener.location.href.length>0){ref=opener.location.href}}catch(e){}return ref};
+    document.write('<iframe src="'+order_url+'?from_url='+encodeURIComponent(getPageReferrer())+'" width="100%" frameborder="0" scrolling="no" onload="this.height=this.contentWindow.document.documentElement.scrollHeight"></iframe>');
+</script>
             </textarea>
             <tip>复制上面代码，放到网页中要显示的位置即可。</tip>
         </div>

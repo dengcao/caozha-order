@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>下单 - {$product.pro_name}</title>
+    <link rel="stylesheet" href="__CAOZHA-STATIC__/order/green/style.css" type="text/css">
+    <script src="__CAOZHA-ADMIN-STATIC__/caozha/js/jquery-3.4.1.min.js"></script>
+    <script src="__CAOZHA-STATIC__/order/green/order.js"></script>
+    <script type="text/javascript" src="__CAOZHA-STATIC__/order/green/check.js"></script>
+    <style type="text/css">
+        .ddorder{max-width:950px;background:#FFFFFF;}
+        .ddwrap{border:5px solid #5FB878;}
+        .ddform{width:auto;margin-right:300px;}
+        @media screen and (max-width:749px){.ddform{margin-right:0;}.ddfhwrap,.ddquewrap{position:static;width:100%;}}
+        @media screen and (max-width:449px){.ddwrap{border:none;}}
+    </style>
+</head>
+<body>
+<div class="ddorder">
+    <div class="ddwrap">
+        <form id="ddform" name="ddform" method="post" class="ddform layui-form" action="{:url('index/order/save')}" onsubmit="return check()">
+
+            <input type="hidden" name="pro_name" id="pro_name" value="{$product.pro_name}">
+            <input type="hidden" name="pro_sign" id="pro_sign" value="{$product.pro_sign}">
+            <input type="hidden" name="pro_url" id="pro_url" value="">
+            <input type="hidden" name="from_url" id="from_url" value="">
+            <input type="hidden" name="addresss" id="addresss" value="">
+            <input type="hidden" name="amount" id="amount" value="0">
+
+            <div class="ddtit-img"><img src="__CAOZHA-STATIC__/order/green/title.png"></div>
+
+            <div class="ddform-box">
+                <label class="ddform-label">订购产品</label>
+                <div class="ddform-pro radio">
+                    {php}
+                    $pro_options=explode("\n",$product->pro_options);
+                    $pro_options_arr2str="";
+                    foreach($pro_options as $key=>$val) {
+                    $val_arr=explode("||",$val);
+                    if(array_key_exists(2,$val_arr) && $val_arr[2]==1){
+                    $checked="checked";
+                    }else{
+                    $checked="";
+                    }
+                    if(array_key_exists(3,$val_arr) && $val_arr[3]==1){
+                    $recommend='<img src="__CAOZHA-STATIC__/order/orangered/tj.png">';
+                    }else{
+                    $recommend="";
+                    }
+                    echo '<span class="down"><input type="radio" '.$checked.' name="pro_options" id="ddproduct'.$key.'" onclick="total()" value="'.$val_arr[0].'" price="'.$val_arr[1].'" class="input-radio" lay-ignore><label for="ddproduct'.$key.'">'.$val_arr[0].$recommend.'</label></span>';
+                    $pro_options_arr2str.='"'.$val_arr[0].'",';
+                    }
+                    {/php}
+                </div>
+            </div>
+
+            <div class="ddform-box">
+                <label class="ddform-label">数量</label>
+                <div class="ddform-opt ddnums">
+                    <a onclick="numdec()" title="减1" class="dec"></a>
+                    <input type="text" id="quantity" name="quantity" value="1" onChange="onprice()">
+                    <a onclick="numlnc()" title="加1" class="lnc"></a>
+                    <strong><em class="rmb">&yen;</em><em id="showprice"></em></strong>
+                </div>
+            </div>
+
+
+            <div class="ddform-box">
+                <label class="ddform-label">姓名</label>
+                <div class="ddform-opt">
+                    <input type="text" name="realname" id="realname" placeholder="请填写姓名" class="input-text">
+                </div>
+            </div>
+            <div class="ddform-box">
+                <label class="ddform-label">手机号码</label>
+                <div class="ddform-opt">
+                    <input type="text" name="tel" id="tel" placeholder="请填写手机号码" class="input-text">
+                </div>
+            </div>
+            <div class="ddform-box">
+                <label class="ddform-label">所在地区</label>
+                <div class="ddform-opt area">
+                    <span class="ddprovince"><select class="select " id="s_province" name="s_province" tabindex="3" >
+                        <option value="">选省份</option>
+                    </select></span>
+                    <span class="ddcity"><select class="select " id="s_city" name="s_city" tabindex="4" >
+                        <option value="">选城市</option>
+                    </select></span>
+                    <span class="ddarea"><select class="select" id="s_county" name="s_county" tabindex="5"  >
+                        <option value="">选地区</option>
+                    </select></span>
+                    <script class="resources library" src="__CAOZHA-STATIC__/order/default/area.js"></script>
+                    <script type="text/javascript">_init_area();</script>
+                </div>
+            </div><div class="ddform-box">
+            <label class="ddform-label">详细地址</label>
+            <div class="ddform-opt">
+                <input type="text" name="addr" id="addr" placeholder="请填写详细地址" class="input-text">
+            </div>
+        </div>
+
+
+            <div class="ddform-box"{if count($pro_payment)<1} style="display:none"{/if}>
+                <label class="ddform-label">付款方式</label>
+                <div class="ddform-pro radio">
+                    {foreach $pro_payment as $key=>$vo }
+                    <span class="auto"><input type="radio"{if $key==$product.pro_payment_checked} checked{/if} name="payment" id="payment{$key}" value="{$key}" class="input-radio"><label for="payment{$key}">{$vo}</label></span>
+                    {/foreach}
+                </div>
+            </div>
+
+            <div class="ddform-box">
+                <label class="ddform-label">留言</label>
+                <div class="ddform-opt">
+                    <textarea name="remarks" placeholder="可填写补充说明" class="textarea"></textarea>
+                </div>
+            </div>
+
+    {if $product.is_captcha}
+    <div class="ddform-box">
+        <label class="ddform-label">验证码</label>
+        <div class="ddform-opt">
+            <input type="text" name="captcha" id="captcha" placeholder="输入验证码" class="input-text" style="width: 85px;display: inline">
+            <img src="{:url('index/order/captcha')}" align="absmiddle" name="plKeyImg" class="plKeyImg" onclick="updateKey()" title="看不清楚,点击刷新" style="cursor: pointer" />
+        </div>
+    </div>
+    {/if}
+
+            <div class="ddform-box btnbox">
+                <button id="ddsubmit" type="submit" class="ddbtn btn-g">立即提交订单</button>
+            </div>
+        </form>
+        <script src="__CAOZHA-STATIC__/order/green/scroll.js"></script>
+        <script>
+            $(function(){
+                $(".ddfahuo").myScroll({
+                    speed:40, //数值越大，速度越慢
+                    rowHeight:55 //li的高度
+                });
+            });
+            </script>
+        <div class="ddfhwrap">
+            <div class="ddtit-text"><span>发货通知</span></div>
+            <div class="ddfahuo ddfhcont">
+                    <script>
+                        var pro_options=new Array({$pro_options_arr2str|raw});
+                        var province=new Array("北京","上海","天津","重庆","广东","福建","湖北","湖南","河北","河南","山西","江苏","浙江","安徽","江西","山东","辽宁","吉林","黑龙江","四川","贵州","云南","海南","陕西","甘肃","广西","青海","内蒙古");
+                        var surname=new Array("张","李","赵","刘","周","王","秦","朱","吴","谭","钱","邓","钟","罗","施","杨","朴","方","孙","黄","韩","陈","冯","郑","卫","蒋","沈","韩","尤","许","何","吕","孔","曹","严","华","金","魏","陶","姜","谢","邹","章","苏","潘","葛","奚","范","彭","鲁","韦","马","苗","方","俞","袁","柳","史","唐","费","薛","雷","贺","汤");
+                        var tel_1=new Array("130","132","131","158","188","139","186","138","182","183","133","166","189","136","134","152");
+
+                        function get_province(){
+                            return province[Math.floor(Math.random()*province.length)];
+                        }
+
+                        function get_pro_options(){
+                            return pro_options[Math.floor(Math.random()*pro_options.length)];
+                        }
+
+                        function getSurname(){
+                            return surname[Math.floor(Math.random()*surname.length)];
+                        }
+
+                        function getTel_1(){
+                            return tel_1[Math.floor(Math.random()*tel_1.length)];
+                        }
+
+                        document.writeln("<ul>");
+                        for (i = 0; i < 40; i++) {
+                            document.writeln('<li><span><span class="showdate"></span></span> <span>'+get_province()+'</span>的<span>'+getSurname()+'**</span> <span>'+getTel_1()+'****'+(Math.floor(Math.random()*8999)+1000)+'</span> 您订购的 <span>'+get_pro_options()+'</span> 已发货！</li>');
+                        }
+                        document.writeln("<\/ul>");
+                    </script>
+                    </div>
+            <div class="h10"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

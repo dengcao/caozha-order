@@ -141,7 +141,7 @@ class Order
             }
             return $order_payment;
         })->withAttr('addresss', function ($value) {
-            return str_ireplace("/@/"," ",$value);
+            return str_ireplace("/@/","",$value);
         })->order('addtime', 'desc');
 
         $action = Request::param('', '', 'filter_sql');//过滤注入

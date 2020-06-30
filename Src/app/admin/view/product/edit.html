@@ -25,17 +25,17 @@
 <form class="layui-form layuimini-form">
 
     <div class="layui-form-item">
-        <label class="layui-form-label required">产品名称</label>
+        <label class="layui-form-label required">产品标识符</label>
         <div class="layui-input-block">
-            <input type="text" name="pro_name" lay-verify="required" lay-reqtext="请输入产品名称" placeholder="请输入产品名称" value="{$product.pro_name}"
-                   class="layui-input">
+            <input type="text" name="pro_sign" lay-verify="required" placeholder="请输入标识符" value="{$product.pro_sign}"
+                   class="layui-input" readonly title="标识符一旦设置，不允许更改">
         </div>
     </div>
 
     <div class="layui-form-item">
-        <label class="layui-form-label required">产品标识符</label>
+        <label class="layui-form-label required">产品名称</label>
         <div class="layui-input-block">
-            <input type="text" name="pro_sign" lay-verify="required" placeholder="请输入标识符" value="{$product.pro_sign}"
+            <input type="text" name="pro_name" lay-verify="required" lay-reqtext="请输入产品名称" placeholder="请输入产品名称" value="{$product.pro_name}"
                    class="layui-input">
         </div>
     </div>
@@ -44,7 +44,25 @@
         <label class="layui-form-label required">订购选项</label>
         <div class="layui-input-block">
             <textarea name="pro_options" lay-verify="required" class="layui-textarea" placeholder="">{$product.pro_options}</textarea>
-            <tip>填写格式：选项描述||价格||是否选中（1为选中）</tip>
+            <tip>填写格式：选项描述||价格||是否选中（1为选中）||是否推荐（1为推荐）</tip>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">付款类型</label>
+        <div class="layui-input-block">
+            {foreach $order_payment as $key=>$vo }
+            <input type="checkbox" name="pro_payment[]" value="{$key}" title="{$vo}"{if in_array($key,$pro_payment)} checked{/if}>
+            {/foreach}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">付款选中项</label>
+        <div class="layui-input-block">
+            <input type="text" name="pro_payment_checked" lay-verify="required" placeholder="填写数字" value="{$product.pro_payment_checked}"
+                   class="layui-input">
+            <tip>付款类型的默认选中项，填写数字，如：1，则默认选中第一个</tip>
         </div>
     </div>
 
@@ -68,7 +86,7 @@
     </div>
 
     <div class="layui-form-item">
-        <label class="layui-form-label required">订单模板</label>
+        <label class="layui-form-label required">下单页模板</label>
         <div class="layui-input-block">
             <select name="templates" lay-verify="required" lay-reqtext="请选择订单页模板">
                 <option value=""></option>
@@ -101,6 +119,24 @@
         <label class="layui-form-label">跳转的URL</label>
         <div class="layui-input-block">
             <input type="text" name="tips_url" placeholder="" value="{$product.tips_url}" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">验证码</label>
+        <div class="layui-input-block">
+            <input type="checkbox" {if $product.is_captcha==1}checked=""{/if} value="1" name="is_captcha" lay-skin="switch" lay-filter="switchTest"
+                   lay-text="启用|停用">
+            <div class="layui-unselect layui-form-switch layui-form-onswitch" lay-skin="_switch"><em>启用</em><i></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">防护设置</label>
+        <div class="layui-input-block">
+            同一个IP或手机号 <input type="text" name="anti_time" placeholder="" value="{$product.anti_time}" class="layui-input" style="width: 50px;display:inline;"> 分钟内最多允许提交 <input type="text" name="anti_num" placeholder="" value="{$product.anti_num}" class="layui-input" style="width: 50px;display:inline;"> 次订单
+            <br><tip>填写0或者留空则不开启此防护</tip>
         </div>
     </div>
 

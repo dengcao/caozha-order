@@ -39,7 +39,6 @@ function check() {
         return false;
     }
     $('#addresss').val($('#s_province').val()+'/@/'+$('#s_city').val()+'/@/'+order_county+'/@/'+$('#addr').val());
-    $('#pro_options').val($('.sku_cur').text());
     $('#pro_url').val(getParentUrl());
     $('#from_url').val($.getUrlParam("from_url"));
 }
@@ -56,6 +55,16 @@ function getParentUrl() {//获取iframe父页面URL
         url = window.location.href;
     }
     return url;
+}
+
+function getPageReferrer() {//获取来路页面URL
+    var ref = '';
+    if (document.referrer.length>0){ref=document.referrer;}
+    try {  if (ref.length == 0 && opener.location.href.length > 0) {
+        ref = opener.location.href;
+    }
+    } catch (e) {}
+    return ref;
 }
 
 (function ($) {

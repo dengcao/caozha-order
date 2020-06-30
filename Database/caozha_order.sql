@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2020-06-24 21:50:52
+-- 生成日期： 2020-06-29 21:05:56
 -- 服务器版本： 5.7.26
 -- PHP 版本： 7.3.4
 
@@ -52,7 +52,7 @@ CREATE TABLE `cz_administrators` (
 --
 
 INSERT INTO `cz_administrators` (`admin_id`, `admin_name`, `admin_password`, `admin_password_rnd`, `role_id`, `is_enabled`, `real_name`, `tel`, `email`, `wechat`, `qq`, `last_login_ip`, `last_login_time`, `last_logout_time`, `login_times`, `admin_remarks`) VALUES
-(1, 'caozha', '5fd9cd58f4e516bae46557b355c5208a', NULL, 1, 1, '草札', '1320000000', 'dzh188@qq.com', 'wx', 'qq', '127.0.0.1', '2020-06-24 09:55:05', '2020-06-22 17:49:49', 77, NULL),
+(1, 'caozha', '5fd9cd58f4e516bae46557b355c5208a', NULL, 1, 1, '草札', '1320000000', 'dzh188@qq.com', 'wx', 'qq', '127.0.0.1', '2020-06-29 17:20:34', '2020-06-22 17:49:49', 81, NULL),
 (2, 'dd78', 'ee04ddc4fea36f4ce797766b6c4f66a4', NULL, 2, 1, '查订单', '', '', NULL, NULL, '223.74.103.196', '2018-10-27 19:56:03', '2018-10-27 17:59:46', 4, NULL),
 (3, 'xgd', '0b9c6913e2cc2a29571cdf8d5b590baf', NULL, 2, 1, '小谢', '', '', NULL, NULL, '113.65.207.15', '2018-10-27 18:15:00', '2017-05-26 17:11:30', 113, NULL),
 (4, 'lb', 'f49c5286a10a22228c79793732acf431', NULL, 2, 0, '邱总', '', '', '', '', '14.145.253.14', '2015-11-04 10:20:05', '2015-10-21 17:54:09', 12, ''),
@@ -111,7 +111,13 @@ INSERT INTO `cz_order` (`order_id`, `realname`, `gender`, `tel`, `addresss`, `pa
 (1, '草札测试', NULL, '13286895000', '广西/@/贵港市/@/港北区/@/测试地址', 1, 1, '3999.00', '', '小米10', '小米10（8GB+128GB）', 'mi10', NULL, NULL, NULL, NULL, '2020-06-24 21:31:58', 0, 1, NULL, '127.0.0.1', 0, 'Windows 10（Safari 537.36）', 'http://order/admin/product/index.html', '', 0),
 (2, '测试', NULL, '13212345600', '山西省/@/大同市/@/阳高县/@/测试地址', 1, 1, '7998.00', '', '苹果iPhone11', '苹果iPhone11（买2部手机送充电宝6个）', 'iphone11', NULL, NULL, NULL, NULL, '2020-06-24 21:33:17', 0, 1, NULL, '127.0.0.1', 0, 'Windows 10（Safari 537.36）', 'http://order/admin/product/index.html', '', 1),
 (3, '张飞', NULL, '13212345612', '山西省/@/大同市/@/矿区/@/XX小区', 1, 1, '3999.00', '快点发货哦', '苹果iPhone11', '苹果iPhone11（买手机送充电宝2个）', 'iphone11', NULL, NULL, NULL, NULL, '2020-06-24 21:34:06', 0, 1, NULL, '127.0.0.1', 0, 'Windows 10（Safari 537.36）', 'http://order/admin/product/index.html', '', 0),
-(4, '王生', NULL, '13266521121', '吉林省/@/长春市/@/朝阳区/@/南天门XX街', 1, 1, '3999.00', '急用，快发货', '苹果iPhone11', '苹果iPhone11（买手机送充电宝2个）', 'iphone11', NULL, NULL, NULL, NULL, '2020-06-24 21:48:43', 0, 1, NULL, '127.0.0.1', 0, 'Windows 10（Safari 537.36）', 'http://order/admin/product/index.html', '', 0);
+(4, '王生', NULL, '13266521121', '吉林省/@/长春市/@/朝阳区/@/南天门XX街', 1, 1, '3999.00', '急用，快发货', '苹果iPhone11', '苹果iPhone11（买手机送充电宝2个）', 'iphone11', NULL, NULL, NULL, NULL, '2020-06-24 21:48:43', 0, 1, NULL, '127.0.0.1', 0, 'Windows 10（Safari 537.36）', 'http://order/admin/product/index.html', '', 0),
+(5, '李明', NULL, '13286895001', '江苏省/@/南京市/@/白下区/@/XX小区2', 1, 2, '8598.00', '', '小米10', '小米10（8GB+256GB）', 'mi10', NULL, NULL, NULL, NULL, '2020-06-28 20:40:42', 0, 1, NULL, '127.0.0.1', 0, 'Windows 10（Safari 537.36）', 'http://order/index/order/view/sign/mi10.html?from_url=lailu.com', 'lailu.com', 0),
+(6, '王小丫', NULL, '13212345613', '广西/@/桂林市/@/七星区/@/测试地址', 1, 1, '0.00', '', '苹果iPhone11', '苹果iPhone11（买手机送充电宝2个）', 'iphone11', NULL, NULL, NULL, NULL, '2020-06-29 20:54:55', 0, 1, NULL, '127.0.0.1', 0, 'Windows 10（Safari 537.36）', 'http://order/admin/product/index.html', '', 0),
+(7, '刘飞', NULL, '13266521121', '天津市/@/null/@/null/@/测试地址', 1, 1, '0.00', '', '苹果iPhone11', '苹果iPhone11（买手机送充电宝2个）', 'iphone11', NULL, NULL, NULL, NULL, '2020-06-29 20:56:09', 0, 1, NULL, '127.0.0.1', 0, 'Windows 10（Safari 537.36）', 'http://order/admin/product/index.html', '', 0),
+(8, '测试', NULL, '13286895000', '天津市/@/天津市/@/河西区/@/测试地址', 1, 1, '0.00', '', '苹果iPhone11', '苹果iPhone11（买2部手机送充电宝6个）', 'iphone11', NULL, NULL, NULL, NULL, '2020-06-29 20:58:33', 0, 1, NULL, '127.0.0.1', 0, 'Windows 10（Safari 537.36）', 'http://order/admin/product/index.html', '', 0),
+(9, '测试', NULL, '13212345600', '北京市/@/地级市/@/市、县级市/@/测试地址', 1, 1, '0.00', '', '苹果iPhone11', '苹果iPhone11（买手机送充电宝2个）', 'iphone11', NULL, NULL, NULL, NULL, '2020-06-29 21:01:54', 0, 1, NULL, '127.0.0.1', 0, 'Windows 10（Safari 537.36）', 'http://order/admin/product/index.html', '', 0),
+(10, '测试', NULL, '13286895000', '上海市/@/上海市/@/黄浦区/@/测试地址', 1, 1, '5988.00', '', '华为HUAWEI P40 Pro', '华为 P40 Pro 5G全网通 8GB+128GB', 'p40pro', NULL, NULL, NULL, NULL, '2020-06-29 21:04:16', 0, 1, NULL, '127.0.0.1', 0, 'Windows 10（Safari 537.36）', 'http://order/admin/product/index.html', '', 0);
 
 -- --------------------------------------------------------
 
@@ -124,6 +130,8 @@ CREATE TABLE `cz_product` (
   `pro_name` varchar(1000) DEFAULT NULL COMMENT '产品名称',
   `pro_options` text COMMENT '订购选项，依次顺序：描述|价格|是否选中，1为选中',
   `pro_sign` varchar(500) DEFAULT NULL COMMENT '产品标识符',
+  `pro_payment` varchar(100) DEFAULT NULL COMMENT '付款方式序号，多个中间用,分隔',
+  `pro_payment_checked` int(3) DEFAULT '1' COMMENT '付款方式默认选中项',
   `updatetime` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '添加时间',
   `hits` int(11) DEFAULT '0' COMMENT '浏览次数',
   `listorder` int(11) DEFAULT '0' COMMENT '排序',
@@ -131,16 +139,20 @@ CREATE TABLE `cz_product` (
   `templates` varchar(500) DEFAULT 'default.html' COMMENT '订单模板',
   `tips_type` tinyint(1) DEFAULT '1' COMMENT '提醒类型，1=弹出成功对话框，2=跳转URL',
   `tips_text` varchar(500) DEFAULT NULL COMMENT '对话框提示语',
-  `tips_url` varchar(200) DEFAULT NULL COMMENT '跳转的URL'
+  `tips_url` varchar(200) DEFAULT NULL COMMENT '跳转的URL',
+  `is_captcha` tinyint(1) DEFAULT '0' COMMENT '是否开启验证码，1=开启',
+  `anti_time` int(11) DEFAULT '0' COMMENT '同一个IP或手机号多少分钟内允许提交',
+  `anti_num` int(11) DEFAULT '0' COMMENT '同一个IP或手机号某分钟内最多提交多少次'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- 转存表中的数据 `cz_product`
 --
 
-INSERT INTO `cz_product` (`pro_id`, `pro_name`, `pro_options`, `pro_sign`, `updatetime`, `hits`, `listorder`, `status`, `templates`, `tips_type`, `tips_text`, `tips_url`) VALUES
-(1, '苹果iPhone11', '苹果iPhone11（买手机送充电宝2个）||3999||1\n苹果iPhone11（买2部手机送充电宝6个）||7998||0', 'iphone11', '2020-06-24 21:20:46', 0, 0, 2, 'default', 1, '订单提交成功！我们会尽快给您发货，谢谢您的支持！', ''),
-(2, '小米10', '小米10（8GB+128GB）||3999||1\n小米10（8GB+256GB）||4299||0\n小米10（12GB+256GB）||4699||0', 'mi10', '2020-06-24 21:25:02', 0, 0, 2, 'default', 1, '订单提交成功！我们会尽快给您发货，谢谢您的支持！', '');
+INSERT INTO `cz_product` (`pro_id`, `pro_name`, `pro_options`, `pro_sign`, `pro_payment`, `pro_payment_checked`, `updatetime`, `hits`, `listorder`, `status`, `templates`, `tips_type`, `tips_text`, `tips_url`, `is_captcha`, `anti_time`, `anti_num`) VALUES
+(1, '苹果iPhone11', '苹果iPhone11（买手机送充电宝2个）||3999||1\n苹果iPhone11（买2部手机送充电宝6个）||7998||0', 'iphone11', '1', 1, '2020-06-24 21:20:46', 0, 0, 2, 'default', 1, '订单提交成功！我们会尽快给您发货，谢谢您的支持！', '', 1, 0, 1),
+(2, '小米10', '小米10（8GB+128GB）||3999||1\n小米10（8GB+256GB）||4299||0\n小米10（12GB+256GB）||4699||0', 'mi10', '1', 1, '2020-06-24 21:25:02', 0, 0, 2, 'green', 1, '订单提交成功！我们会尽快给您发货，谢谢您的支持！', '', 1, 0, 0),
+(3, '华为HUAWEI P40 Pro', '华为 P40 Pro 5G全网通 8GB+128GB||5988||1\n华为 P40 Pro 5G全网通 8GB+256GB||6488||0\n华为 P40 Pro 5G全网通 8GB+512GB||7388||0', 'p40pro', '1', 1, '2020-06-29 19:19:19', 0, 0, 2, 'green', 1, '订单提交成功！我们会尽快给您发货，谢谢您的支持！', '', 1, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -479,7 +491,36 @@ INSERT INTO `cz_syslog` (`log_id`, `log_content`, `log_user`, `log_ip`, `log_dat
 (295, '修改产品，ID：2（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-06-24 21:30:21'),
 (296, '修改产品，ID：2（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-06-24 21:30:49'),
 (297, '修改产品，ID：2（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-06-24 21:31:16'),
-(298, '软删除订单(ID)：2（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-06-24 21:49:07');
+(298, '软删除订单(ID)：2（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-06-24 21:49:07'),
+(299, '登陆成功（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-06-28 11:02:22'),
+(300, '下载订单：客户订单(共1条)_20200628143029.csv，s=admin/order/get.html&is_del=1&is_export=1&keyword=&status=&payment=&starttime=2020-05-01%2000%3A00%3A00&endtime=2020-05-31%2023%3A59%3A59&keyword=&status=&payment=&starttime=2020-06-01%2000%3A00%3A00&endtime=2020-06-28%2023%3A59%3A59&export_type=csv（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-06-28 14:30:29'),
+(301, '登陆成功（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-06-28 15:44:28'),
+(302, '修改产品，ID：2（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-06-28 16:23:57'),
+(303, '软删除订单(ID)：8,7,6,5（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-06-28 20:36:26'),
+(304, '修改产品，ID：1（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-06-28 21:32:52'),
+(305, '修改产品，ID：1（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-06-28 21:36:05'),
+(306, '修改产品，ID：1（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-06-28 21:36:10'),
+(307, '修改产品，ID：1（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-06-28 21:36:37'),
+(308, '修改产品，ID：2（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-06-28 21:36:57'),
+(309, '修改产品，ID：2（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-06-28 21:37:08'),
+(310, '修改产品，ID：1（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-06-28 21:38:57'),
+(311, '修改产品，ID：1（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-06-28 21:39:09'),
+(312, '修改产品，ID：2（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-06-28 21:43:16'),
+(313, '修改产品，ID：2（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-06-28 21:48:32'),
+(314, '修改产品，ID：2（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-06-28 21:49:02'),
+(315, '修改产品，ID：2（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-06-28 21:56:05'),
+(316, '登陆成功（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-06-29 09:48:15'),
+(317, '登陆成功（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-06-29 17:20:34'),
+(318, '修改产品，ID：1（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-06-29 19:14:50'),
+(319, '修改产品，ID：1（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-06-29 19:15:00'),
+(320, '新增产品，ID：3（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-06-29 19:19:19'),
+(321, '修改产品，ID：3（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-06-29 19:20:10'),
+(322, '修改产品，ID：2（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-06-29 19:36:57'),
+(323, '修改产品，ID：1（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-06-29 20:27:00'),
+(324, '修改产品，ID：1（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-06-29 20:28:31'),
+(325, '修改产品，ID：1（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-06-29 20:55:02'),
+(326, '修改产品，ID：1（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-06-29 21:01:18'),
+(327, '修改产品，ID：3（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-06-29 21:03:58');
 
 -- --------------------------------------------------------
 
@@ -553,13 +594,13 @@ ALTER TABLE `cz_administrators`
 -- 使用表AUTO_INCREMENT `cz_order`
 --
 ALTER TABLE `cz_order`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- 使用表AUTO_INCREMENT `cz_product`
 --
 ALTER TABLE `cz_product`
-  MODIFY `pro_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `pro_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- 使用表AUTO_INCREMENT `cz_roles`
@@ -571,7 +612,7 @@ ALTER TABLE `cz_roles`
 -- 使用表AUTO_INCREMENT `cz_syslog`
 --
 ALTER TABLE `cz_syslog`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=299;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=328;
 
 --
 -- 使用表AUTO_INCREMENT `cz_web_config`
