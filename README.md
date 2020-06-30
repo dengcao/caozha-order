@@ -72,7 +72,7 @@ GitHub Wiki：[https://github.com/cao-zha/caozha-admin/wiki](https://github.com/
 
 **版本1.3.0，主要更新：**
 
-1、新增了3套下单页模板。
+1、新增了3套竞价页下单表单模板。
 
 2、新增了防护设置：支持下单页是否开启验证码，是否防恶意提交（可设置同个IP或手机号X分钟内只能提交N次订单）
 
