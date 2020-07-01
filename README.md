@@ -135,19 +135,19 @@ GitHub：https://github.com/cao-zha/caozha-order
 **后台管理功能页面：**
 
 
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0701/205131_4732da56_7397417.png "11.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0701/210221_62e6b554_7397417.png "1.png")
 
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0624/222924_45b3913d_7397417.png "1.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0701/210229_51d0bae9_7397417.png "2.png")
 
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0624/222933_565c78dc_7397417.png "2.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0701/210236_e330436f_7397417.png "3.png")
 
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0628/144907_7aca6b17_7397417.png "3.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0701/210243_bce659bc_7397417.png "4.png")
 
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0628/144916_43a44d8f_7397417.png "4.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0701/210250_fab99560_7397417.png "5.png")
 
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0624/222954_6c54cc78_7397417.png "5.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0701/210257_9b7b776e_7397417.png "6.png")
 
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0630/153714_a11eb487_7397417.png "6.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0701/210307_acbaea3b_7397417.png "10.png")
 
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0630/154425_00892cdf_7397417.png "10.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0701/210317_ef12a3df_7397417.png "11.png")
 
