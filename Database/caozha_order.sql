@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2020-06-30 15:55:00
+-- 生成日期： 2020-06-30 22:38:40
 -- 服务器版本： 5.7.26
 -- PHP 版本： 7.3.4
 
@@ -177,7 +177,7 @@ CREATE TABLE `cz_roles` (
 --
 
 INSERT INTO `cz_roles` (`role_id`, `roles`, `role_name`, `role_remarks`, `is_enabled`) VALUES
-(1, 'config,roles,admin,log_view,log_del,mine,product,order_view,order_todo,order_del,order_export,order_recycle', '超级管理员', '可使用后台所有功能', 1),
+(1, 'config,roles,admin,log_view,log_del,mine,product,order_view,order_todo,order_del,order_export,order_recycle,order_upload,order_repeat,order_repeat_del', '超级管理员', '可使用后台所有功能', 1),
 (2, 'article', '内容管理员', '测试停用', 0),
 (3, 'article', '编辑', '只管理文章', 1);
 
@@ -543,7 +543,8 @@ INSERT INTO `cz_syslog` (`log_id`, `log_content`, `log_user`, `log_ip`, `log_dat
 (343, '修改产品，ID：3（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-06-30 14:11:50'),
 (344, '修改产品，ID：1（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-06-30 14:14:40'),
 (345, '软删除订单(ID)：11,9,8,7（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-06-30 14:58:13'),
-(346, '软删除订单(ID)：6（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-06-30 14:58:27');
+(346, '软删除订单(ID)：6（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-06-30 14:58:27'),
+(347, '修改权限组：超级管理员，ID：1（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-06-30 18:57:49');
 
 -- --------------------------------------------------------
 
@@ -635,7 +636,7 @@ ALTER TABLE `cz_roles`
 -- 使用表AUTO_INCREMENT `cz_syslog`
 --
 ALTER TABLE `cz_syslog`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=347;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=348;
 
 --
 -- 使用表AUTO_INCREMENT `cz_web_config`

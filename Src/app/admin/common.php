@@ -17,16 +17,6 @@ use think\facade\Db;
 use think\facade\Cache;
 
 
-//引入自动加载类
-require_once "../vendor/autoload.php";
-//使用Spreadsheet类
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-//xls格式类
-use PhpOffice\PhpSpreadsheet\Writer\Xls;
-//可以生成多种格式类
-use PhpOffice\PhpSpreadsheet\IOFactory;
-
-
 // 应用公共文件
 /*if(!function_exists('cz_error')){
     }*/
@@ -170,6 +160,25 @@ function caozha_success($alert, $url, $is_exit = 0)
     ]);
     echo View::fetch('common/success');
     //redirect(url("admin/common/success")."?alert=".urlencode($alert)."&url=".urlencode($url));
+    if ($is_exit == 1) {
+        exit;
+    }
+}
+
+/**
+ *操作确认
+ * @param string $alert 提示信息
+ * @param string $js_code 点确定后执行的JS代码
+ * @param integer $is_exit 1立刻终止程序的执行
+ * @return string
+ */
+function caozha_confirm($alert, $js_code, $is_exit = 0)
+{
+    View::assign([
+        'alert' => $alert,
+        'js_code' => $js_code
+    ]);
+    echo View::fetch('common/confirm');
     if ($is_exit == 1) {
         exit;
     }
@@ -511,117 +520,6 @@ function get_userOS()
     return $os;
 }
 
-/**
- * 导出到EXCEL
- * @param array $source_arr_data 导出的源内容，数组
- * @param array $format_arr_data 导出的列格式，数组
- * @param string $export_type 导出的数据类型，如csv,xls,xlsx等
- * @param boolean $is_syslog 是否记录系统日志
- * @return boolean or none
- */
-function export_to_excel($source_arr_data,$format_arr_data,$export_type="csv",$is_syslog=false){
-    if(!$source_arr_data || !$format_arr_data){return false;}
-    error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
-    set_time_limit(0);
-    $export_count=count($source_arr_data);
-    if($export_type=="csv"){
-        $csv_txt=implode(",",$format_arr_data);
-        foreach ($source_arr_data as $k => $v) {
-            $csv_txt_temp="";
-            foreach ($format_arr_data as $k_temp => $v_temp) {
-                $csv_txt_temp.=',"'.$v[$k_temp].'"';
-            }
-            $csv_txt.="\r\n".mb_substr($csv_txt_temp, 1);
-        }
-        $filename="客户订单(共".$export_count."条)_".date('YmdHis').".csv";
-        if($is_syslog){
-            write_syslog(array("log_content" => "下载订单：".$filename."，" . $_SERVER['QUERY_STRING']));//记录系统日志
-        }
-        return download($csv_txt, $filename, true);
-    }elseif ($export_type=="xls" || $export_type=="xlsx"){
-
-        //总结规律 设置参数的时候如果用$sheet $sheet->setTitle('Hello');而用$spreadsheet $spreadsheet->getActiveSheet()->setTitle('Hello'); 所有参数应该都可用这里两种方法
-        $spreadsheet = new Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
-        //设置sheet的名字  两种方法
-        //$sheet->setTitle('phpspreadsheet——demo');
-        $sheet->setTitle('订单');
-        //设置第一行小标题
-        $k = 1;
-        $list_i=0;
-        foreach ($format_arr_data as $list_k => $list_v) {
-            $list_i+=1;
-            $sheet->setCellValue(getExcelValue($list_i).$k, $list_v);
-            $sheet->getColumnDimension(getExcelValue($list_i))->setWidth(15);//设置列的宽度
-            //$sheet->getColumnDimension(getExcelValue($list_i))->setAutoSize(true);//自动设置列宽
-            $sheet->getStyle(getExcelValue($list_i).$k)->getFont()->setBold(true);// 一定范围内字体加粗
-            $sheet->freezePane('A2');//固定首行
-        }
-
-        //设置A单元格的宽度 同理设置每个
-        //$spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(20);
-        //设置第三行的高度
-        //$spreadsheet->getActiveSheet()->getRowDimension('3')->setRowHeight(50);
-        //A1水平居中
-//        $styleArray = [
-//            'alignment' => [
-//                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
-//            ],
-//        ];
-//        $sheet->getStyle('A1')->applyFromArray($styleArray);
-        //将A3到D4合并成一个单元格
-        //$spreadsheet->getActiveSheet()->mergeCells('A3:D4');
-        //拆分合并单元格
-        //$spreadsheet->getActiveSheet()->unmergeCells('A3:D4');
-        //将A2到D8表格边框 改变为红色
-//        $styleArray = [
-//            'borders' => [
-//                'outline' => [
-//                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
-//                    'color' => ['argb' => 'FFFF0000'],
-//                ],
-//            ],
-//        ];
-//        $sheet->getStyle('A2:D8')->applyFromArray($styleArray);
-        //设置超链接
-//        $sheet->setCellValue('D6', 'www.baidu.com');
-//        $spreadsheet->getActiveSheet()->setCellValue('E6', 'www.baidu.com');
-        //循环赋值
-        $k = 2;
-        foreach ($source_arr_data as $key => $value) {
-
-            $list_i=0;
-            foreach ($format_arr_data as $list_k => $list_v) {
-                $list_i+=1;
-                $sheet->setCellValue(getExcelValue($list_i).$k, $value[$list_k]);
-            }
-            $k++;
-        }
-
-        $filename="客户订单(共".$export_count."条)_".date('YmdHis').".".$export_type;
-        if($is_syslog){
-            write_syslog(array("log_content" => "下载订单：".$filename."，" . $_SERVER['QUERY_STRING']));//记录系统日志
-        }
-
-       //第一种保存方式
-        /*$writer = new Xls($spreadsheet);
-        //保存的路径可自行设置
-        $file_name = '../'.$file_name . ".xls";
-        $writer->save($file_name);*/
-       //第二种直接页面上显示下载
-        header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename="'.$filename.'"');
-        header('Cache-Control: max-age=0');
-        if($export_type=="xls"){
-            $writer = IOFactory::createWriter($spreadsheet, 'Xls'); //注意createWriter($spreadsheet, 'Xls') 第二个参数首字母必须大写
-        }else{
-            $writer = IOFactory::createWriter($spreadsheet, 'Xlsx'); //注意createWriter($spreadsheet, 'Xlsx') 第二个参数首字母必须大写
-        }
-
-        $writer->save('php://output');
-    }
-
-}
 
 
 /**

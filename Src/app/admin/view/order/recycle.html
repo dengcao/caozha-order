@@ -56,6 +56,14 @@
                                 </select>
                             </div>
 
+                            <div class="layui-input-inline cz-select">
+                                <select class="layui-inline" name="is_repeat">
+                                    <option value="">所有订单</option>
+                                    <option value="1">重复订单</option>
+                                    <option value="0">不重复订单</option>
+                                </select>
+                            </div>
+
                             <div class="layui-inline">
                                 <label class="layui-form-label" style="width:60px;">下单时间</label>
                                 <div class="layui-input-inline">
@@ -89,7 +97,8 @@
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container">
                 <button class="layui-btn layui-btn-sm data-add-btn" lay-event="recover"> 恢复订单</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="permanently_del"> 彻底删除</button>
+                <button class="layui-btn layui-btn-sm layui-btn-warm data-delete-btn" lay-event="permanently_del"> 彻底删除</button>
+                <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="permanently_del_all"> 清空回收站</button>
             </div>
         </script>
 
@@ -168,23 +177,33 @@
             }else if (obj.event === 'cz_export') {
                 $(".layui-icon-export").after('<ul class="layui-table-tool-panel"><li onclick="export_to(this);" data-type="csv">导出 .csv 文件</li><li onclick="export_to(this);" data-type="xls">导出 .xls 文件</li><li onclick="export_to(this);" data-type="xlsx">导出 .xlsx 文件</li></ul>');
                 return false;
+            }else if (obj.event === 'permanently_del_all') {
             }else{
                 return false;
             }
 
-            var checkStatus = table.checkStatus('currentTableId')
-                , data = checkStatus.data;
-            var order_id_arr = $.map(data, function (d) {
-                return d.order_id;
-            });
-            var order_id_str = order_id_arr.join(",");//转为字符串
+            if(obj.event === 'permanently_del_all'){
+                order_id_str="";
+                alert_text='确定要清空订单回收站吗？<br>清空后将彻底删除回收站内所有订单且无法恢复，<br>点击“确认”开始执行，点击“取消”则不执行！';
 
-            if (order_id_str == "") {
-                layer.msg('请先选择要'+todo_name+'的订单。', {icon: 2});
-                return false;
+            }else{
+
+                var checkStatus = table.checkStatus('currentTableId')
+                    , data = checkStatus.data;
+                var order_id_arr = $.map(data, function (d) {
+                    return d.order_id;
+                });
+                var order_id_str = order_id_arr.join(",");//转为字符串
+
+                if (order_id_str == "") {
+                    layer.msg('请先选择要'+todo_name+'的订单。', {icon: 2});
+                    return false;
+                }
+
+                alert_text='确定要'+todo_name+'ID为[ ' + order_id_str + ' ]的订单吗？';
             }
 
-            caozha_alert = layer.confirm('确定要'+todo_name+'ID为[ ' + order_id_str + ' ]的订单吗？', {
+            caozha_alert = layer.confirm(alert_text, {
                 btn: ['确认', '取消'],
                 btnAlign: 'c',
                 title: "操作提示"

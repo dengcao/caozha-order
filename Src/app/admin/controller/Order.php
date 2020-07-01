@@ -14,7 +14,17 @@ use think\Exception;
 use think\facade\Config;
 use think\facade\Db;
 use think\facade\Request;
+use think\facade\Session;
 use think\facade\View;
+
+//引入自动加载类
+require_once "../vendor/autoload.php";
+//使用Spreadsheet类
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+//xls格式类
+use PhpOffice\PhpSpreadsheet\Writer\Xls;
+//可以生成多种格式类
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class Order
 {
@@ -160,7 +170,7 @@ class Order
         $list = $list->where('addtime','<=', $action["endtime"]);
         }
 
-        $action_arr = ['status', 'payment'];
+        $action_arr = ['status', 'payment', 'is_repeat'];
         foreach ($action_arr as $value) {
             if (isset($action[$value])) {
                 if ($action[$value] != "") {
@@ -206,7 +216,7 @@ class Order
                 "pro_url"=>"下单网址",
                 "from_url"=>"访客来路",
             );
-            return export_to_excel($list->select()->toArray(),$format_arr_data,$export_type,true);
+            return $this->export_to_excel($list->select()->toArray(),$format_arr_data,$export_type,true);
         }
 
         $list = $list->paginate([
@@ -215,6 +225,119 @@ class Order
         ]);
         //print_r(Db::getLastSql());
         return json($list);
+    }
+
+
+    /**
+     * 导出到EXCEL
+     * @param array $source_arr_data 导出的源内容，数组
+     * @param array $format_arr_data 导出的列格式，数组
+     * @param string $export_type 导出的数据类型，如csv,xls,xlsx等
+     * @param boolean $is_syslog 是否记录系统日志
+     * @return boolean or none
+     */
+    public function export_to_excel($source_arr_data,$format_arr_data,$export_type="csv",$is_syslog=false){
+        if(!$source_arr_data || !$format_arr_data){return false;}
+        error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
+        set_time_limit(0);
+        $export_count=count($source_arr_data);
+        if($export_type=="csv"){
+            $csv_txt=implode(",",$format_arr_data);
+            foreach ($source_arr_data as $k => $v) {
+                $csv_txt_temp="";
+                foreach ($format_arr_data as $k_temp => $v_temp) {
+                    $csv_txt_temp.=',"'.$v[$k_temp].'"';
+                }
+                $csv_txt.="\r\n".mb_substr($csv_txt_temp, 1);
+            }
+            $filename="客户订单(共".$export_count."条)_".date('YmdHis').".csv";
+            if($is_syslog){
+                write_syslog(array("log_content" => "下载订单：".$filename."，" . $_SERVER['QUERY_STRING']));//记录系统日志
+            }
+            return download($csv_txt, $filename, true);
+        }elseif ($export_type=="xls" || $export_type=="xlsx"){
+
+            //总结规律 设置参数的时候如果用$sheet $sheet->setTitle('Hello');而用$spreadsheet $spreadsheet->getActiveSheet()->setTitle('Hello'); 所有参数应该都可用这里两种方法
+            $spreadsheet = new Spreadsheet();
+            $sheet = $spreadsheet->getActiveSheet();
+            //设置sheet的名字  两种方法
+            //$sheet->setTitle('phpspreadsheet——demo');
+            $sheet->setTitle('订单');
+            //设置第一行小标题
+            $k = 1;
+            $list_i=0;
+            foreach ($format_arr_data as $list_k => $list_v) {
+                $list_i+=1;
+                $sheet->setCellValue(getExcelValue($list_i).$k, $list_v);
+                $sheet->getColumnDimension(getExcelValue($list_i))->setWidth(15);//设置列的宽度
+                //$sheet->getColumnDimension(getExcelValue($list_i))->setAutoSize(true);//自动设置列宽
+                $sheet->getStyle(getExcelValue($list_i).$k)->getFont()->setBold(true);// 一定范围内字体加粗
+                $sheet->freezePane('A2');//固定首行
+            }
+
+            //设置A单元格的宽度 同理设置每个
+            //$spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(20);
+            //设置第三行的高度
+            //$spreadsheet->getActiveSheet()->getRowDimension('3')->setRowHeight(50);
+            //A1水平居中
+//        $styleArray = [
+//            'alignment' => [
+//                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+//            ],
+//        ];
+//        $sheet->getStyle('A1')->applyFromArray($styleArray);
+            //将A3到D4合并成一个单元格
+            //$spreadsheet->getActiveSheet()->mergeCells('A3:D4');
+            //拆分合并单元格
+            //$spreadsheet->getActiveSheet()->unmergeCells('A3:D4');
+            //将A2到D8表格边框 改变为红色
+//        $styleArray = [
+//            'borders' => [
+//                'outline' => [
+//                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
+//                    'color' => ['argb' => 'FFFF0000'],
+//                ],
+//            ],
+//        ];
+//        $sheet->getStyle('A2:D8')->applyFromArray($styleArray);
+            //设置超链接
+//        $sheet->setCellValue('D6', 'www.baidu.com');
+//        $spreadsheet->getActiveSheet()->setCellValue('E6', 'www.baidu.com');
+            //循环赋值
+            $k = 2;
+            foreach ($source_arr_data as $key => $value) {
+
+                $list_i=0;
+                foreach ($format_arr_data as $list_k => $list_v) {
+                    $list_i+=1;
+                    $sheet->setCellValue(getExcelValue($list_i).$k, $value[$list_k]);
+                }
+                $k++;
+            }
+
+            $filename="客户订单(共".$export_count."条)_".date('YmdHis').".".$export_type;
+            if($is_syslog){
+                write_syslog(array("log_content" => "下载订单：".$filename."，" . $_SERVER['QUERY_STRING']));//记录系统日志
+            }
+
+            //第一种保存方式
+            /*$writer = new Xls($spreadsheet);
+            //保存的路径可自行设置
+            $file_name = '../'.$file_name . ".xls";
+            $writer->save($file_name);*/
+            //第二种直接页面上显示下载
+            header('Content-Type: application/vnd.ms-excel');
+            header('Content-Disposition: attachment;filename="'.$filename.'"');
+            header('Cache-Control: max-age=0');
+            if($export_type=="xls"){
+                $writer = IOFactory::createWriter($spreadsheet, 'Xls'); //注意createWriter($spreadsheet, 'Xls') 第二个参数首字母必须大写
+            }else{
+                $writer = IOFactory::createWriter($spreadsheet, 'Xlsx'); //注意createWriter($spreadsheet, 'Xlsx') 第二个参数首字母必须大写
+            }
+
+            $writer->save('php://output');
+        }
+
     }
 
     public function todo()//操作数据
@@ -227,9 +350,14 @@ class Order
                 $list = array("code" => 0, "msg"=>"删除失败！您没有删除订单的权限。");
                 $act="";
             }
-        }elseif($act=="permanently_del"){
+        }elseif($act=="permanently_del"){//彻底删除订单
             if(!is_cz_auth("order_recycle")){//检测是否有权限
                 $list = array("code" => 0, "msg"=>"删除失败！您没有彻底删除订单的权限。");
+                $act="";
+            }
+        }elseif($act=="permanently_del_all"){//清空订单回收站
+            if(!is_cz_auth("order_recycle")){//检测是否有权限
+                $list = array("code" => 0, "msg"=>"清空订单回收站失败！您没有清空订单回收站的权限。");
                 $act="";
             }
         }elseif($act=="recover"){
@@ -311,6 +439,18 @@ class Order
             $list = array("code" => 0, "msg"=>"删除失败！");
         }
 
+        }elseif($act=="permanently_del_all"){
+
+            //彻底清空订单回收站
+            $del_num = OrderModel::where("is_del", "=", 1)->delete();
+
+            if ($del_num > 0) {
+                write_syslog(array("log_content" => "清空订单回收站，共彻底删除了".$del_num."条订单。"));//记录系统日志
+                $list = array("code" => 1, "msg"=>"删除成功，共删除了 <font color='red'>".$del_num."</font> 条订单！");
+            } else {
+                $list = array("code" => 0, "msg"=>"删除失败！");
+            }
+
         }else{
             if(!$list){
                 $list = array("code" => 0, "msg"=>"未定义操作！");
@@ -322,5 +462,144 @@ class Order
     }
 
 
+    public function upload()//订单上传
+    {
+        cz_auth("order_upload");//检测是否有权限
+        // 模板输出
+        return View::fetch('order/upload');
+    }
+
+    public function upload_save()//订单上传处理
+    {
+        cz_auth("order_upload");//检测是否有权限
+        // 获取表单上传文件
+        $file = request()->file('order_file');
+        try {
+            validate(['image'=>'filesize:'.(1024*1024*20).'|fileExt:csv,xls,xlsx'])->check(['file'=>$file]);
+            $savename =  \think\facade\Filesystem::putFile( 'excel', $file,function(){return "file_".Session::get("admin_id");});
+            return json(array("code"=>1,"msg"=>"上传成功","filename"=>$savename));
+        } catch (\think\exception\ValidateException $e) {
+//            echo $e->getMessage();
+            return json(array("code"=>0,"msg"=>"上传失败","filename"=>""));
+        }
+    }
+
+    public function import()//订单导入处理
+    {
+        cz_auth("order_upload");//检测是否有权限
+        if(!Request::isAjax()){
+            // 如果不是AJAX
+            return result_json(0,"error:not ajax.");
+        }
+        $action = Request::param("", '', 'filter_sql');
+        $action["filename"]=isset($action["filename"])?$action["filename"]:"";
+        if(!$action["filename"]){
+            return result_json(0,"filename不能为空");
+        }
+
+        $fileExtendName = substr(strrchr($action["filename"], '.'), 1);//文件后缀
+
+        // 有Xls、Xlsx、csv等格式
+        if( $fileExtendName =='xlsx' ){
+            $objReader = IOFactory::createReader('Xlsx');
+        }else if( $fileExtendName =='csv' ){
+            $objReader = IOFactory::createReader('Csv');
+        }else{
+            $objReader = IOFactory::createReader('Xls');
+        }
+        $objReader->setReadDataOnly(TRUE);
+        $filename = runtime_path()."storage/".$action["filename"];
+        $objPHPExcel = $objReader->load($filename);  //$filename可以是上传的表格，或者是指定的表格
+        $sheet = $objPHPExcel->getSheet(0);   //excel中的第一张表sheet
+        $highestRow = $sheet->getHighestRow();       // 取得总行数
+        $realHighestRow =$highestRow -2;//取得去除前面两行外的真实行数
+        $highestColumn = $sheet->getHighestColumn();   // 取得最大的列，如：G
+        // 最大列数+1 实际上是往后错一列
+        ++$highestColumn;
+        \PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString($highestColumn);
+        if($realHighestRow <= 0){
+            return result_json(0,"excel表格没有数据！");
+        }
+
+        //获取所有字段名
+        $fields_arr=array();
+        $cz_prefix=config('database.connections.mysql.prefix');//数据表前缀
+        $row_field = Db::query("SHOW FULL COLUMNS FROM ".$cz_prefix."order");
+        foreach ($row_field as $value){
+            $fields_arr[]=$value["Field"];
+        }
+
+        //获取第二行的列，用来做字段名，判断
+        $fields_order=[];
+        for ($colIndex = 'A'; $colIndex != $highestColumn; $colIndex++) {
+            //$val = trim($sheet->getCellByColumnAndRow($colIndex, 2)->getValue());
+            // 组装单元格标识  A1  A2
+            $addr = $colIndex . 2;
+            // 获取单元格内容
+            $val = $sheet->getCell($addr)->getValue();
+            if(in_array($val,$fields_arr)){//判断是否合法
+                $fields_order[$val]=$colIndex;
+            }
+        }
+
+
+        //循环读取excel表格，整合成数组。如果是不指定key的二维，就用$data[i][j]表示。
+        $insertData=[];
+        for ($j = 3; $j <= $highestRow; $j++) {
+            $insertData_temp=array();
+            foreach ($fields_order as $key=>$value){
+                $insertData_temp[$key]=trim($objPHPExcel->getActiveSheet()->getCell($value . $j)->getValue());
+            }
+            $insertData[]=$insertData_temp;
+        }
+
+        //批量插入数据建议使用Db::insertAll() 方法，只会进行一次数据库请求；saveAll 方法实际上是 循环数据数组，每一条数据进行一遍save方法
+        // 分批写入 每次最多500条数据
+        $res = Db::name('order')
+            ->limit(500)
+            ->insertAll($insertData);
+        write_syslog(array("log_content" => "批量导入订单，共导入".$res."条订单数据。"));//记录系统日志
+        return json(array("code"=>1,"msg"=>"导入订单成功，共导入".$res."条订单数据！"));
+    }
+
+    public function repeat_confirm()//检测重复订单
+    {
+        cz_auth("order_repeat");//检测是否有权限
+        $alert='校检重复订单需要较长时间，请您点击“确认”按钮后，不要做任何操作，只需静待页面显示成功即可。<br>点击“确认”开始执行，点击“取消”则不执行！';
+        $js_code='window.location.href="'.url("admin/order/repeat_check").'";';
+        caozha_confirm($alert, $js_code, 1);
+    }
+
+    public function repeat_check()//批量检测重复订单，并设置重复状态
+    {
+        cz_auth("order_repeat");//检测是否有权限
+        $list = Db::name('order')->where("is_check_repeat","=",0)->select()->toArray();
+        foreach ($list as $order) {
+            $list_check=OrderModel::where([["is_check_repeat","=",1],["tel","=",$order["tel"]]])->findOrEmpty();
+            if ($list_check->isEmpty()) {//不重复
+                Db::name('order')->where('order_id',"=", $order["order_id"])->update(['is_check_repeat' => 1]);
+            }else{//重复
+                Db::name('order')->where('order_id',"=", $order["order_id"])->update(['is_check_repeat' => 1,'is_repeat' => 1]);
+            }
+        }
+        write_syslog(array("log_content" => "批量检测重复订单。"));//记录系统日志
+        caozha_success("批量检测重复订单完成","",1);
+    }
+
+    public function repeat_del_confirm()//确认是否删除重复订单
+    {
+        cz_auth("order_repeat_del");//检测是否有权限
+        $alert='是否确认删除所有标记为重复的订单？按确认继续删除，按取消退出。';
+        $js_code='window.location.href="'.url("admin/order/repeat_del").'";';
+        caozha_confirm($alert, $js_code, 1);
+    }
+
+    public function repeat_del()//删除重复订单
+    {
+        cz_auth("order_repeat_del");//检测是否有权限
+        $res=Db::name('order')->where('is_repeat',"=",1)->update(['is_del' => 1]);
+        write_syslog(array("log_content" => "批量删除".$res."条重复订单。"));//记录系统日志
+        caozha_success("已成功批量删除".$res."条重复订单。","",1);
+    }
 
 }

@@ -37,4 +37,15 @@ class Common
         return View::fetch('common/success');
     }
 
+    function confirm()//确认信息
+    {
+        $alert = Request::param('alert');
+        $js_code = Request::param('js_code');
+        View::assign([
+            'alert' => $alert,
+            'js_code' => $js_code
+        ]);
+        return View::fetch('common/confirm');
+    }
+
 }

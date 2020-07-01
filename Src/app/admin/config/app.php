@@ -73,6 +73,9 @@ return [
         'order_del'  =>  array('name'=>'删除订单','remarks'=>'可以删除订单'),
         'order_export'  =>  array('name'=>'导出订单','remarks'=>'可以导出订单'),
         'order_recycle'  =>  array('name'=>'订单回收站','remarks'=>'可以管理订单回收站'),
+        'order_upload'  =>  array('name'=>'批量上传订单','remarks'=>'可以批量上传订单导入后台'),
+        'order_repeat'  =>  array('name'=>'检测重复订单','remarks'=>'可以检测重复订单，并自动对重复的订单做标记'),
+        'order_repeat_del'  =>  array('name'=>'删除重复订单','remarks'=>'可以一键批量删除重复订单'),
     ),
 
     //后台初始化菜单,json数据
@@ -122,20 +125,46 @@ return [
         },
         {
           "title": "订单管理",
-          "href": "'.url("admin/order/index").'",
-          "icon": "fa fa-list",
-          "target": "_self"
+          "href": "",
+          "icon": "fa fa-list-alt",
+          "target": "_self",
+          "child": [
+            {
+              "title": "订单列表",
+              "href": "'.url("admin/order/index").'",
+              "icon": "fa fa-list",
+              "target": "_self"
+            },
+            {
+              "title": "批量上传订单",
+              "href": "'.url("admin/order/upload").'",
+              "icon": "fa fa-cloud-upload",
+              "target": "_self"
+            },
+            {
+              "title": "检测重复订单",
+              "href": "'.url("admin/order/repeat_confirm").'",
+              "icon": "fa fa-repeat",
+              "target": "_self"
+            },
+            {
+              "title": "删除重复订单",
+              "href": "'.url("admin/order/repeat_del_confirm").'",
+              "icon": "fa fa-trash-o",
+              "target": "_self"
+            },
+            {
+              "title": "订单回收站",
+              "href": "'.url("admin/order/recycle").'",
+              "icon": "fa fa-recycle",
+              "target": "_self"
+            }
+          ]
         },
         {
           "title": "产品管理",
           "href": "'.url("admin/product/index").'",
           "icon": "fa fa-product-hunt",
-          "target": "_self"
-        },
-        {
-          "title": "订单回收站",
-          "href": "'.url("admin/order/recycle").'",
-          "icon": "fa fa-trash-o",
           "target": "_self"
         },
         {
