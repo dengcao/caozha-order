@@ -12,7 +12,7 @@
 //应用的名称及版本
 $GLOBALS["caozha_common_config"] = [
     "name" => "caozha-order",
-    "version" => "1.5.0",
+    "version" => "1.6.0",
     "gitee" => "caozha/caozha-order",
     "github" => "cao-zha/caozha-order",
 ];

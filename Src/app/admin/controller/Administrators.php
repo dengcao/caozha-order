@@ -112,7 +112,7 @@ class Administrators
         $edit_data=Request::param('','','filter_sql');//过滤注入
         $edit_data["is_enabled"]=isset($edit_data["is_enabled"])?$edit_data["is_enabled"]:0;
         $edit_data["admin_password"]=isset($edit_data["admin_password"])?$edit_data["admin_password"]:false;
-        $update_field=['admin_name','role_id','is_enabled','real_name','tel','email','wechat','qq','admin_remarks'];//允许更新的字段
+        $update_field=['admin_name','role_id','pro_signs','is_enabled','real_name','tel','email','wechat','qq','admin_remarks'];//允许更新的字段
         if($edit_data["admin_password"]){$edit_data["admin_password"]=md5_plus($edit_data["admin_password"]);$update_field[]="admin_password";}
 
         //检测admin_name是否存在

@@ -49,6 +49,14 @@
     </div>
 
     <div class="layui-form-item">
+        <label class="layui-form-label">允许查看此标识符的产品订单</label>
+        <div class="layui-input-block">
+            <input type="text" name="pro_signs" placeholder="默认为空，多个标识符中间用,分隔" value="" class="layui-input">
+            <tip>提示：设置以后此账号只能查看此产品标识符的订单，多个产品标识符中间用,分隔。为空时默认可以查看所有产品订单。设置后该账号下次登录起效。	</tip>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
         <label class="layui-form-label">是否启用</label>
         <div class="layui-input-block">
             <input type="checkbox" checked="" value="1" name="is_enabled" lay-skin="switch" lay-filter="switchTest"

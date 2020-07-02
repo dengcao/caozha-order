@@ -10,6 +10,7 @@
 namespace app\admin\controller;
 
 use app\admin\model\Order as OrderModel;
+use app\admin\model\WebConfig as WebConfigModel;
 use think\Exception;
 use think\facade\Config;
 use think\facade\Db;
@@ -106,9 +107,26 @@ class Order
                 $order_payment="";
             }
             return $order_payment;
-        })->findOrEmpty();
+        });
+
+        $pro_signs=trim(Session::get("pro_signs"));
+        if ($pro_signs) {
+            $order = $order->where(function ($query) use ($pro_signs) {
+                //解决生成的SQL语句不自动加括号的问题
+                $pro_signs_arr=explode(",",$pro_signs);
+                foreach ($pro_signs_arr as $value){
+                    $query->whereOr("pro_sign","=",$value);
+                }
+
+            });
+        }
+
+        $order = $order->findOrEmpty();
+
+        //print_r(Db::getLastSql());
+
         if ($order->isEmpty()) {
-            caozha_error("[ID:" . $order_id . "]订单不存在。", "", 1);
+            caozha_error("[ID:" . $order_id . "]订单不存在或无权限查看。", "", 1);
         } else {
 
             View::assign([
@@ -159,6 +177,18 @@ class Order
             if ($action["keyword"] != "") {
                 $list = $list->where("realname|tel|addresss|remarks|pro_name|pro_options|pro_sign|wechat|qq|email|postal_code|admin_remarks|pro_url|from_url", "like", "%" . $action["keyword"] . "%");
             }
+        }
+
+        $pro_signs=trim(Session::get("pro_signs"));
+        if ($pro_signs) {
+            $list = $list->where(function ($query) use ($pro_signs) {
+                //解决生成的SQL语句不自动加括号的问题
+                $pro_signs_arr=explode(",",$pro_signs);
+                foreach ($pro_signs_arr as $value){
+                    $query->whereOr("pro_sign","=",$value);
+                }
+
+            });
         }
 
         $action["starttime"]=isset($action["starttime"])?$action["starttime"]:"";
@@ -562,7 +592,7 @@ class Order
         return json(array("code"=>1,"msg"=>"导入订单成功，共导入".$res."条订单数据！"));
     }
 
-    public function repeat_confirm()//检测重复订单
+    public function repeat_confirm()//确认是否检测重复订单
     {
         cz_auth("order_repeat");//检测是否有权限
         $alert='校检重复订单需要较长时间，请您点击“确认”按钮后，不要做任何操作，只需静待页面显示成功即可。<br>点击“确认”开始执行，点击“取消”则不执行！';
@@ -573,9 +603,24 @@ class Order
     public function repeat_check()//批量检测重复订单，并设置重复状态
     {
         cz_auth("order_repeat");//检测是否有权限
+
+        $order_repeat_check_field_arr=[];
+        $web_config=WebConfigModel::where("id",">=",1)->limit(1)->findOrEmpty();
+        if ($web_config->isEmpty()) {
+            caozha_error("系统设置的数据表不存在。","",1);
+        }else{
+            $web_config_data=object_to_array($web_config->web_config);
+            $order_repeat_check_field_arr=explode(",",$web_config_data["order_repeat_check_fields"]);
+        }
+
         $list = Db::name('order')->where("is_check_repeat","=",0)->select()->toArray();
         foreach ($list as $order) {
-            $list_check=OrderModel::where([["is_check_repeat","=",1],["tel","=",$order["tel"]]])->findOrEmpty();
+            $where_data=array("is_check_repeat"=>1);
+            foreach ($order_repeat_check_field_arr as $field) {
+                $where_data[$field]=$order[$field];
+            }
+            //$list_check=OrderModel::where([["is_check_repeat","=",1],["tel","=",$order["tel"]]])->findOrEmpty();
+            $list_check=OrderModel::where($where_data)->findOrEmpty();
             if ($list_check->isEmpty()) {//不重复
                 Db::name('order')->where('order_id',"=", $order["order_id"])->update(['is_check_repeat' => 1]);
             }else{//重复

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2020-07-01 20:54:37
+-- 生成日期： 2020-07-02 11:11:00
 -- 服务器版本： 5.7.26
 -- PHP 版本： 7.3.4
 
@@ -44,29 +44,30 @@ CREATE TABLE `cz_administrators` (
   `last_login_time` datetime DEFAULT NULL COMMENT '最后登陆时间',
   `last_logout_time` datetime DEFAULT NULL COMMENT '最后退出时间',
   `login_times` int(11) DEFAULT NULL COMMENT '登陆次数',
-  `admin_remarks` text COMMENT '备注'
+  `admin_remarks` text COMMENT '备注',
+  `pro_signs` text COMMENT '产品标识符，设置以后只能查看此产品标识符的订单，多个产品标识符中间用,分隔。为空时默认可以查看所有产品订单。'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- 转存表中的数据 `cz_administrators`
 --
 
-INSERT INTO `cz_administrators` (`admin_id`, `admin_name`, `admin_password`, `admin_password_rnd`, `role_id`, `is_enabled`, `real_name`, `tel`, `email`, `wechat`, `qq`, `last_login_ip`, `last_login_time`, `last_logout_time`, `login_times`, `admin_remarks`) VALUES
-(1, 'caozha', '5fd9cd58f4e516bae46557b355c5208a', NULL, 1, 1, '草札', '1320000000', 'dzh188@qq.com', 'wx', 'qq', '127.0.0.1', '2020-07-01 15:42:06', '2020-06-22 17:49:49', 84, NULL),
-(2, 'dd78', 'ee04ddc4fea36f4ce797766b6c4f66a4', NULL, 2, 1, '查订单', '', '', NULL, NULL, '223.74.103.196', '2018-10-27 19:56:03', '2018-10-27 17:59:46', 4, NULL),
-(3, 'xgd', '0b9c6913e2cc2a29571cdf8d5b590baf', NULL, 2, 1, '小谢', '', '', NULL, NULL, '113.65.207.15', '2018-10-27 18:15:00', '2017-05-26 17:11:30', 113, NULL),
-(4, 'lb', 'f49c5286a10a22228c79793732acf431', NULL, 2, 0, '邱总', '', '', '', '', '14.145.253.14', '2015-11-04 10:20:05', '2015-10-21 17:54:09', 12, ''),
-(5, 'tongji', '97891b84c4370e99661b1aed0047f054', NULL, 2, 1, '统计', '', '', NULL, NULL, '113.109.41.79', '2017-09-07 14:01:35', '2017-04-21 11:05:56', 84, NULL),
-(6, 'ebjs', 'ca48d8526924b7c385d13db9f0415be3', NULL, 2, 1, '技术', '', '', '', '', '14.23.122.114', '2018-04-27 08:23:01', '2014-04-01 13:46:44', 714, ''),
-(7, 'gg2', '887416f73c49ff6729dd5ea7c68c36aa', NULL, 2, 0, '广告', '', '', '', '', '14.145.252.199', '2015-11-03 10:56:28', '2014-02-14 14:38:09', 1263, ''),
-(8, 'wqs', '733b96c977ea5568757c01c578e6fe64', NULL, 2, 1, '小王', '', '', NULL, NULL, '113.65.207.203', '2018-10-29 09:31:33', '2014-02-27 17:55:44', 658, NULL),
-(9, 'md', 'ade5c0caf8444c3dedc18b7366368053', NULL, 2, 0, '陈光', '', '', NULL, NULL, '113.119.205.125', '2015-10-21 15:49:25', '2015-03-13 17:20:37', 34, NULL),
-(10, 'xhm', '8f8cf8b32d5022ca4ed7fa7e739d4f99', NULL, 2, 0, '许总', '', '', NULL, NULL, '58.62.93.40', '2016-08-10 16:50:58', '2014-11-22 11:04:33', 79, NULL),
-(11, 'hedan', '5aca2c7cb35fe3210b25e6acf56fca1d', NULL, 2, 1, '核单', '', '', '', '', '14.23.122.114', '2017-05-11 11:59:40', '2014-12-03 09:52:39', 4505, ''),
-(12, 'weixin', '8cdec0532ce92d9e43556d14a52ce87a', NULL, 3, 1, '微信运营', '', '', '', '', '113.111.8.55', '2018-10-18 10:32:47', '2017-09-23 19:40:22', 520, ''),
-(14, 'weixin3', '5fd9cd58f4e516bae46557b355c5208a', NULL, 2, 0, '微信客服', '', '', '', '', '113.65.207.203', '2018-10-29 09:38:36', '2018-10-27 18:11:30', 8, ''),
-(24, 'test1', '5fd9cd58f4e516bae46557b355c5208a', NULL, 2, 1, '凤2', '', '', '', '', NULL, NULL, NULL, NULL, ''),
-(25, 'test2', '5fd9cd58f4e516bae46557b355c5208a', NULL, 2, 1, '', '', '', '', '', NULL, NULL, NULL, NULL, '');
+INSERT INTO `cz_administrators` (`admin_id`, `admin_name`, `admin_password`, `admin_password_rnd`, `role_id`, `is_enabled`, `real_name`, `tel`, `email`, `wechat`, `qq`, `last_login_ip`, `last_login_time`, `last_logout_time`, `login_times`, `admin_remarks`, `pro_signs`) VALUES
+(1, 'caozha', '5fd9cd58f4e516bae46557b355c5208a', NULL, 1, 1, '草札', '1320000000', 'dzh188@qq.com', 'wx', 'qq', '127.0.0.1', '2020-07-02 11:03:34', '2020-07-02 11:00:38', 85, '', 'p40pro,mi10'),
+(2, 'dd78', 'ee04ddc4fea36f4ce797766b6c4f66a4', NULL, 2, 1, '查订单', '', '', NULL, NULL, '223.74.103.196', '2018-10-27 19:56:03', '2018-10-27 17:59:46', 4, NULL, NULL),
+(3, 'xgd', '0b9c6913e2cc2a29571cdf8d5b590baf', NULL, 2, 1, '小谢', '', '', NULL, NULL, '113.65.207.15', '2018-10-27 18:15:00', '2017-05-26 17:11:30', 113, NULL, NULL),
+(4, 'lb', 'f49c5286a10a22228c79793732acf431', NULL, 2, 0, '邱总', '', '', '', '', '14.145.253.14', '2015-11-04 10:20:05', '2015-10-21 17:54:09', 12, '', NULL),
+(5, 'tongji', '97891b84c4370e99661b1aed0047f054', NULL, 2, 1, '统计', '', '', NULL, NULL, '113.109.41.79', '2017-09-07 14:01:35', '2017-04-21 11:05:56', 84, NULL, NULL),
+(6, 'ebjs', 'ca48d8526924b7c385d13db9f0415be3', NULL, 2, 1, '技术', '', '', '', '', '14.23.122.114', '2018-04-27 08:23:01', '2014-04-01 13:46:44', 714, '', NULL),
+(7, 'gg2', '887416f73c49ff6729dd5ea7c68c36aa', NULL, 2, 0, '广告', '', '', '', '', '14.145.252.199', '2015-11-03 10:56:28', '2014-02-14 14:38:09', 1263, '', NULL),
+(8, 'wqs', '733b96c977ea5568757c01c578e6fe64', NULL, 2, 1, '小王', '', '', NULL, NULL, '113.65.207.203', '2018-10-29 09:31:33', '2014-02-27 17:55:44', 658, NULL, NULL),
+(9, 'md', 'ade5c0caf8444c3dedc18b7366368053', NULL, 2, 0, '陈光', '', '', NULL, NULL, '113.119.205.125', '2015-10-21 15:49:25', '2015-03-13 17:20:37', 34, NULL, NULL),
+(10, 'xhm', '8f8cf8b32d5022ca4ed7fa7e739d4f99', NULL, 2, 0, '许总', '', '', NULL, NULL, '58.62.93.40', '2016-08-10 16:50:58', '2014-11-22 11:04:33', 79, NULL, NULL),
+(11, 'hedan', '5aca2c7cb35fe3210b25e6acf56fca1d', NULL, 2, 1, '核单', '', '', '', '', '14.23.122.114', '2017-05-11 11:59:40', '2014-12-03 09:52:39', 4505, '', NULL),
+(12, 'weixin', '8cdec0532ce92d9e43556d14a52ce87a', NULL, 3, 1, '微信运营', '', '', '', '', '113.111.8.55', '2018-10-18 10:32:47', '2017-09-23 19:40:22', 520, '', NULL),
+(14, 'weixin3', '5fd9cd58f4e516bae46557b355c5208a', NULL, 2, 0, '微信客服', '', '', '', '', '113.65.207.203', '2018-10-29 09:38:36', '2018-10-27 18:11:30', 8, '', NULL),
+(24, 'test1', '5fd9cd58f4e516bae46557b355c5208a', NULL, 2, 1, '凤2', '', '', '', '', NULL, NULL, NULL, NULL, '', NULL),
+(25, 'test2', '5fd9cd58f4e516bae46557b355c5208a', NULL, 2, 1, '', '', '', '', '', NULL, NULL, NULL, NULL, '', NULL);
 
 -- --------------------------------------------------------
 
@@ -75,7 +76,7 @@ INSERT INTO `cz_administrators` (`admin_id`, `admin_name`, `admin_password`, `ad
 --
 
 CREATE TABLE `cz_order` (
-  `order_id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL COMMENT '订单ID',
   `realname` varchar(255) DEFAULT NULL COMMENT '收货人',
   `gender` varchar(10) DEFAULT NULL COMMENT '性别',
   `tel` varchar(255) DEFAULT NULL COMMENT '电话',
@@ -556,7 +557,27 @@ INSERT INTO `cz_syslog` (`log_id`, `log_content`, `log_user`, `log_ip`, `log_dat
 (353, '恢复订单(ID)：2（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-07-01 20:42:56'),
 (354, '恢复订单(ID)：9,8,7,6（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-07-01 20:43:07'),
 (355, '清空订单回收站，共彻底删除了1条订单。（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-07-01 20:43:13'),
-(356, '软删除订单(ID)：9,8,7,6（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-07-01 20:43:34');
+(356, '软删除订单(ID)：9,8,7,6（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-07-01 20:43:34'),
+(357, '修改系统设置（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-07-02 02:15:51'),
+(358, '修改系统设置（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-07-02 02:17:05'),
+(359, '修改系统设置（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-07-02 02:18:18'),
+(360, '修改系统设置（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-07-02 02:21:47'),
+(361, '修改系统设置（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-07-02 02:22:05'),
+(362, '修改系统设置（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-07-02 02:22:51'),
+(363, '修改系统设置（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-07-02 02:25:10'),
+(364, '修改系统设置（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-07-02 02:25:14'),
+(365, '修改系统设置（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-07-02 02:25:30'),
+(366, '修改系统设置（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-07-02 02:26:03'),
+(367, '修改系统设置（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-07-02 02:26:07'),
+(368, '修改系统设置（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-07-02 02:26:18'),
+(369, '修改系统设置（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-07-02 02:32:23'),
+(370, '修改系统设置（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-07-02 02:45:54'),
+(371, '批量检测重复订单。（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-07-02 02:46:16'),
+(372, '修改系统设置（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-07-02 09:58:56'),
+(373, '修改管理员账号：caozha，ID：1（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-07-02 10:15:25'),
+(374, '修改管理员账号：caozha，ID：1（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-07-02 10:48:49'),
+(375, '退出登陆（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-07-02 11:00:38'),
+(376, '登陆成功（Safari 537.36，Windows 10）', 'caozha（ID:1，姓名:草札）', '127.0.0.1', '2020-07-02 11:03:34');
 
 -- --------------------------------------------------------
 
@@ -574,7 +595,7 @@ CREATE TABLE `cz_web_config` (
 --
 
 INSERT INTO `cz_web_config` (`id`, `web_config`) VALUES
-(1, '{\"share_url\":\"http:\\/\\/www.caozha.com(\\u6b64URL\\u53ef\\u5728\\u7cfb\\u7edf\\u8bbe\\u7f6e\\u4e2d\\u4fee\\u6539)\",\"admin_limit\":\"15\",\"roles_limit\":\"15\",\"syslog_limit\":\"15\",\"order_limit\":\"10\",\"product_limit\":\"10\"}');
+(1, '{\"share_url\":\"http:\\/\\/www.caozha.com(\\u6b64URL\\u53ef\\u5728\\u7cfb\\u7edf\\u8bbe\\u7f6e\\u4e2d\\u4fee\\u6539)\",\"admin_limit\":\"15\",\"roles_limit\":\"15\",\"syslog_limit\":\"15\",\"order_limit\":\"10\",\"product_limit\":\"10\",\"layTableCheckbox\":\"on\",\"order_repeat_check_fields\":\"tel\"}');
 
 --
 -- 转储表的索引
@@ -630,7 +651,7 @@ ALTER TABLE `cz_administrators`
 -- 使用表AUTO_INCREMENT `cz_order`
 --
 ALTER TABLE `cz_order`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '订单ID', AUTO_INCREMENT=17;
 
 --
 -- 使用表AUTO_INCREMENT `cz_product`
@@ -648,7 +669,7 @@ ALTER TABLE `cz_roles`
 -- 使用表AUTO_INCREMENT `cz_syslog`
 --
 ALTER TABLE `cz_syslog`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=357;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=377;
 
 --
 -- 使用表AUTO_INCREMENT `cz_web_config`

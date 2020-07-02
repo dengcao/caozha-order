@@ -63,3 +63,7 @@ body .caozha-layer-1 .layui-layer-title{background:#23262e;}
 body .caozha-layer-1 .layui-layer-btn0{border-color: #23262e;}
 body .caozha-layer-1 .layui-layer-btn a{background:#23262e;}
 body .layui-layer-btn .layui-layer-btn1{background:#fff;}
+
+body .layuimini-form > .layui-form-item > .layui-input-block > tip {
+    line-height: 165%;
+}

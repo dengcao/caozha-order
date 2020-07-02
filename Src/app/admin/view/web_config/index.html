@@ -115,6 +115,15 @@
                     </select>
                 </div>
             </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label required">检测重复订单的字段</label>
+                <div class="layui-input-block">
+                    <table class="layui-hide" id="order_repeat_check_fields" lay-filter="order_repeat_check_fields_filter"></table>
+                    <tip style="line-height: 180%;"><span style="color: red;font-weight: bold;">【注意事项】</span><br>1、检测重复订单时，将以上面设置的字段作为判断是否重复的依据，即：以上字段的数据完全一样时判定为重复。<br>2、一旦设置后不建议随意更改，如确实需要更改，请先：<a href="{:url('admin/web_config/order_reset')}" style="color:red;">重置订单重复数据</a>。原因是：重新设置后只对后来的订单有影响，对之前已设置成重复订单的数据无影响。<br>&nbsp; </tip>
+                </div>
+            </div>
+
             <div class="layui-form-item">
                 <div class="layui-input-block">
                     <button type="submit" class="layui-btn caozha-submit" lay-submit="" lay-filter="setting">确认保存</button>
@@ -125,9 +134,34 @@
     </div>
 </div>
 <script>
-    layui.use(['form'], function () {
+    layui.use(['form','table'], function () {
         var form = layui.form
             ,layer = layui.layer;
+
+        var table = layui.table;
+        table.render({
+            elem: '#order_repeat_check_fields'
+            ,url:'{:url(\'admin/web_config/getFields\')}'
+            ,parseData: function (res) { //res 即为原始返回的数据
+                return {
+                    "code": "0", //解析接口状态 res.status
+                    "msg": "", //解析提示文本 res.message
+                    "count": "", //解析数据长度
+                    "data": res //解析数据列表
+                };
+            }
+            ,title: '字段表'
+            //,totalRow: true
+            ,even: false  //隔行背景
+            ,size: ""//sm （小尺寸）       lg （大尺寸）
+            ,cols: [[
+                {type: "checkbox", width: 40, align: "center"}
+                ,{field:'field', title:'字段名',width:150, minWidth:150}
+                ,{field:'comment', title:'描述'}
+            ]]
+            ,page: false
+        });
+
 
         layer_skin(layer);
 
@@ -140,15 +174,42 @@
 
         //监听提交
         form.on('submit(setting)', function (data) {
+
+            var checkStatus = table.checkStatus('order_repeat_check_fields')
+                , fields_data = checkStatus.data;
+            var key_arr = $.map(fields_data, function (d) {
+                return d.field;
+            });
+            //layer.alert(JSON.stringify(key_arr));
+            var key_str = key_arr.join(",");//转为字符串
+
+            if (key_str == "") {
+                layer.msg('请选择作为检测重复订单依据的字段。', {icon: 2});
+                return false;
+            }
+
+            post_data=data.field;
+            post_data["order_repeat_check_fields"]=key_str;
+
             $.ajax({
                 type: "post",
                 url: '{:url(\'admin/web_config/save\')}',
-                data: data.field,
+                data: post_data,
                 dataType: "json",
                 async: false,
                 success: function (res) {
                     if (res.code == 1) {
-                        layer.msg(res.msg, {icon: 1});
+
+                        caozha_success=layer.alert(res.msg, {
+                            title:'成功提示',
+                            btn: ['确定'],
+                            closeBtn: 0,
+                            btnAlign: 'c',
+                            icon: 6,
+                        }, function(){
+                            window.location.reload();
+                            });
+
                     } else {
                         layer.msg(res.msg, {icon: 2});
                     }

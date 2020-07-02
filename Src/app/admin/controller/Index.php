@@ -117,6 +117,7 @@ class Index
             Session::set('admin_name',$admin->admin_name);
             Session::set('role_id',$admin->role_id);
             Session::set('real_name',$admin->real_name);
+            Session::set('pro_signs',$admin->pro_signs);//所属的产品标识符
 
             //更新管理员数据
             $admin->last_login_ip     = getip();

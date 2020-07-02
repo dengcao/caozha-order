@@ -42,6 +42,13 @@
     </div>
 
     <div class="layui-form-item">
+        <label class="layui-form-label">可看产品订单：</label>
+        <div class="layui-input-block">
+            {if $admin.pro_signs==""}全部{else}{$admin.pro_signs}{/if}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
         <label class="layui-form-label">是否启用：</label>
         <div class="layui-input-block">
             {$admin.is_enabled|raw}
