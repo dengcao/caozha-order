@@ -21,8 +21,10 @@
 <body class="layui-layout-body">
 <script src="__CAOZHA-LAYUIMINI__/js/lay-config.js?v=2.0.0" charset="utf-8"></script>
 <script>
-    layui.use('layer', function(){
-        var layer = layui.layer;
+    layui.use(['layer','miniTab'], function(){
+        var layer = layui.layer,
+            miniTab = layui.miniTab;
+
         layer_skin(layer);
 
         //墨绿深蓝风
@@ -32,9 +34,15 @@
             closeBtn: 0,
             btnAlign: 'c',
             icon: 5,
+            cancel: function(){
+                //右上角关闭回调
+                layer.close(caozha_alert);
+                miniTab.deleteCurrentByIframe();
+                //return false 开启该代码可禁止点击该按钮关闭
+            }
         }, function(){
             {if $url neq ""}location.href="{$url|raw}";{else}layer.close(caozha_error);var iframeIndex = parent.layer.getFrameIndex(window.name);
-            parent.layer.close(iframeIndex);{/if}
+            parent.layer.close(iframeIndex);miniTab.deleteCurrentByIframe();{/if}
         });
 
     });
