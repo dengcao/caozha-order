@@ -21,20 +21,34 @@
 <body class="layui-layout-body">
 <script src="__CAOZHA-LAYUIMINI__/js/lay-config.js?v=2.0.0" charset="utf-8"></script>
 <script>
-    layui.use('layer', function(){
-        var layer = layui.layer;
+    layui.use(['layer','miniTab'], function(){
+        var layer = layui.layer,
+        miniTab = layui.miniTab;
 
         layer_skin(layer);
 
         caozha_alert = layer.confirm('{$alert|raw}', {
             btn: ['确认', '取消'],
             btnAlign: 'c',
-            title: "操作提示"
+            title: "操作提示" ,
+            cancel: function(){
+                //右上角关闭回调
+                layer.close(caozha_alert);
+                miniTab.deleteCurrentByIframe();
+                //return false 开启该代码可禁止点击该按钮关闭
+            }
         }, function () {
 
             {$js_code|raw}
 
             layer.close(caozha_alert);
+            var iframeIndex = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(iframeIndex);
+
+        }, function () {
+
+            layer.close(caozha_alert);
+            miniTab.deleteCurrentByIframe();
             var iframeIndex = parent.layer.getFrameIndex(window.name);
             parent.layer.close(iframeIndex);
 
