@@ -517,6 +517,11 @@ class Order
     public function import()//订单导入处理
     {
         cz_auth("order_upload");//检测是否有权限
+
+        ini_set('memory_limit', '1000M');//允许PHP使用最大内存，当处理的Excel文件太大的时候，建议适当修改大小，不过容易导致内存溢出错误。
+        set_time_limit(0);//永不超时
+        ignore_user_abort(true);//即使关闭浏览器也不中断程序执行
+
         if(!Request::isAjax()){
             // 如果不是AJAX
             return result_json(0,"error:not ajax.");
@@ -603,6 +608,10 @@ class Order
     public function repeat_check()//批量检测重复订单，并设置重复状态
     {
         cz_auth("order_repeat");//检测是否有权限
+
+        ini_set('memory_limit', '600M');//允许PHP使用最大内存，当处理的数据太大的时候，建议适当修改大小，不过容易导致内存溢出错误。
+        set_time_limit(0);//永不超时
+        //ignore_user_abort(true);//即使关闭浏览器也不中断程序执行
 
         $order_repeat_check_field_arr=[];
         $web_config=WebConfigModel::where("id",">=",1)->limit(1)->findOrEmpty();
