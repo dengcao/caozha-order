@@ -39,11 +39,11 @@ caozha-order是一个通用的竞价页订单管理系统，基于开源的caozh
 
 1、PHP版本必须7.1及以上。
 
-2、上传目录/Src/内所有源码到服务器，并设置网站的根目录指向目录/Src/public/。（ThinkPHP6.0要求）
+2、上传目录/Src/内所有源码到服务器，并设置网站的根目录指向运行目录/public/。（此为ThinkPHP6.0的要求）
 
 3、将/Database/目录里的.sql文件导入到MYSQL数据库。
 
-4、修改文件/Src/config/database.php，配置您的数据库信息（如果是本地测试，还需要修改文件/Src/.env，本地测试会优先使用此配置文件）。
+4、修改文件/config/database.php，配置您的数据库信息（如果测试时启用了/.env，还需要修改文件/.env，系统会优先使用此配置文件）。
 
 5、后台访问地址：http://您的域名/admin/index/login   (账号：caozha   密码：123456)
 
@@ -86,7 +86,7 @@ location / {
 }
 
 
-4、在网站根目录下，有两个文件：.htaccess和nginx.htaccess，分别是Apache和Nginx的伪静态文件，您可以直接拿来使用。
+4、在网站根目录（/public/）下，有两个文件：.htaccess和nginx.htaccess，分别是Apache和Nginx的伪静态文件，您可以直接拿来使用。
 
 
 **开发手册**
