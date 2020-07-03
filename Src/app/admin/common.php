@@ -185,6 +185,27 @@ function caozha_confirm($alert, $js_code, $is_exit = 0)
 }
 
 /**
+ *显示页面提示
+ * @param string $alert 提示信息
+ * @param string $url 自动跳转的URL，为空则不跳转
+ * @param string $time 提示停留多久时间，单位：秒
+ * @param integer $is_exit 1立刻终止程序的执行
+ * @return string
+ */
+function caozha_alert_msg($alert, $url, $time, $is_exit = 0)
+{
+    View::assign([
+        'alert' => $alert,
+        'url' => $url,
+        'time' => $time*1000
+    ]);
+    echo View::fetch('common/alert_msg');
+    if ($is_exit == 1) {
+        exit;
+    }
+}
+
+/**
  *判断是否登陆管理员
  * @return boolean
  */

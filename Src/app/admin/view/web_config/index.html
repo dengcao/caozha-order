@@ -26,7 +26,7 @@
                 <label class="layui-form-label required">对外调用域名</label>
                 <div class="layui-input-block">
                     <input type="text" name="share_url" lay-verify="required" lay-reqtext="网址不能为空" placeholder="请输入网址"  value="{$web_config.share_url}" class="layui-input">
-                    <tip>格式：http://www.caozha.com</tip>
+                    <tip>格式：http://caozha.com</tip>
                 </div>
             </div>
 
@@ -113,6 +113,30 @@
                         <option value="500">500条</option>
                         <option value="1000">1000条</option>
                     </select>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label required">上传订单大小限制</label>
+                <div class="layui-input-block">
+                    <input type="text" name="order_upload_limit" lay-verify="required" lay-reqtext="上传订单限制不能为空，且必须为数字" placeholder="请输入数字"  value="{$web_config.order_upload_limit}" class="layui-input">
+                    <tip>单位：M，建议设置20，即限制20M以内的文件上传。</tip>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label required">导入订单时最大内存</label>
+                <div class="layui-input-block">
+                    <input type="text" name="order_upload_memory_limit" lay-verify="required" lay-reqtext="导入订单时最大内存的设置不能为空，且必须为数字" placeholder="请输入数字"  value="{$web_config.order_upload_memory_limit}" class="layui-input">
+                    <tip>设置处理导入订单时允许使用的最大内存，单位M。建议设置1000以内，具体看服务器自身配置。</tip>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label required">订单查重时每次处理量</label>
+                <div class="layui-input-block">
+                    <input type="text" name="order_repeat_check_limit" lay-verify="required" lay-reqtext="检测重复订单每次处理量不能为空，且必须为数字" placeholder="请输入数字"  value="{$web_config.order_repeat_check_limit}" class="layui-input">
+                    <tip>建议设置500，即检测重复订单时每次处理500个。</tip>
                 </div>
             </div>
 

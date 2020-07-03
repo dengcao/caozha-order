@@ -47,6 +47,10 @@ class WebConfig
             return result_json(0, "error");
         }
         $edit_data = Request::param('', '', 'filter_sql');//过滤注入
+        $edit_data["order_upload_limit"]=is_numeric($edit_data["order_upload_limit"])?$edit_data["order_upload_limit"]:20;
+        $edit_data["order_upload_memory_limit"]=is_numeric($edit_data["order_upload_memory_limit"])?$edit_data["order_upload_memory_limit"]:1000;
+        $edit_data["order_repeat_check_limit"]=is_numeric($edit_data["order_repeat_check_limit"])?$edit_data["order_repeat_check_limit"]:500;
+
         $edit_data=array("web_config"=>$edit_data);
 
         $update = WebConfigModel::where("id", ">=", 1)->limit(1)->findOrEmpty();

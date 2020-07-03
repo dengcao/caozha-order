@@ -495,6 +495,19 @@ class Order
     public function upload()//订单上传
     {
         cz_auth("order_upload");//检测是否有权限
+
+        $order_upload_limit=20;
+        $web_config=WebConfigModel::where("id",">=",1)->limit(1)->findOrEmpty();
+        if ($web_config->isEmpty()) {
+            caozha_error("系统设置的数据表不存在。","",1);
+        }else{
+            $web_config_data=object_to_array($web_config->web_config);
+            $order_upload_limit=$web_config_data["order_upload_limit"];
+        }
+        View::assign([
+            'order_upload_limit' => $order_upload_limit,
+        ]);
+
         // 模板输出
         return View::fetch('order/upload');
     }
@@ -502,10 +515,20 @@ class Order
     public function upload_save()//订单上传处理
     {
         cz_auth("order_upload");//检测是否有权限
+
+        $order_upload_limit=20;
+        $web_config=WebConfigModel::where("id",">=",1)->limit(1)->findOrEmpty();
+        if ($web_config->isEmpty()) {
+            caozha_error("系统设置的数据表不存在。","",1);
+        }else{
+            $web_config_data=object_to_array($web_config->web_config);
+            $order_upload_limit=$web_config_data["order_upload_limit"];
+        }
+
         // 获取表单上传文件
         $file = request()->file('order_file');
         try {
-            validate(['image'=>'filesize:'.(1024*1024*20).'|fileExt:csv,xls,xlsx'])->check(['file'=>$file]);
+            validate(['image'=>'filesize:'.(1024*1024*$order_upload_limit).'|fileExt:csv,xls,xlsx'])->check(['file'=>$file]);
             $savename =  \think\facade\Filesystem::putFile( 'excel', $file,function(){return "file_".Session::get("admin_id");});
             return json(array("code"=>1,"msg"=>"上传成功","filename"=>$savename));
         } catch (\think\exception\ValidateException $e) {
@@ -518,7 +541,16 @@ class Order
     {
         cz_auth("order_upload");//检测是否有权限
 
-        ini_set('memory_limit', '1000M');//允许PHP使用最大内存，当处理的Excel文件太大的时候，建议适当修改大小，不过容易导致内存溢出错误。
+        $order_upload_memory_limit=1000;
+        $web_config=WebConfigModel::where("id",">=",1)->limit(1)->findOrEmpty();
+        if ($web_config->isEmpty()) {
+            caozha_error("系统设置的数据表不存在。","",1);
+        }else{
+            $web_config_data=object_to_array($web_config->web_config);
+            $order_upload_memory_limit=$web_config_data["order_upload_memory_limit"];
+        }
+
+        ini_set('memory_limit', $order_upload_memory_limit.'M');//允许PHP使用最大内存，当处理的Excel文件太大的时候，建议适当修改大小，不过容易导致内存溢出错误。
         set_time_limit(0);//永不超时
         ignore_user_abort(true);//即使关闭浏览器也不中断程序执行
 
@@ -609,21 +641,35 @@ class Order
     {
         cz_auth("order_repeat");//检测是否有权限
 
-        ini_set('memory_limit', '600M');//允许PHP使用最大内存，当处理的数据太大的时候，建议适当修改大小，不过容易导致内存溢出错误。
         set_time_limit(0);//永不超时
         //ignore_user_abort(true);//即使关闭浏览器也不中断程序执行
 
         $order_repeat_check_field_arr=[];
+        $order_repeat_check_limit=500;
+        $order_upload_memory_limit=1000;
         $web_config=WebConfigModel::where("id",">=",1)->limit(1)->findOrEmpty();
         if ($web_config->isEmpty()) {
             caozha_error("系统设置的数据表不存在。","",1);
         }else{
             $web_config_data=object_to_array($web_config->web_config);
             $order_repeat_check_field_arr=explode(",",$web_config_data["order_repeat_check_fields"]);
+            $order_repeat_check_limit=$web_config_data["order_repeat_check_limit"];
+            $order_upload_memory_limit=$web_config_data["order_upload_memory_limit"];
         }
 
-        $list = Db::name('order')->where("is_check_repeat","=",0)->select()->toArray();
-        foreach ($list as $order) {
+        ini_set('memory_limit', $order_upload_memory_limit.'M');//允许PHP使用最大内存，当处理的数据太大的时候，建议适当修改大小，不过容易导致内存溢出错误。
+
+        $list = Db::name('order')->where("is_check_repeat","=",0)->paginate([
+            'list_rows'=> $order_repeat_check_limit,//每次处理数量
+            'page' => 1,
+        ])->toArray();
+
+        $res_total=$list["total"]-$list["per_page"];//剩余处理数据
+        $res_per=$list["per_page"];//本次处理数据
+        $res_data=$list["data"];//本次待处理的订单数据
+        //print_r($list);exit();
+
+        foreach ($res_data as $order) {
             $where_data=array("is_check_repeat"=>1);
             foreach ($order_repeat_check_field_arr as $field) {
                 $where_data[$field]=$order[$field];
@@ -636,8 +682,13 @@ class Order
                 Db::name('order')->where('order_id',"=", $order["order_id"])->update(['is_check_repeat' => 1,'is_repeat' => 1]);
             }
         }
-        write_syslog(array("log_content" => "批量检测重复订单。"));//记录系统日志
-        caozha_success("批量检测重复订单完成","",1);
+        if($res_total>0){
+            write_syslog(array("log_content" => "批量检测重复订单：剩余处理".$res_total."条，本次处理".$res_per."条"));//记录系统日志
+            caozha_alert_msg("本次批量检测完成 <font color='red'>".$res_per."</font> 条订单数据，<br>剩余 <font color='red'>".$res_total."</font> 条将在下一批处理。<br>请不要关闭页面，系统正在处理下一批数据，请耐心等待……", url("admin/order/repeat_check"), 3600,1);
+        }else{
+            caozha_success("批量检测重复订单完成","",1);
+        }
+
     }
 
     public function repeat_del_confirm()//确认是否删除重复订单

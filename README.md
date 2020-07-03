@@ -1,4 +1,4 @@
-# caozha-order 竞价页订单管理系统 1.6.0
+# caozha-order 竞价页订单管理系统 1.6.2
 
 caozha-order是一个通用的竞价页订单管理系统，基于开源的caozha-admin开发，支持订单管理、订单回收站、产品管理、批量上传订单、批量导出订单（支持导出格式：.xls，.xlsx，.csv）、检测订单重复、竞价页的下单表单调用等功能，内置灵活的查看订单权限设置机制。系统特点：易上手，零门槛，界面清爽极简，极便于二次开发。
 
@@ -139,6 +139,14 @@ GitHub Wiki：[https://github.com/cao-zha/caozha-admin/wiki](https://github.com/
 
 2、新增了查重字段设置。
 
+**版本1.6.2，主要更新：**
+
+1、可以设置：上传订单大小限制、导入订单时最大内存、订单查重时每次处理量等。
+
+2、修复了上传订单时，大数据量的excel表格容易失败的问题，本地实测一次性导入6万订单依然成功。
+
+3、优化了订单查重时容易崩溃的问题。
+
 
 ### 特别鸣谢
 
@@ -203,4 +211,6 @@ GitHub：https://github.com/cao-zha/caozha-order
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/0702/111805_1689bae8_7397417.png "12.png")
 
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/0702/111816_9fffec5e_7397417.png "13.png")
+
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0703/204201_2fed4469_7397417.png "14.png")
 
