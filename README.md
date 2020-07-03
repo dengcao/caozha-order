@@ -50,7 +50,7 @@ caozha-order是一个通用的竞价页订单管理系统，基于开源的caozh
 
 **伪静态设置**
 
-1、ThinkPHP框架必须在根目录下设置伪静态才能正常访问，否则会显示404错误。
+1、ThinkPHP框架必须在运行目录下设置伪静态才能正常访问，否则会显示404错误。
 
 2、如果您使用的是Apache，伪静态设置为（.htaccess）：
 
@@ -86,7 +86,7 @@ location / {
 }
 
 
-4、在网站根目录（/public/）下，有两个文件：.htaccess和nginx.htaccess，分别是Apache和Nginx的伪静态文件，您可以直接拿来使用。
+4、在网站运行目录（/public/）下，有两个文件：.htaccess和nginx.htaccess，分别是Apache和Nginx的伪静态文件，您可以直接拿来使用。
 
 
 **开发手册**
