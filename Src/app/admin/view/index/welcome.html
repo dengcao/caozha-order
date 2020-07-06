@@ -46,7 +46,7 @@
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
                         <div class="layui-card">
-                            <div class="layui-card-header"><i class="fa fa-warning icon"></i>数据统计</div>
+                            <div class="layui-card-header"><i class="fa fa-warning icon"></i>统计<span style="color:#999999;font-size: 12px;">（数据延迟5分钟更新，如需看最新可清空缓存）</span></div>
                             <div class="layui-card-body">
                                 <div class="welcome-module">
                                     <div class="layui-row layui-col-space10">
@@ -83,10 +83,10 @@
                                                 <div class="panel-body">
                                                     <div class="panel-title">
                                                         <span class="label pull-right layui-bg-orange">实时</span>
-                                                        <h5>订单回收站统计</h5>
+                                                        <h5>系统日志</h5>
                                                     </div>
                                                     <div class="panel-content">
-                                                        <h1 class="no-margins">{$order_recycle_total}</h1>
+                                                        <h1 class="no-margins">{$syslog_total}</h1>
                                                         <small>当前总记录数</small>
                                                     </div>
                                                 </div>
@@ -250,6 +250,7 @@
     </div>
 </div>
 <script src="__CAOZHA-LAYUIMINI__/js/lay-config.js?v=1.0.4" charset="utf-8"></script>
+<script src="{:url('admin/index/welcome_echarts')}" charset="utf-8"></script>
 <script>
     layui.use(['layer', 'miniTab','echarts'], function () {
         var layer = layui.layer,
@@ -291,6 +292,7 @@
             });
         });
 
+        window.onload=function (){
         /**
          * 报表功能
          */
@@ -300,7 +302,7 @@
                 trigger: 'axis'
             },
             legend: {
-                data:['订单','产品']
+                data:['订单']
             },
             grid: {
                 left: '3%',
@@ -316,7 +318,7 @@
             xAxis: {
                 type: 'category',
                 boundaryGap: false,
-                data: [{$week_date_arr2str}]
+                data: week_date_arr2str
             },
             yAxis: {
                 type: 'value'
@@ -325,12 +327,7 @@
                 {
                     name:'订单',
                     type:'line',
-                    data:[{$week_order_arr2str}]
-                },
-                {
-                    name:'产品',
-                    type:'line',
-                    data:[{$week_product_arr2str}]
+                    data:week_order_arr2str
                 }
             ]
         };
@@ -339,6 +336,8 @@
         // echarts 窗口缩放自适应
         window.onresize = function(){
             echartsRecords.resize();
+        }
+
         }
 
     });

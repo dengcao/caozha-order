@@ -31,6 +31,17 @@
             </div>
 
             <div class="layui-form-item">
+                <label class="layui-form-label">订单列表分页模式</label>
+                <div class="layui-input-block">
+                    <select name="order_paginate" id="order_paginate">
+                        <option value="1">正常分页模式</option>
+                        <option value="2">简洁分页模式</option>
+                    </select>
+                    <tip>当订单数据量达到百万级别以上的时候，建议采用：简洁分页模式，否则页面打开速度将比较慢。简洁模式时，搜索结果不显示总页数和数据总量。</tip>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
                 <label class="layui-form-label">管理员每页显示</label>
                 <div class="layui-input-block"><!--此处设置的选项必须跟管理员页面设置的limits一致，否则出错-->
                     <select name="admin_limit" id="admin_limit">
@@ -47,6 +58,7 @@
                     </select>
                 </div>
             </div>
+
             <div class="layui-form-item">
                 <label class="layui-form-label">管理员权限组每页显示</label>
                 <div class="layui-input-block"><!--此处设置的选项必须跟权限组页面设置的limits一致，否则出错-->
@@ -136,7 +148,15 @@
                 <label class="layui-form-label required">订单查重时每次处理量</label>
                 <div class="layui-input-block">
                     <input type="text" name="order_repeat_check_limit" lay-verify="required" lay-reqtext="检测重复订单每次处理量不能为空，且必须为数字" placeholder="请输入数字"  value="{$web_config.order_repeat_check_limit}" class="layui-input">
-                    <tip>建议设置500，即检测重复订单时每次处理500个。</tip>
+                    <tip>设置检测重复订单时的单次处理量，视服务器性能设置合适的值。建议1000。</tip>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label required">订单导出的字段</label>
+                <div class="layui-input-block">
+                    <table class="layui-hide" id="order_export_fields" lay-filter="order_export_fields_filter"></table>
+                    <tip style="line-height: 180%;">至少选择一个导出字段。<span style="color: red;font-weight: bold;">【注意】</span>订单导出时，建议选择.csv格式，数据量建议在20万以内，否则有可能超时失败。</tip>
                 </div>
             </div>
 
@@ -144,7 +164,7 @@
                 <label class="layui-form-label required">检测重复订单的字段</label>
                 <div class="layui-input-block">
                     <table class="layui-hide" id="order_repeat_check_fields" lay-filter="order_repeat_check_fields_filter"></table>
-                    <tip style="line-height: 180%;"><span style="color: red;font-weight: bold;">【注意事项】</span><br>1、检测重复订单时，将以上面设置的字段作为判断是否重复的依据，即：以上字段的数据完全一样时判定为重复。<br>2、一旦设置后不建议随意更改，如确实需要更改，请先：<a href="{:url('admin/web_config/order_reset')}" style="color:red;">重置订单重复数据</a>。原因是：重新设置后只对后来的订单有影响，对之前已设置成重复订单的数据无影响。<br>&nbsp; </tip>
+                    <tip style="line-height: 180%;"><span style="color: red;font-weight: bold;">【注意事项】</span><br>1、检测重复订单时，将以上面设置的字段作为判断是否重复的依据，即：以上字段的数据完全一样时判定为重复。<br>2、检测重复的数据不包括订单回收站内的订单。<br>&nbsp; </tip>
                 </div>
             </div>
 
@@ -162,6 +182,32 @@
         var form = layui.form
             ,layer = layui.layer;
 
+        var table2 = layui.table;
+        table2.render({
+            elem: '#order_export_fields'
+            ,url:'{:url(\'admin/web_config/getExportFields\')}'
+            ,parseData: function (res) { //res 即为原始返回的数据
+                return {
+                    "code": "0", //解析接口状态 res.status
+                    "msg": "", //解析提示文本 res.message
+                    "count": "", //解析数据长度
+                    "data": res //解析数据列表
+                };
+            }
+            ,title: '字段表'
+            ,height: 315
+            //,totalRow: true
+            ,even: false  //隔行背景
+            ,size: ""//sm （小尺寸）       lg （大尺寸）
+            ,cols: [[
+                {type: "checkbox", width: 40, align: "center"}
+                ,{field:'field', title:'字段名',width:150, minWidth:150}
+                ,{field:'comment', title:'描述'}
+            ]]
+            ,page: false
+        });
+
+
         var table = layui.table;
         table.render({
             elem: '#order_repeat_check_fields'
@@ -175,6 +221,7 @@
                 };
             }
             ,title: '字段表'
+            ,height: 315
             //,totalRow: true
             ,even: false  //隔行背景
             ,size: ""//sm （小尺寸）       lg （大尺寸）
@@ -189,6 +236,7 @@
 
         layer_skin(layer);
 
+        $('select[name="order_paginate"]').val('{$web_config.order_paginate}');
         $('select[name="admin_limit"]').val('{$web_config.admin_limit}');
         $('select[name="roles_limit"]').val('{$web_config.roles_limit}');
         $('select[name="syslog_limit"]').val('{$web_config.syslog_limit}');
@@ -199,20 +247,30 @@
         //监听提交
         form.on('submit(setting)', function (data) {
 
+            var checkStatus2 = table2.checkStatus('order_export_fields')
+                , fields_data2 = checkStatus2.data;
+            var key_arr2 = $.map(fields_data2, function (d) {
+                return d.field;
+            });//layer.alert(JSON.stringify(key_arr));
+            var key_str2 = key_arr2.join(",");//转为字符串
+            if (key_str2 == "") {
+                layer.msg('请选择导出表格的字段。', {icon: 2});
+                return false;
+            }
+            post_data=data.field;
+            post_data["order_export_fields"]=key_str2;
+
+
             var checkStatus = table.checkStatus('order_repeat_check_fields')
                 , fields_data = checkStatus.data;
             var key_arr = $.map(fields_data, function (d) {
                 return d.field;
-            });
-            //layer.alert(JSON.stringify(key_arr));
+            });//layer.alert(JSON.stringify(key_arr));
             var key_str = key_arr.join(",");//转为字符串
-
             if (key_str == "") {
                 layer.msg('请选择作为检测重复订单依据的字段。', {icon: 2});
                 return false;
             }
-
-            post_data=data.field;
             post_data["order_repeat_check_fields"]=key_str;
 
             $.ajax({

@@ -117,9 +117,9 @@ class Order
             "client"=>get_userOS()."（".get_userbrowser()."）",
         );
 
-        $order_id = Db::name('order')->insertGetId($insert_data);
+        $id = Db::name('order')->insertGetId($insert_data);
 
-        if($order_id>0){
+        if($id>0){
             if($product->tips_type==1){
                 if(!$product->tips_text){
                     $product->tips_text="订单提交成功！我们会尽快给您发货，谢谢您的支持！";

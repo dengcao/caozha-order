@@ -49,7 +49,6 @@ class WebConfig
         $edit_data = Request::param('', '', 'filter_sql');//过滤注入
         $edit_data["order_upload_limit"]=is_numeric($edit_data["order_upload_limit"])?$edit_data["order_upload_limit"]:20;
         $edit_data["order_upload_memory_limit"]=is_numeric($edit_data["order_upload_memory_limit"])?$edit_data["order_upload_memory_limit"]:1000;
-        $edit_data["order_repeat_check_limit"]=is_numeric($edit_data["order_repeat_check_limit"])?$edit_data["order_repeat_check_limit"]:500;
 
         $edit_data=array("web_config"=>$edit_data);
 
@@ -70,7 +69,7 @@ class WebConfig
         return json($list);
     }
 
-    public function getFields()//获取字段名称数组
+    public function getFields()//获取检测重复数据的字段名称数组
     {
         $is_own_key = "LAY_CHECKED";
         $is_own_ok = true;
@@ -113,11 +112,54 @@ class WebConfig
         return json($list);
     }
 
-    public function order_reset()//重置订单重复数据
+    public function getExportFields()//获取导出字段名称数组
     {
-        $res=Db::name('order')->where('order_id',">",0)->update(['is_check_repeat' => 0,'is_repeat' => 0]);
-        write_syslog(array("log_content" => "重置订单重复数据。"));//记录系统日志
-        caozha_success("已成功重置订单重复数据，共更新了".$res."条订单数据。",url("admin/WebConfig/index"),1);
+        $is_own_key = "LAY_CHECKED";
+        $is_own_ok = true;
+        $is_own_no = false;
+        $order_export_fields_arr=[];
+
+        $web_config=WebConfigModel::where("id",">=",1)->limit(1)->findOrEmpty();
+        if ($web_config->isEmpty()) {
+            caozha_error("系统设置的数据表不存在。","",1);
+        }else{
+            $web_config_data=object_to_array($web_config->web_config);
+            $order_export_fields_arr=explode(",",$web_config_data["order_export_fields"]);
+        }
+
+        //获取所有字段名
+        $fields_arr=array();
+        $cz_prefix=config('database.connections.mysql.prefix');//数据表前缀
+        $row_field = Db::query("SHOW FULL COLUMNS FROM ".$cz_prefix."order");
+        //print_r($row_field);exit();
+        foreach ($row_field as $value){
+            $fields_arr[]=array(
+                "Field"=>$value["Field"],
+                "Comment"=>$value["Comment"],
+            );
+        }
+
+        $list=[];
+
+        foreach ($fields_arr as $key => $val) {
+
+            if(in_array($val["Field"],$order_export_fields_arr)) {//判断是否包含
+                $is_own = $is_own_ok;
+            } else {
+                $is_own = $is_own_no;
+            }
+
+            $list[] = array($is_own_key => $is_own, "field" => $val["Field"], "comment" => $val["Comment"]);
+        }
+
+        return json($list);
     }
+
+//    public function order_reset()//重置订单重复数据
+//    {
+//        $res=Db::name('order')->where('id',">",0)->update(['is_check_repeat' => 0,'is_repeat' => 0]);
+//        write_syslog(array("log_content" => "重置订单重复数据。"));//记录系统日志
+//        caozha_success("已成功重置订单重复数据，共更新了".$res."条订单数据。",url("admin/WebConfig/index"),1);
+//    }
 
 }

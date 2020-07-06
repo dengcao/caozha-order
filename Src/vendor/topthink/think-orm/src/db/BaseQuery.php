@@ -685,13 +685,13 @@ abstract class BaseQuery
             ->order($key, $sort)
             ->limit(1)
             ->find();
-
         $result = $data[$key];
 
         if (is_numeric($result)) {
             $lastId = 'asc' == $sort ? ($result - 1) + ($page - 1) * $listRows : ($result + 1) - ($page - 1) * $listRows;
         } else {
-            throw new Exception('not support type');
+            $lastId=0;
+            //throw new Exception('not support type');
         }
 
         $results = $this->when($lastId, function ($query) use ($key, $sort, $lastId) {

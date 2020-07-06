@@ -26,10 +26,10 @@
 
         layer_skin(layer);
 
-        layer.msg("{$alert|raw}", {icon: 1,time:{$time} });
+        layer.msg("{$alert|raw}", {icon: 1,anim: 5,time:{$time} });
 
         {if $url!=""}
-        window.location.href='{$url}';
+        window.location.href='{$url|raw}';
         {/if}
 
     });

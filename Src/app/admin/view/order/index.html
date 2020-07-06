@@ -145,7 +145,7 @@
             size: "",//sm （小尺寸）       lg （大尺寸）
             cols: [[
                 {type: "checkbox", width: 40, align: "center"},
-                {field: 'order_id', width: 75, title: 'ID', sort: true},
+                {field: 'id', width: 75, title: 'ID', sort: true},
                 {field: 'pro_name', Width: 180, title: '产品名称'},
                 {field: 'pro_options', Width: 280, title: '订购选项'},
                 {field: 'quantity', width: 70, align: "center", title: '数量'},
@@ -188,17 +188,17 @@
 
             var checkStatus = table.checkStatus('currentTableId')
                 , data = checkStatus.data;
-            var order_id_arr = $.map(data, function (d) {
-                return d.order_id;
+            var id_arr = $.map(data, function (d) {
+                return d.id;
             });
-            var order_id_str = order_id_arr.join(",");//转为字符串
+            var id_str = id_arr.join(",");//转为字符串
 
-            if (order_id_str == "") {
+            if (id_str == "") {
                 layer.msg('请先选择要'+todo_name+'的订单。', {icon: 2});
                 return false;
             }
 
-            caozha_alert = layer.confirm('确定要'+todo_name+'ID为[ ' + order_id_str + ' ]的订单吗？', {
+            caozha_alert = layer.confirm('确定要'+todo_name+'ID为[ ' + id_str + ' ]的订单吗？', {
                 btn: ['确认', '取消'],
                 btnAlign: 'c',
                 title: "操作提示"
@@ -207,7 +207,7 @@
                 $.ajax({
                     type: "post",
                     url: '{:url(\'admin/order/todo\')}',
-                    data: {order_id: order_id_str,act:obj.event},
+                    data: {id: id_str,act:obj.event},
                     dataType: "json",
                     async: false,
                     success: function (todo_data) {
@@ -243,6 +243,13 @@
             });
             console.log(data.field);
             export_url=export_url+"&"+$.param(data.field);
+
+            //判断采用的分页模式，order_paginate，1=正常模式，2=简洁模式
+            var order_paginate={$order_paginate|raw};
+            if(order_paginate==2){
+                $("<style>body .layui-laypage-last,body .layui-laypage-count{display: none;}</style>").appendTo("head");
+            }
+
             return false;
         });
 
@@ -268,7 +275,7 @@
                 maxmin: true,
                 shadeClose: true,
                 area: ['60%', '95%'],
-                content: '{:url(\'admin/order/view\')}?order_id=' + order_data.order_id,
+                content: '{:url(\'admin/order/view\')}?id=' + order_data.id,
             });
 
             return false;
@@ -288,7 +295,7 @@
                     maxmin: true,
                     shadeClose: true,
                     area: ['60%', '95%'],
-                    content: '{:url(\'admin/order/view\')}?order_id=' + order_data.order_id,
+                    content: '{:url(\'admin/order/view\')}?id=' + order_data.id,
                 });
                 return false;
 

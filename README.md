@@ -1,4 +1,4 @@
-# caozha-order 竞价页订单管理系统 1.6.2
+# caozha-order 竞价页订单管理系统 1.7.0
 
 caozha-order是一个通用的竞价页订单管理系统，基于开源的caozha-admin开发，支持订单管理、订单回收站、产品管理、批量上传订单、批量导出订单（支持导出格式：.xls，.xlsx，.csv）、检测订单重复、竞价页的下单表单调用等功能，内置灵活的查看订单权限设置机制。系统特点：易上手，零门槛，界面清爽极简，极便于二次开发。
 
@@ -24,13 +24,15 @@ caozha-order是一个通用的竞价页订单管理系统，基于开源的caozh
 
 10、批量上传订单，支持上传的格式：.xls，.xlsx，.csv等
 
-11、批量导出订单，支持导出格式：.xls，.xlsx，.csv等
+11、批量导出订单，可以设置订单导出的任何字段，支持导出格式：.xls，.xlsx，.csv等。单次导出的数量建议20万以下，可以通过按日期筛选导出。
 
 12、内置3套不同风格的下单表单页面，支持调用或内嵌在竞价页上。（如需要不同的风格，可以自己新增或修改）
 
 13、防护设置：支持下单页是否开启验证码，是否防恶意提交（可设置同个IP或手机号X分钟内只能提交N次订单）
 
 14、按产品标识符设置查看订单的权限：可以单独对某个账号设置只能查看某些产品标识符的订单。说明：①此功能可以很方便的开账户给下属或合作商查看订单。②此功能和权限组设置是并列的，可相互搭配使用。
+
+15、支持百万级别以上的订单数据量。当数据量很大，出现明显卡顿的时候，可以到系统设置—》订单列表分页模式-》简洁模式，即可解决问题。
 
 
 ### 安装使用
@@ -41,7 +43,7 @@ caozha-order是一个通用的竞价页订单管理系统，基于开源的caozh
 
 2、上传目录/Src/内所有源码到服务器，并设置网站的根目录指向运行目录/public/。（此为ThinkPHP6.0的要求）
 
-3、将/Database/目录里的.sql文件导入到MYSQL数据库。
+3、将/Database/目录里的.sql文件导入到MYSQL数据库。（我是用phpMyAdmin 4.8.5导出的sql文件，建议使用这个版本的工具导入，否则有可能不兼容。）
 
 4、修改文件/config/database.php，配置您的数据库信息（如果测试时启用了/.env，还需要修改文件/.env，系统会优先使用此配置文件）。
 
@@ -98,8 +100,25 @@ location / {
 GitHub Wiki：[https://github.com/cao-zha/caozha-admin/wiki](https://github.com/cao-zha/caozha-admin/wiki)
 
 
-### 更新说明
+### 更新方法
 
+**1.6升级到1.7的方法：**
+
+
+1、更新cz_web_config表，执行SQL语句：
+
+
+UPDATE `cz_web_config` SET `web_config` = '{\"share_url\":\"http:\\/\\/www.caozha.com(\\u6b64URL\\u53ef\\u5728\\u7cfb\\u7edf\\u8bbe\\u7f6e\\u4e2d\\u4fee\\u6539)\",\"order_paginate\":\"1\",\"admin_limit\":\"15\",\"roles_limit\":\"15\",\"syslog_limit\":\"15\",\"order_limit\":\"10\",\"product_limit\":\"10\",\"order_upload_limit\":\"20\",\"order_upload_memory_limit\":\"1000\",\"order_repeat_check_limit\":\"1000\",\"layTableCheckbox\":\"on\",\"order_export_fields\":\"id,realname,tel,addresss,payment,quantity,amount,remarks,pro_name,pro_options,pro_sign,addtime,client,pro_url,from_url\",\"order_repeat_check_fields\":\"tel\"}' WHERE `cz_web_config`.`id` = 1;
+
+
+2、修改cz_order表结构：①将原字段order_id修改成id。②删除is_check_repeat字段。
+
+
+3、将1.7版/SRC/目录的源文件覆盖旧版本，注意修改数据库配置，还有清空缓存。
+
+
+
+### 更新说明
 
 **版本1.0.0，主要更新：**
 
@@ -146,6 +165,18 @@ GitHub Wiki：[https://github.com/cao-zha/caozha-admin/wiki](https://github.com/
 2、修复了上传订单时，大数据量的excel表格容易失败的问题，本地实测一次性导入6万订单依然成功。
 
 3、优化了订单查重时容易崩溃的问题。
+
+**版本1.7.0，主要更新：**
+
+1、可以在系统设置订单导出的字段，可以是数据库里的任意字段。
+
+2、性能有很大提升，1.6版在订单量100万以上的时候，订单列表页和后台首页有点卡顿，新版解决了这个问题。
+
+3、改动了cz_order和cz_web_config的表结构。升级时，请注意查看上面文档的：1.6升级到1.7的方法。
+
+4、重新设计了查重的功能，极大地加快了查重速度和准确率。
+
+5、优化了订单导出功能，在选择导出格式.csv情况下，可以轻松导出几十万条订单。
 
 
 ### 特别鸣谢
