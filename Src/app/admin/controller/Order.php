@@ -653,15 +653,25 @@ class Order
             }
         }
 
+        if(count($fields_order)<1){
+            return json(array("code" => 0, "msg" => "导入订单失败，表格第二行必须至少设置一个字段名！"));
+        }
 
         //循环读取excel表格，整合成数组。如果是不指定key的二维，就用$data[i][j]表示。
         $insertData = [];
         for ($j = 3; $j <= $highestRow; $j++) {
-            $insertData_temp = array();
+            $insertData_temp_arr = array();
+            $is_insertData_empty=true;//插入的行是否全部为空。先假定为空。
             foreach ($fields_order as $key => $value) {
-                $insertData_temp[$key] = trim($objPHPExcel->getActiveSheet()->getCell($value . $j)->getValue());
+                $insertData_temp_arr[$key] = trim($objPHPExcel->getActiveSheet()->getCell($value . $j)->getValue());
+                if($insertData_temp_arr[$key] || is_numeric($insertData_temp_arr[$key])){
+                    $is_insertData_empty=false;//只要任何一个字段有值，就不为空
+                }
             }
-            $insertData[] = $insertData_temp;
+            if(!$is_insertData_empty){
+                $insertData[] = $insertData_temp_arr;
+            }
+
         }
 
         //批量插入数据建议使用Db::insertAll() 方法，只会进行一次数据库请求；saveAll 方法实际上是 循环数据数组，每一条数据进行一遍save方法

@@ -122,7 +122,11 @@
                     }
                 },
                 error:function(data){
-                    layer.msg('错误：'+data.msg);
+                    if(data.msg==undefined){
+                        layer.msg('程序运行出错，可能的原因是：数据库等配置错误，或缓存没有清空。');
+                    }else {
+                        layer.msg('错误：'+data.msg);
+                    }
                 }
             });
             return false;
