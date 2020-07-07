@@ -113,19 +113,19 @@
                 success: function (jsonResult) {
                     if (jsonResult.code == 1)
                     {
-                        layer.msg(jsonResult.msg, function () {
+                        layer.msg(jsonResult.msg, {icon: 1}, function () {
                             window.location = '{:url(\'admin/index/index\')}';
                         });
                     } else {
-                        layer.msg(jsonResult.msg);
+                        layer.msg(jsonResult.msg, {icon: 2});
                         $("#captchaPic").attr("src","{:url('admin/index/captcha')}?r="+parseInt(Math.random()*1000));
                     }
                 },
                 error:function(data){
                     if(data.msg==undefined){
-                        layer.msg('程序运行出错，可能的原因是：数据库等配置错误，或缓存没有清空。');
+                        layer.msg('程序运行出错，可能的原因是：数据库等配置错误，或缓存没有清空。', {icon: 2});
                     }else {
-                        layer.msg('错误：'+data.msg);
+                        layer.msg('错误：'+data.msg, {icon: 2});
                     }
                 }
             });
