@@ -1012,4 +1012,26 @@ class Order
         caozha_success("已成功批量删除" . $res . "条重复订单。", "", 1);
     }
 
+    public function del_order_send()//从订单总表中删除另外一个表中已经存在的订单记录，主要用于删除已发过短信广告的订单。
+    {
+        $all_num=688648;//订单总数，参数需要自己对照数据表的总记录来改。
+        $page_num=5000;//每页处理数
+        $page_all=ceil($all_num/$page_num);//总页数
+        $page = Request::param("page", '', 'filter_sql');
+        if(!is_numeric($page)){
+            $page = 1;
+        }
+        $order_curr=$page_num*($page-1);//当前处理到
+        //cz_totalorder=总表，cz_order=已经发送过短信的表
+        $cz_sql="DELETE FROM `cz_totalorder` WHERE `tel` in (select t.tel from (SELECT tel FROM `cz_order` order by id asc limit ".$order_curr.",".$page_num.")as t)";
+        $res_num=Db::execute($cz_sql);
+        write_syslog(array("log_content" => "批量删除已发送过的订单：当前第".$page."页，共删除" . $res_num."个，SQL：".$cz_sql));//记录系统日志
+        $page+=1;
+        if($page>$page_all){
+            caozha_alert_msg("删除已发送过的订单：<br>完成。", "", 3600, 1);
+        }
+        $jump_url=url("admin/order/del_order_send")."?page=".$page;
+        caozha_alert_msg("删除已发送过的订单：<br><br>当前进度：".($page-1)."/".$page_all."<br>请不要关闭页面，系统正在处理下一步，请耐心等待……<br><a href='".$jump_url."' style='color:#999;'>如页面长时间无响应，请点击这里继续</a>", $jump_url, 3600, 1);
+    }
+
 }

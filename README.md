@@ -133,7 +133,7 @@ ALTER TABLE `cz_order` CHANGE `addtime` `addtime` DATETIME NULL DEFAULT NULL COM
 ALTER TABLE `cz_product` CHANGE `updatetime` `updatetime` DATETIME NULL DEFAULT NULL COMMENT '添加时间';
 
 
-3、将1.7.2版/SRC/目录的源文件覆盖旧版本，注意修改数据库配置，还有清空缓存。
+2、将1.7.2版/SRC/目录的源文件覆盖旧版本，注意修改数据库配置，还有清空缓存。
 
 
 ### 更新说明
