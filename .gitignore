@@ -2,6 +2,6 @@
 /.bak
 /.vscode
 /.image
-/Src/runtime/
+/Src/runtime
 /install.lock
-/Src/public/cache/
+/Src/public/cache

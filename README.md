@@ -109,7 +109,7 @@ GitHub Wiki：[https://github.com/cao-zha/caozha-admin/wiki](https://github.com/
 
 ### 更新方法
 
-**1.6升级到1.7的方法：**
+**1.6升级到1.7.1的方法：**
 
 
 1、更新cz_web_config表，执行SQL语句：
@@ -121,8 +121,19 @@ UPDATE `cz_web_config` SET `web_config` = '{\"share_url\":\"http:\\/\\/www.caozh
 2、修改cz_order表结构：①将原字段order_id修改成id。②删除is_check_repeat字段。
 
 
-3、将1.7版/SRC/目录的源文件覆盖旧版本，注意修改数据库配置，还有清空缓存。
+3、将1.7.1版/SRC/目录的源文件覆盖旧版本，注意修改数据库配置，还有清空缓存。
 
+
+**1.7.1升级到1.7.2的方法：**
+
+1、执行下面MYSQL命令：
+
+ALTER TABLE `cz_order` CHANGE `addtime` `addtime` DATETIME NULL DEFAULT NULL COMMENT '下单时间';
+
+ALTER TABLE `cz_product` CHANGE `updatetime` `updatetime` DATETIME NULL DEFAULT NULL COMMENT '添加时间';
+
+
+3、将1.7.2版/SRC/目录的源文件覆盖旧版本，注意修改数据库配置，还有清空缓存。
 
 
 ### 更新说明
