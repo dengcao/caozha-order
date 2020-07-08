@@ -1,4 +1,0 @@
-<?php
-//000000000000
- exit();?>
-a:13:{s:9:"share_url";s:56:"http://www.caozha.com(此URL可在系统设置中修改)";s:14:"order_paginate";s:1:"1";s:11:"admin_limit";s:2:"15";s:11:"roles_limit";s:2:"15";s:12:"syslog_limit";s:2:"15";s:11:"order_limit";s:2:"10";s:13:"product_limit";s:2:"10";s:18:"order_upload_limit";s:2:"20";s:25:"order_upload_memory_limit";s:4:"1000";s:24:"order_repeat_check_limit";s:4:"1000";s:16:"layTableCheckbox";s:2:"on";s:19:"order_export_fields";s:118:"id,realname,tel,addresss,payment,quantity,amount,remarks,pro_name,pro_options,pro_sign,addtime,client,pro_url,from_url";s:25:"order_repeat_check_fields";s:3:"tel";}

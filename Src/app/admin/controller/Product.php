@@ -80,6 +80,8 @@ class Product
             return json(array("code"=>0,"update_num"=>0,"msg"=>"产品标识符 ".$update_data["pro_sign"]." 已经存在，请换个再提交。"));
         }
 
+        $update_data["updatetime"]=date("Y-m-d H:i:s",time());
+
         $pro_id = Db::name('product')->insertGetId($update_data);
 
         if($pro_id>0){

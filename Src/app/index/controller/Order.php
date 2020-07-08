@@ -115,6 +115,7 @@ class Order
             "remarks"=>$update_data["remarks"],
             "ip"=>getip(),
             "client"=>get_userOS()."（".get_userbrowser()."）",
+            "addtime"=>date("Y-m-d H:i:s",time()),
         );
 
         $id = Db::name('order')->insertGetId($insert_data);
