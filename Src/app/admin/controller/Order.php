@@ -850,7 +850,11 @@ class Order
 //                $order_arr[$field]=$order->$field;
             }
 
-            Db::execute("update `" . $cz_prefix . "order` set is_repeat=1 where id!=".$order->id.$where_sql);
+            //获取最小的ID
+            $order_query_min_id = Db::query("select id from `" . $cz_prefix . "order` where is_del=0 and is_repeat=0 ".$where_sql." order by id asc limit 0,1");
+            $order_min_id = $order_query_min_id[0]["id"];
+
+            Db::execute("update `" . $cz_prefix . "order` set is_repeat=1 where id!=".$order_min_id.$where_sql);
 
             $order->id = 0;
             $order->save();

@@ -1,4 +1,4 @@
-# caozha-order 竞价页订单管理系统 1.7.2
+# caozha-order 竞价页订单管理系统 1.7.3
 
 caozha-order是一个通用的竞价页订单管理系统，基于开源的caozha-admin开发，支持订单管理、订单回收站、产品管理、批量上传订单、批量导出订单（支持导出格式：.xls，.xlsx，.csv）、检测订单重复、竞价页的下单表单调用等功能，内置灵活的查看订单权限设置机制。系统特点：易上手，零门槛，界面清爽极简，极便于二次开发。
 
@@ -124,7 +124,7 @@ UPDATE `cz_web_config` SET `web_config` = '{\"share_url\":\"http:\\/\\/www.caozh
 3、将1.7.1版/SRC/目录的源文件覆盖旧版本，注意修改数据库配置，还有清空缓存。
 
 
-**1.7.1升级到1.7.2的方法：**
+**1.7.1升级到1.7.2+的方法：**
 
 1、执行下面MYSQL命令：
 
@@ -133,7 +133,7 @@ ALTER TABLE `cz_order` CHANGE `addtime` `addtime` DATETIME NULL DEFAULT NULL COM
 ALTER TABLE `cz_product` CHANGE `updatetime` `updatetime` DATETIME NULL DEFAULT NULL COMMENT '添加时间';
 
 
-2、将1.7.2版/SRC/目录的源文件覆盖旧版本，注意修改数据库配置，还有清空缓存。
+2、将1.7.2+版/SRC/目录的源文件覆盖旧版本，注意修改数据库配置，还有清空缓存。
 
 
 ### 更新说明
@@ -207,6 +207,11 @@ ALTER TABLE `cz_product` CHANGE `updatetime` `updatetime` DATETIME NULL DEFAULT 
 **版本1.7.2，主要更新：**
 
 兼容了MySQL5.6及以下数据库，在MySQL5.5/5.6上测试，可以正常导入和使用。但为了获取更高的性能，依然建议您使用更高版本的MySQL数据库。
+
+
+**版本1.7.3，主要更新：**
+
+修复了检查重复订单的一个BUG。
 
 
 ### 特别鸣谢
