@@ -78,9 +78,7 @@ caozha-order是一个通用的竞价页订单管理系统，基于开源的caozh
 </IfModule>
 
 
-3、如果您使用的是Nginx，伪静态设置为：
-
-location / {
+3、如果您使用的是Nginx，以wdCP和宝塔Linux面板为例，伪静态设置为：
 
     index index.php;
     
@@ -92,7 +90,6 @@ location / {
        
     }
     
-}
 
 
 4、在网站运行目录（/public/）下，有两个文件：.htaccess和nginx.htaccess，分别是Apache和Nginx的伪静态文件，您可以直接拿来使用。
