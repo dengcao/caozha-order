@@ -20,9 +20,6 @@ use think\facade\Request;
 use think\facade\Session;
 use think\facade\View;
 
-//引入自动加载类
-require_once "../vendor/autoload.php";
-
 //使用Spreadsheet类
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 //xls格式类
