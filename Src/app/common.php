@@ -12,7 +12,7 @@
 //应用的名称及版本
 $GLOBALS["caozha_common_config"] = [
     "name" => "caozha-order",
-    "version" => "1.7.3",
+    "version" => "1.7.5",
     "gitee" => "caozha/caozha-order",
     "github" => "cao-zha/caozha-order",
 ];
@@ -48,4 +48,18 @@ function get_cz_name(){
 function get_cz_version(){
     global $caozha_common_config;
     return $caozha_common_config["version"];
+}
+
+/**
+ * 判断是否URL网址
+ * @param string $url 网址
+ * @return boolean
+ */
+function is_url_cz($url){
+    if(!$url){return false;}
+    if (filter_var($url, FILTER_VALIDATE_URL) !== false) {
+        return true;
+    }else{
+        return false;
+    }
 }

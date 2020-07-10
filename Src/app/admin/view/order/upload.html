@@ -48,7 +48,7 @@
 <fieldset class="layui-elem-field cz-fieldset">
     <legend>上传说明</legend>
     <div class="layui-field-box">
-        1、支持的上传文件格式：.csv &nbsp;.xls &nbsp;.xlsx。
+        1、支持的上传文件格式：.xls &nbsp;.xlsx。
         <br>
         2、上传文件限制：最大允许{$order_upload_limit}M，Excel表格的内容必须放在第一张表（页），表格的行数建议20000行以内为佳，超出则容易导致内存溢出等错误。
         <br>
@@ -173,7 +173,7 @@
             }
             ,accept: 'file' //允许上传的文件类型
             ,size: 1024*{$order_upload_limit} //设置文件最大可允许上传的大小，单位 KB。不支持ie8/9
-            ,exts:'csv|xls|xlsx' //允许上传的文件后缀
+            ,exts:'xls|xlsx' //允许上传的文件后缀
             ,auto:false //是否选完文件后自动上传
             ,bindAction: '#upload_btn'
             ,field:'order_file' //设定文件域的字段名

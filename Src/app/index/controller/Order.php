@@ -121,16 +121,27 @@ class Order
         $id = Db::name('order')->insertGetId($insert_data);
 
         if($id>0){
+
             if($product->tips_type==1){
                 if(!$product->tips_text){
                     $product->tips_text="订单提交成功！我们会尽快给您发货，谢谢您的支持！";
                 }
-                echo_js("alert('".$product->tips_text."');window.location.href='".$_SERVER["HTTP_REFERER"]."';",false);
+                $jump_url=$_SERVER["HTTP_REFERER"];
+                if(!is_url_cz($jump_url)){
+                    $jump_url=url("/index/order/view/sign/".$product->pro_sign);
+                }
+                echo_js("alert('".$product->tips_text."');window.location.href='".$jump_url."';",false);
             }elseif($product->tips_type==2){
                 if(!$product->tips_url){
-                    $product->tips_url=$_SERVER["HTTP_REFERER"];
+                    $jump_url=$_SERVER["HTTP_REFERER"];
+                    if(!is_url_cz($jump_url)){
+                        $jump_url=url("/index/order/view/sign/".$product->pro_sign);
+                    }
+                    echo_js("window.location.href='".$jump_url."';",false);
+                }else{
+                    $jump_url=$product->tips_url;
+                    echo_js("if(parent.document != this){top.location.href='".$jump_url."';}else{window.location.href='".$jump_url."';}",false);
                 }
-                echo_js("window.location.href='".$product->tips_url."';",false);
             }
 
         }else{

@@ -567,14 +567,14 @@ class Order
         // 获取表单上传文件
         $file = request()->file('order_file');
         try {
-            validate(['image' => 'filesize:' . (1024 * 1024 * $order_upload_limit) . '|fileExt:csv,xls,xlsx'])->check(['file' => $file]);
+            validate(['file' => 'filesize:' . (1024 * 1024 * $order_upload_limit) . '|fileExt:xls,xlsx'])->check(['file' => $file]);
             $savename = \think\facade\Filesystem::putFile('excel', $file, function () {
                 return "file_" . Session::get("admin_id");
             });
             return json(array("code" => 1, "msg" => "上传成功", "filename" => $savename));
         } catch (\think\exception\ValidateException $e) {
 //            echo $e->getMessage();
-            return json(array("code" => 0, "msg" => "上传失败", "filename" => ""));
+            return json(array("code" => 0, "msg" => "上传失败：".$e->getMessage(), "filename" => ""));
         }
     }
 
@@ -610,8 +610,9 @@ class Order
         // 有Xls、Xlsx、csv等格式
         if ($fileExtendName == 'xlsx') {
             $objReader = IOFactory::createReader('Xlsx');
-        } else if ($fileExtendName == 'csv') {
+        } else if ($fileExtendName == 'csv') {//CSV格式容易导致编码的问题，所以暂时取消支持
             $objReader = IOFactory::createReader('Csv');
+            $objReader->setInputEncoding('CP936'); //默认情况下假定加载的CSV文件是UTF-8编码的。如果要读取在Microsoft Office Excel中创建的CSV文件，则正确的输入编码可能是Windows-1252（CP1252）。始终确保正确设置了输入编码。
         } else {
             $objReader = IOFactory::createReader('Xls');
         }
@@ -660,7 +661,13 @@ class Order
             $insertData_temp_arr = array();
             $is_insertData_empty=true;//插入的行是否全部为空。先假定为空。
             foreach ($fields_order as $key => $value) {
-                $insertData_temp_arr[$key] = trim($objPHPExcel->getActiveSheet()->getCell($value . $j)->getValue());
+                $excel_value_curr=trim($objPHPExcel->getActiveSheet()->getCell($value . $j)->getValue());//获取单元格的内容
+                if($key=="addtime" && $excel_value_curr){
+                    //$excel_value_curr = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($excel_value_curr);
+                    $toTimestamp = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToTimestamp($excel_value_curr,"PRC");
+                    $excel_value_curr = date("Y-m-d H:i:s", $toTimestamp );
+                }
+                $insertData_temp_arr[$key] = $excel_value_curr;
                 if($insertData_temp_arr[$key] || is_numeric($insertData_temp_arr[$key])){
                     $is_insertData_empty=false;//只要任何一个字段有值，就不为空
                 }
@@ -668,7 +675,6 @@ class Order
             if(!$is_insertData_empty){
                 $insertData[] = $insertData_temp_arr;
             }
-
         }
 
         //批量插入数据建议使用Db::insertAll() 方法，只会进行一次数据库请求；saveAll 方法实际上是 循环数据数组，每一条数据进行一遍save方法
