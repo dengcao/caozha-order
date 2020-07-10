@@ -213,7 +213,7 @@ ALTER TABLE `cz_product` CHANGE `updatetime` `updatetime` DATETIME NULL DEFAULT 
 
 **版本1.7.5，主要更新：**
 
-1、修复了上传订单的一个BUG，支持导入excel的时间格式。
+1、修复了上传订单的一个BUG，支持导入excel的时间格式；因兼容性原因，删除了上传.csv格式文件的支持，仅支持.xls和.xlsx两种格式。
 
 2、订单列表增加下单时间显示。
 
