@@ -155,11 +155,11 @@ class WebConfig
         return json($list);
     }
 
-//    public function order_reset()//重置订单重复数据
-//    {
-//        $res=Db::name('order')->where('id',">",0)->update(['is_check_repeat' => 0,'is_repeat' => 0]);
-//        write_syslog(array("log_content" => "重置订单重复数据。"));//记录系统日志
-//        caozha_success("已成功重置订单重复数据，共更新了".$res."条订单数据。",url("admin/WebConfig/index"),1);
-//    }
+    public function order_reset()//重置订单重复数据
+    {
+        $res=Db::name('order')->where('id',">",0)->update(['is_repeat' => 0]);
+        write_syslog(array("log_content" => "重置订单重复数据。"));//记录系统日志
+        caozha_success("已成功重置订单重复数据，共更新了".$res."条订单数据。",url("admin/WebConfig/index"),1);
+    }
 
 }

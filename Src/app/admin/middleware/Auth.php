@@ -24,7 +24,7 @@ class Auth
     {
         // 添加前置中间件执行代码
         if(is_login()==false){
-            caozha_error("您未登陆后台，请登陆后再操作。",url("admin/index/login"),1);
+            caozha_error("您未登陆后台，请登陆后再操作。",url("admin/index/login"),1,1);
         }
 
         $response =  $next($request);

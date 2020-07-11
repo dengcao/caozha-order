@@ -10,6 +10,8 @@
 // 应用公共文件
 
 use think\facade\Request;
+use app\index\model\WebConfig as WebConfigModel;
+use think\facade\Cache;
 
 /**
  * 过滤参数，防SQL注入
@@ -269,4 +271,45 @@ function echo_js($js_code,$is_back=true,$is_exit=true){
     }
     echo "</body></html>";
     if($is_exit){exit();}
+}
+
+
+/**
+ *获取系统设置数据
+ * @return array
+ */
+function get_web_config()
+{
+    $web_config_data = Cache::get('web_config');
+    if ($web_config_data) {
+        return $web_config_data;
+    } else {
+        $web_config = WebConfigModel::where("id", ">=", 1)->limit(1)->findOrEmpty();
+        if ($web_config->isEmpty()) {
+            return array();
+        } else {
+            $web_config_data = object_to_array($web_config->web_config);
+            Cache::set('web_config', $web_config_data);
+            return $web_config_data;
+        }
+    }
+}
+
+/**
+ * 对象转数组
+ * @param object $obj 对象
+ * @return array
+ */
+function object_to_array($obj)
+{
+    $obj = (array)$obj;
+    foreach ($obj as $k => $v) {
+        if (gettype($v) == 'resource') {
+            return;
+        }
+        if (gettype($v) == 'object' || gettype($v) == 'array') {
+            $obj[$k] = (array)object_to_array($v);
+        }
+    }
+    return $obj;
 }

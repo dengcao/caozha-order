@@ -29,7 +29,7 @@ use think\facade\Cache;
 function cz_auth($role)
 {
     $role_id=Session::get("role_id");
-    if(!$role_id){caozha_error("抱歉，登陆状态已失效，请重新登陆。", Request::header('referer'), 1);}
+    if(!$role_id){caozha_error("抱歉，登陆状态已失效，请重新登陆。", url("admin/index/login"), 1,1);}
     $roles_data = get_roles($role_id);
     $authorize = explode(",", $roles_data["roles"]);
     $auth_config = Config::get("app.caozha_role_auths");
@@ -129,14 +129,16 @@ function write_syslog($data_arr)
  *显示错误提示
  * @param string $alert 提示信息
  * @param string $url 点确定返回的URL
- * @param integer $is_exit 1立刻终止程序的执行
+ * @param integer $is_exit 1=立刻终止程序的执行
+ * @param integer $is_open_new 1=新窗口打开
  * @return string
  */
-function caozha_error($alert, $url, $is_exit = 0)
+function caozha_error($alert, $url, $is_exit = 0,$is_open_new=0)
 {
     View::assign([
         'alert' => $alert,
-        'url' => $url
+        'url' => $url,
+        'is_open_new' => $is_open_new
     ]);
     echo View::fetch('common/error');
     //redirect(url("admin/common/error")."?alert=".urlencode($alert)."&url=".urlencode($url));

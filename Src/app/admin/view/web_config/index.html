@@ -164,7 +164,7 @@
                 <label class="layui-form-label required">检测重复订单的字段</label>
                 <div class="layui-input-block">
                     <table class="layui-hide" id="order_repeat_check_fields" lay-filter="order_repeat_check_fields_filter"></table>
-                    <tip style="line-height: 180%;"><span style="color: red;font-weight: bold;">【注意事项】</span><br>1、检测重复订单时，将以上面设置的字段作为判断是否重复的依据，即：以上字段的数据完全一样时判定为重复。<br>2、检测重复的数据不包括订单回收站内的订单。<br>&nbsp; </tip>
+                    <tip style="line-height: 180%;"><span style="color: red;font-weight: bold;">【注意事项】</span><br>1、检测重复订单时，将以上面设置的字段作为判断是否重复的依据，即：以上字段的数据完全一样时判定为重复。<br>2、检测重复的数据不包括订单回收站内的订单。<br>3、检测字段一旦设置后不建议随意更改。如您更改了检测字段，建议：<a href="{:url('admin/web_config/order_reset')}" style="color:red;">重置订单重复数据</a> 后，再执行“检测重复订单”操作，否则原有的重复数据将不准确。<br>&nbsp; </tip>
                 </div>
             </div>
 

@@ -41,7 +41,7 @@
                 //return false 开启该代码可禁止点击该按钮关闭
             }
         }, function(){
-            {if $url neq ""}location.href="{$url|raw}";{else}layer.close(caozha_error);miniTab.deleteCurrentByIframe();var iframeIndex = parent.layer.getFrameIndex(window.name);
+            {if $url neq ""}{if $is_open_new==1}top.{/if}location.href="{$url|raw}";{else}layer.close(caozha_error);miniTab.deleteCurrentByIframe();var iframeIndex = parent.layer.getFrameIndex(window.name);
             parent.layer.close(iframeIndex);{/if}
         });
 

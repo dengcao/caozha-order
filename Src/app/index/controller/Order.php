@@ -118,6 +118,20 @@ class Order
             "addtime"=>date("Y-m-d H:i:s",time()),
         );
 
+        //检测重复订单
+        $web_config_data = get_web_config();//获取网站配置
+        $order_repeat_check_field_arr = explode(",", $web_config_data["order_repeat_check_fields"]);//检测的字段
+        $cz_prefix = config('database.connections.mysql.prefix');//数据表前缀
+        $where_sql = "";
+        foreach ($order_repeat_check_field_arr as $field) {
+            $where_sql .= " and " . $field . "='" . $insert_data[$field] . "'";
+        }
+        $order_query_total = Db::query("select count(id) as total from `" . $cz_prefix . "order`  where is_del=0 and is_repeat=0 ".$where_sql);
+        $order_repeat_total = $order_query_total[0]["total"];
+        if($order_repeat_total>0){//重复订单
+            $insert_data["is_repeat"]=1;
+        }
+
         $id = Db::name('order')->insertGetId($insert_data);
 
         if($id>0){
