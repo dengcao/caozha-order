@@ -140,17 +140,19 @@ class Order
                 if(!$product->tips_text){
                     $product->tips_text="订单提交成功！我们会尽快给您发货，谢谢您的支持！";
                 }
-                $jump_url=$_SERVER["HTTP_REFERER"];
-                if(!is_url_cz($jump_url)){
-                    $jump_url=url("/index/order/view/sign/".$product->pro_sign);
-                }
+//                $jump_url=$_SERVER["HTTP_REFERER"];
+//                if(!is_url_cz($jump_url)){
+//                    $jump_url=url("/index/order/view/sign/".$product->pro_sign);
+//                }
+                $jump_url=url("/index/order/view/sign/".$product->pro_sign)."?from_url=".urlencode($update_data["from_url"]);
                 echo_js("alert('".$product->tips_text."');window.location.href='".$jump_url."';",false);
             }elseif($product->tips_type==2){
                 if(!$product->tips_url){
-                    $jump_url=$_SERVER["HTTP_REFERER"];
-                    if(!is_url_cz($jump_url)){
-                        $jump_url=url("/index/order/view/sign/".$product->pro_sign);
-                    }
+//                    $jump_url=$_SERVER["HTTP_REFERER"];
+//                    if(!is_url_cz($jump_url)){
+//                        $jump_url=url("/index/order/view/sign/".$product->pro_sign);
+//                    }
+                    $jump_url=url("/index/order/view/sign/".$product->pro_sign)."?from_url=".urlencode($update_data["from_url"]);
                     echo_js("window.location.href='".$jump_url."';",false);
                 }else{
                     $jump_url=$product->tips_url;
