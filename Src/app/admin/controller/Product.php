@@ -200,7 +200,7 @@ class Product
         $list=$list->withAttr('status', function($value) {
             return $this->product_status[$value];
         })->withAttr('tips_type', function($value) {
-            $tips_type = [1=>'弹框',2=>'跳转'];
+            $tips_type = [1=>'弹框后跳转',2=>'直接跳转',3=>'成功页跳转'];
             return $tips_type[$value];
         })->withAttr('is_captcha', function($value) {
             $is_captcha = [1=>'开启',0=>'关闭'];

@@ -12,7 +12,6 @@
         body {
             background-color: #ffffff;
         }
-        {if 1==$product.tips_type}.tips_url{display: none}{/if}
         {if 2==$product.tips_type}.tips_text{display: none}{/if}
     </style>
     <script src="__CAOZHA-STATIC__/js/jquery-3.4.1.min.js"></script>
@@ -98,27 +97,28 @@
     </div>
 
     <div class="layui-form-item">
-        <label class="layui-form-label required">提醒类型</label>
+        <label class="layui-form-label required">下单成功后</label>
         <div class="layui-input-block">
             <select name="tips_type" lay-verify="required" lay-reqtext="请选择" lay-filter="tips_type">
                 <option value=""></option>
-                <option value="1"{if 1==$product.tips_type} selected{/if}>弹出成功对话框</option>
-                <option value="2"{if 2==$product.tips_type} selected{/if}>跳转URL</option>
+                <option value="1"{if 1==$product.tips_type} selected{/if}>弹出提示框后跳转</option>
+                <option value="3"{if 3==$product.tips_type} selected{/if}>转到成功页后跳转</option>
+                <option value="2"{if 2==$product.tips_type} selected{/if}>直接跳转</option>
             </select>
         </div>
     </div>
 
     <div class="layui-form-item tips_text">
-        <label class="layui-form-label">对话框提示语</label>
+        <label class="layui-form-label required">提示语</label>
         <div class="layui-input-block">
             <input type="text" name="tips_text" placeholder="" value="{$product.tips_text}" class="layui-input">
         </div>
     </div>
 
     <div class="layui-form-item tips_url">
-        <label class="layui-form-label">跳转的URL</label>
+        <label class="layui-form-label required">跳转到URL</label>
         <div class="layui-input-block">
-            <input type="text" name="tips_url" placeholder="" value="{$product.tips_url}" class="layui-input">
+            <input type="text" name="tips_url" placeholder="留空则默认返回下单页（如页面不兼容请设置跳转URL）" value="{$product.tips_url}" class="layui-input">
         </div>
     </div>
 
@@ -196,9 +196,9 @@
         });
 
         form.on('select(tips_type)', function(data){
-            if(data.value==1){
+            if(data.value==1 || data.value==3){
                 $(".tips_text").show();
-                $(".tips_url").hide();
+                $(".tips_url").show();
             }else if(data.value==2){
                 $(".tips_text").hide();
                 $(".tips_url").show();

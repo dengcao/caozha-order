@@ -136,28 +136,31 @@ class Order
 
         if($id>0){
 
-            if($product->tips_type==1){
-                if(!$product->tips_text){
-                    $product->tips_text="订单提交成功！我们会尽快给您发货，谢谢您的支持！";
+            if(!$product->tips_text){
+                $product->tips_text="订单提交成功！我们会尽快给您发货，谢谢您的支持！";
+            }
+            $jump_url=$product->tips_url;//跳转到URL
+
+            if($product->tips_type==1){//弹出成功对话框
+                if($jump_url){
+                    echo_js("alert('".$product->tips_text."');top.location.href='".$jump_url."';",false);
+                }else{
+                    $jump_url=url("/index/order/view/sign/".$product->pro_sign)."?from_url=".urlencode($update_data["from_url"]);
+                    echo_js("alert('".$product->tips_text."');window.location.href='".$jump_url."';",false);
                 }
-//                $jump_url=$_SERVER["HTTP_REFERER"];
-//                if(!is_url_cz($jump_url)){
-//                    $jump_url=url("/index/order/view/sign/".$product->pro_sign);
-//                }
-                $jump_url=url("/index/order/view/sign/".$product->pro_sign)."?from_url=".urlencode($update_data["from_url"]);
-                echo_js("alert('".$product->tips_text."');window.location.href='".$jump_url."';",false);
-            }elseif($product->tips_type==2){
-                if(!$product->tips_url){
-//                    $jump_url=$_SERVER["HTTP_REFERER"];
-//                    if(!is_url_cz($jump_url)){
-//                        $jump_url=url("/index/order/view/sign/".$product->pro_sign);
-//                    }
+            }elseif($product->tips_type==2){//跳转URL
+                if($jump_url){
+                    echo_js("top.location.href='".$jump_url."';",false);
+                }else{
                     $jump_url=url("/index/order/view/sign/".$product->pro_sign)."?from_url=".urlencode($update_data["from_url"]);
                     echo_js("window.location.href='".$jump_url."';",false);
-                }else{
-                    $jump_url=$product->tips_url;
-                    echo_js("if(parent.document != this){top.location.href='".$jump_url."';}else{window.location.href='".$jump_url."';}",false);
                 }
+            }elseif($product->tips_type==3){//跳转到成功提示页面
+                if(!$jump_url){
+                    $jump_url=$update_data["pro_url"];
+                }
+                $page_url=url('/index/order/show_success')."?backurl=".urlencode($jump_url)."&back_time=60&text=".urlencode($product->tips_text);
+                echo_js("top.location.href='".$page_url."';",false);
             }
 
         }else{
@@ -168,6 +171,32 @@ class Order
     public function captcha()//显示验证码
     {
         return Captcha::create("verify_comment");
+    }
+
+    public function show_success()//返回成功提示的页面
+    {
+        $action=Request::param('','','filter_sql');//过滤注入
+        $action["text"]=isset($action["text"])?$action["text"]:"订单提交成功！我们会尽快给您发货，谢谢您的支持！";
+        $action["backurl"]=isset($action["backurl"])?$action["backurl"]:"";
+        $action["back_time"]=isset($action["back_time"])?$action["back_time"]:60;
+        echo "<!DOCTYPE html><html><head>
+        <meta charset=\"utf-8\">
+        <meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0\">
+        <title>系统提示</title></head>
+        <body style=\"font-size:18px;padding:5px 10px;text-align:center;line-height:185%;\"><div style='margin: 0 auto;text-align:left;max-width:450px;'>系统提示：<br><div style='font-weight: bold;color:#ff0000;margin:10px auto 15px auto;'>".$action["text"]."</div><div style='text-align: center'><span id=\"back_time\">" . $action["back_time"] . "</span>秒后将自动返回……<br />
+        <a href=\"" . $action["backurl"] . "\"><u>您也可以点此马上返回</u></a></div></div>
+        <script>
+        function back(){
+            var back_time = document.getElementById(\"back_time\");
+            if(back_time.innerText == 0){
+                window.location.href='" . $action["backurl"] . "';
+                return false;
+            }
+            back_time.innerText = back_time.innerText - 1;
+        }
+        window.setInterval(\"back();\", 1000);
+        </script>
+        </body></html>";
     }
 
 }
