@@ -662,10 +662,50 @@ class Order
             $is_insertData_empty=true;//插入的行是否全部为空。先假定为空。
             foreach ($fields_order as $key => $value) {
                 $excel_value_curr=trim($objPHPExcel->getActiveSheet()->getCell($value . $j)->getValue());//获取单元格的内容
-                if($key=="addtime" && $excel_value_curr){
-                    //$excel_value_curr = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($excel_value_curr);
-                    $toTimestamp = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToTimestamp($excel_value_curr,"PRC");
-                    $excel_value_curr = date("Y-m-d H:i:s", $toTimestamp );
+                if($key=="id"){
+                    continue;//直接忽略
+                }
+                if($key=="addtime"){
+                    if(!$excel_value_curr){
+                        $excel_value_curr = NULL;
+                    }else{
+                        try {
+                            //$excel_value_curr = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($excel_value_curr);
+                            $toTimestamp = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToTimestamp($excel_value_curr,"PRC");
+                        }catch (Exception $e){
+                            $toTimestamp = strtotime($excel_value_curr);
+                        }
+                        $excel_value_curr = date("Y-m-d H:i:s", $toTimestamp );
+                    }
+                }
+                if(!is_numeric($excel_value_curr)){
+                    switch ($key)
+                    {
+                        case "payment":
+                            $excel_value_curr=1;
+                            break;
+                        case "quantity":
+                            $excel_value_curr=1;
+                            break;
+                        case "amount":
+                            $excel_value_curr=0;
+                            break;
+                        case "listorder":
+                            $excel_value_curr=0;
+                            break;
+                        case "status":
+                            $excel_value_curr=1;
+                            break;
+                        case "is_show":
+                            $excel_value_curr=0;
+                            break;
+                        case "is_del":
+                            $excel_value_curr=0;
+                            break;
+                        case "is_repeat":
+                            $excel_value_curr=0;
+                            break;
+                    }
                 }
                 $insertData_temp_arr[$key] = $excel_value_curr;
                 if($insertData_temp_arr[$key] || is_numeric($insertData_temp_arr[$key])){
