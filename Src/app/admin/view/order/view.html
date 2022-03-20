@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>查看 - Powered by __CAOZHA-SYS-NAME__ __CAOZHA-SYS-VERSION__</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="__CAOZHA-LAYUIMINI__/lib/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="__CAOZHA-LAYUIMINI__/css/public.css" media="all">
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+    <script src="__CAOZHA-STATIC__/js/jquery-3.4.1.min.js"></script>
+    <script src="__CAOZHA-LAYUIMINI__/lib/layui/layui.js" charset="utf-8"></script>
+    <script src="__CAOZHA-STATIC__/js/all.js"></script>
+    <link rel="stylesheet" href="__CAOZHA-STATIC__/css/style.css" media="all">
+</head>
+<body>
+<form class="layui-form layuimini-form caozha-view-form">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">订单ID：</label>
+        <div class="layui-input-block">
+            {$order.id}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">订购产品：</label>
+        <div class="layui-input-block">
+            {$order.pro_name}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">产品标识符：</label>
+        <div class="layui-input-block">
+            {$order.pro_sign}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">订购选项：</label>
+        <div class="layui-input-block">
+            {$order.pro_options}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">付款方式：</label>
+        <div class="layui-input-block">
+            {$order.payment}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">订购数量：</label>
+        <div class="layui-input-block">
+            {$order.quantity}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">订单金额：</label>
+        <div class="layui-input-block">
+            {$order.amount}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">收货人：</label>
+        <div class="layui-input-block">
+           {$order.realname}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">性别：</label>
+        <div class="layui-input-block">
+            {$order.gender}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">电话：</label>
+        <div class="layui-input-block">
+            {$order.tel}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">地址：</label>
+        <div class="layui-input-block">
+            {$order.addresss}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">客户备注：</label>
+        <div class="layui-input-block">
+            {$order.remarks}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">微信号：</label>
+        <div class="layui-input-block">
+            {$order.wechat}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">QQ：</label>
+        <div class="layui-input-block">
+            {$order.qq}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">客户邮箱：</label>
+        <div class="layui-input-block">
+            {$order.email}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">邮政编码：</label>
+        <div class="layui-input-block">
+            {$order.postal_code}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">下单时间：</label>
+        <div class="layui-input-block">
+            {$order.addtime}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">排序：</label>
+        <div class="layui-input-block">
+            {$order.listorder}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">订单状态：</label>
+        <div class="layui-input-block">
+            {$order.status}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">管理员备注：</label>
+        <div class="layui-input-block">
+            {$order.admin_remarks}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">客户IP：</label>
+        <div class="layui-input-block">
+            {$order.ip}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">客户端：</label>
+        <div class="layui-input-block">
+            {$order.client}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">下单网址：</label>
+        <div class="layui-input-block">
+            {$order.pro_url}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">访客来路：</label>
+        <div class="layui-input-block">
+            {$order.from_url}
+        </div>
+    </div>
+
+</form>
+</body>
+</html>

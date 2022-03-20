@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>下单表单调用</title>
+</head>
+<body style="text-align: center">
+<div style="margin:22px auto;width: 640px;">
+<script>
+    var order_url="{:url('/index/order/view/sign/')}{$sign}";
+    function getPageReferrer(){var ref="";if(document.referrer.length>0){ref=document.referrer}try{if(ref.length==0&&opener.location.href.length>0){ref=opener.location.href}}catch(e){}return ref};
+    document.write('<iframe src="'+order_url+'?from_url='+encodeURIComponent(getPageReferrer())+'" width="100%" frameborder="0" scrolling="no" onload="this.height=this.contentWindow.document.documentElement.scrollHeight"></iframe>');
+</script>
+</div>
+</body>
+</html>

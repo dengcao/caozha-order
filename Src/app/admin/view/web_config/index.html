@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>系统设置 - Powered by __CAOZHA-SYS-NAME__ __CAOZHA-SYS-VERSION__</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="__CAOZHA-LAYUIMINI__/lib/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="__CAOZHA-LAYUIMINI__/css/public.css" media="all">
+    <style>
+        .layui-form-item .layui-input-company {width: auto;padding-right: 10px;line-height: 38px;}
+        {if 1!=$web_config.tips_order_post_type}.email_smtp_config,.email_smtp_to,email_smtp_addcc,.email_smtp_addbcc,.email_smtp_subject,.email_smtp_content{display: none}{/if}
+    </style>
+    <script src="__CAOZHA-STATIC__/js/jquery-3.4.1.min.js"></script>
+    <script src="__CAOZHA-LAYUIMINI__/lib/layui/layui.js" charset="utf-8"></script>
+    <script src="__CAOZHA-STATIC__/js/all.js"></script>
+    <link rel="stylesheet" href="__CAOZHA-STATIC__/css/style.css" media="all">
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+
+        <div class="layui-form layuimini-form web-config-form">
+
+            <div class="layui-form-item">
+                <label class="layui-form-label required">对外调用域名</label>
+                <div class="layui-input-block">
+                    <input type="text" name="share_url" lay-verify="required" lay-reqtext="网址不能为空" placeholder="请输入网址"  value="{$web_config.share_url}" class="layui-input">
+                    <tip>格式：http://caozha.com</tip>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label required">客户下单成功后</label>
+                <div class="layui-input-block">
+                    <select name="tips_order_post_type" lay-verify="required" lay-reqtext="请选择" lay-filter="tips_order_post_type">
+                        <option value="1">给管理员发邮件提醒</option>
+                        <option value="3">不提醒管理员</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-form-item email_smtp_config">
+                <label class="layui-form-label required">发邮件SMTP设置</label>
+                <div class="layui-input-block">
+                    <input type="text" name="email_smtp_config" placeholder="" value="{$web_config.email_smtp_config}" class="layui-input">
+                    <tip style="line-height: 160%">需要您的邮箱账号开启SMTP功能才可使用，具体开通方法可<a href="https://www.baidu.com/s?wd=163%E9%82%AE%E7%AE%B1%E5%A6%82%E4%BD%95%E5%BC%80%E5%90%AFsmtp&ie=UTF-8&tn=62095104_17_oem_dg" target="_blank">百度搜一下</a>。
+                    <br>填写格式：smtp服务器主机||smtp服务器端口号||登录鉴权加密方式（默认ssl）||邮件编码||发件人姓名||smtp登录账号||smtp登录密码（授权码）||发件人邮箱
+                    <br>163邮箱参考：smtp.163.com||465（或994）||ssl||UTF-8||发件人姓名||账号@163.com||密码||账号@163.com
+                    <br>QQ邮箱参考：smtp.qq.com||465（或587）||ssl||UTF-8||发件人姓名||账号@qq.com||密码||账号@qq.com
+                    <br>新浪邮箱参考：smtp.sina.com（或sina.cn）||587（或465）||ssl||UTF-8||发件人姓名||账号@sina.com（或sina.cn）||密码||账号@sina.com（或sina.cn）
+                    </tip>
+                </div>
+            </div>
+
+            <div class="layui-form-item email_smtp_to">
+                <label class="layui-form-label required">收件人邮箱</label>
+                <div class="layui-input-block">
+                    <input type="text" name="email_smtp_to" placeholder="填写收取提醒邮件的邮箱地址" value="{$web_config.email_smtp_to}" class="layui-input">
+                    <tip>多个收件人之间用,分隔（英文逗号）。</tip>
+                </div>
+            </div>
+
+            <div class="layui-form-item email_smtp_addcc">
+                <label class="layui-form-label">抄送邮箱</label>
+                <div class="layui-input-block">
+                    <input type="text" name="email_smtp_addcc" placeholder="填写抄送邮箱" value="{$web_config.email_smtp_addcc}" class="layui-input">
+                    <tip>多个收件人之间用,分隔（英文逗号）。</tip>
+                </div>
+            </div>
+
+            <div class="layui-form-item email_smtp_addbcc">
+                <label class="layui-form-label">密送邮箱</label>
+                <div class="layui-input-block">
+                    <input type="text" name="email_smtp_addbcc" placeholder="填写密送邮箱" value="{$web_config.email_smtp_addbcc}" class="layui-input">
+                    <tip>多个收件人之间用,分隔（英文逗号）。</tip>
+                </div>
+            </div>
+
+            <div class="layui-form-item email_smtp_subject">
+                <label class="layui-form-label required">提醒邮件主题</label>
+                <div class="layui-input-block">
+                    <input type="text" name="email_smtp_subject" placeholder="填写发送的邮件主题" value="{$web_config.email_smtp_subject}" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item email_smtp_content">
+                <label class="layui-form-label required">提醒邮件内容</label>
+                <div class="layui-input-block">
+                    <textarea name="email_smtp_content" lay-verify="required" class="layui-textarea" placeholder="请输入发送的邮件内容">{$web_config.email_smtp_content}</textarea>
+                    <tip>邮件内容：支持HTML格式，支持使用标签 {@字段} 获取客户填写的任意字段（如在邮件中插入客户姓名、产品名称，则使用标签{@realname}、{@pro_name}替代。）</tip>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">订单列表分页模式</label>
+                <div class="layui-input-block">
+                    <select name="order_paginate" id="order_paginate">
+                        <option value="1">正常分页模式</option>
+                        <option value="2">简洁分页模式</option>
+                    </select>
+                    <tip>当订单数据量达到百万级别以上的时候，建议采用：简洁分页模式，否则页面打开速度将比较慢。简洁模式时，搜索结果不显示总页数和数据总量。</tip>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">管理员每页显示</label>
+                <div class="layui-input-block"><!--此处设置的选项必须跟管理员页面设置的limits一致，否则出错-->
+                    <select name="admin_limit" id="admin_limit">
+                        <option value="5">5条</option>
+                        <option value="10">10条</option>
+                        <option value="15">15条</option>
+                        <option value="20">20条</option>
+                        <option value="25">25条</option>
+                        <option value="50">50条</option>
+                        <option value="100">100条</option>
+                        <option value="200">200条</option>
+                        <option value="500">500条</option>
+                        <option value="1000">1000条</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">管理员权限组每页显示</label>
+                <div class="layui-input-block"><!--此处设置的选项必须跟权限组页面设置的limits一致，否则出错-->
+                    <select name="roles_limit">
+                        <option value="5">5条</option>
+                        <option value="10">10条</option>
+                        <option value="15">15条</option>
+                        <option value="20">20条</option>
+                        <option value="25">25条</option>
+                        <option value="50">50条</option>
+                        <option value="100">100条</option>
+                        <option value="200">200条</option>
+                        <option value="500">500条</option>
+                        <option value="1000">1000条</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">系统日志每页显示</label>
+                <div class="layui-input-block"><!--此处设置的选项必须跟系统日志页面设置的limits一致，否则出错-->
+                    <select name="syslog_limit">
+                        <option value="5">5条</option>
+                        <option value="10">10条</option>
+                        <option value="15">15条</option>
+                        <option value="20">20条</option>
+                        <option value="25">25条</option>
+                        <option value="50">50条</option>
+                        <option value="100">100条</option>
+                        <option value="200">200条</option>
+                        <option value="500">500条</option>
+                        <option value="1000">1000条</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">订单管理每页显示</label>
+                <div class="layui-input-block"><!--此处设置的选项必须跟文章管理页面设置的limits一致，否则出错-->
+                    <select name="order_limit">
+                        <option value="5">5条</option>
+                        <option value="10">10条</option>
+                        <option value="15">15条</option>
+                        <option value="20">20条</option>
+                        <option value="25">25条</option>
+                        <option value="50">50条</option>
+                        <option value="100">100条</option>
+                        <option value="200">200条</option>
+                        <option value="500">500条</option>
+                        <option value="1000">1000条</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">产品管理每页显示</label>
+                <div class="layui-input-block"><!--此处设置的选项必须跟文章管理页面设置的limits一致，否则出错-->
+                    <select name="product_limit">
+                        <option value="5">5条</option>
+                        <option value="10">10条</option>
+                        <option value="15">15条</option>
+                        <option value="20">20条</option>
+                        <option value="25">25条</option>
+                        <option value="50">50条</option>
+                        <option value="100">100条</option>
+                        <option value="200">200条</option>
+                        <option value="500">500条</option>
+                        <option value="1000">1000条</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label required">上传订单大小限制</label>
+                <div class="layui-input-block">
+                    <input type="text" name="order_upload_limit" lay-verify="required" lay-reqtext="上传订单限制不能为空，且必须为数字" placeholder="请输入数字"  value="{$web_config.order_upload_limit}" class="layui-input">
+                    <tip>单位：M，建议设置20，即限制20M以内的文件上传。</tip>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label required">导入订单时最大内存</label>
+                <div class="layui-input-block">
+                    <input type="text" name="order_upload_memory_limit" lay-verify="required" lay-reqtext="导入订单时最大内存的设置不能为空，且必须为数字" placeholder="请输入数字"  value="{$web_config.order_upload_memory_limit}" class="layui-input">
+                    <tip>设置处理导入订单时允许使用的最大内存，单位M。建议设置1000以内，具体看服务器自身配置。</tip>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label required">订单查重时每次处理量</label>
+                <div class="layui-input-block">
+                    <input type="text" name="order_repeat_check_limit" lay-verify="required" lay-reqtext="检测重复订单每次处理量不能为空，且必须为数字" placeholder="请输入数字"  value="{$web_config.order_repeat_check_limit}" class="layui-input">
+                    <tip>设置检测重复订单时的单次处理量，视服务器性能设置合适的值。建议1000。</tip>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label required">订单导出的字段</label>
+                <div class="layui-input-block">
+                    <table class="layui-hide" id="order_export_fields" lay-filter="order_export_fields_filter"></table>
+                    <tip style="line-height: 180%;">至少选择一个导出字段。<span style="color: red;font-weight: bold;">【注意】</span>订单导出时，建议选择.csv格式，数据量建议在20万以内，否则有可能超时失败。</tip>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label required">检测重复订单的字段</label>
+                <div class="layui-input-block">
+                    <table class="layui-hide" id="order_repeat_check_fields" lay-filter="order_repeat_check_fields_filter"></table>
+                    <tip style="line-height: 180%;"><span style="color: red;font-weight: bold;">【注意事项】</span><br>1、检测重复订单时，将以上面设置的字段作为判断是否重复的依据，即：以上字段的数据完全一样时判定为重复。<br>2、检测重复的数据不包括订单回收站内的订单。<br>3、检测字段一旦设置后不建议随意更改。如您更改了检测字段，建议：<a href="{:url('admin/web_config/order_reset')}" style="color:red;">重置订单重复数据</a> 后，再执行“检测重复订单”操作，否则原有的重复数据将不准确。<br>&nbsp; </tip>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button type="submit" class="layui-btn caozha-submit" lay-submit="" lay-filter="setting">确认保存</button>
+                    <button type="reset" class="layui-btn layui-btn-primary caozha-reset">重置</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use(['form','table'], function () {
+        var form = layui.form
+            ,layer = layui.layer;
+
+        var table2 = layui.table;
+        table2.render({
+            elem: '#order_export_fields'
+            ,url:'{:url(\'admin/web_config/getExportFields\')}'
+            ,parseData: function (res) { //res 即为原始返回的数据
+                return {
+                    "code": "0", //解析接口状态 res.status
+                    "msg": "", //解析提示文本 res.message
+                    "count": "", //解析数据长度
+                    "data": res //解析数据列表
+                };
+            }
+            ,title: '字段表'
+            ,height: 315
+            //,totalRow: true
+            ,even: false  //隔行背景
+            ,size: ""//sm （小尺寸）       lg （大尺寸）
+            ,cols: [[
+                {type: "checkbox", width: 40, align: "center"}
+                ,{field:'field', title:'字段名',width:150, minWidth:150}
+                ,{field:'comment', title:'描述'}
+            ]]
+            ,page: false
+        });
+
+
+        var table = layui.table;
+        table.render({
+            elem: '#order_repeat_check_fields'
+            ,url:'{:url(\'admin/web_config/getFields\')}'
+            ,parseData: function (res) { //res 即为原始返回的数据
+                return {
+                    "code": "0", //解析接口状态 res.status
+                    "msg": "", //解析提示文本 res.message
+                    "count": "", //解析数据长度
+                    "data": res //解析数据列表
+                };
+            }
+            ,title: '字段表'
+            ,height: 315
+            //,totalRow: true
+            ,even: false  //隔行背景
+            ,size: ""//sm （小尺寸）       lg （大尺寸）
+            ,cols: [[
+                {type: "checkbox", width: 40, align: "center"}
+                ,{field:'field', title:'字段名',width:150, minWidth:150}
+                ,{field:'comment', title:'描述'}
+            ]]
+            ,page: false
+        });
+
+
+        layer_skin(layer);
+
+        $('select[name="order_paginate"]').val('{$web_config.order_paginate}');
+        $('select[name="admin_limit"]').val('{$web_config.admin_limit}');
+        $('select[name="roles_limit"]').val('{$web_config.roles_limit}');
+        $('select[name="syslog_limit"]').val('{$web_config.syslog_limit}');
+        $('select[name="order_limit"]').val('{$web_config.order_limit}');
+        $('select[name="product_limit"]').val('{$web_config.product_limit}');
+        $('select[name="tips_order_post_type"]').val('{$web_config.tips_order_post_type}');
+        form.render('select'); //刷新select选择框渲染
+
+        //监听提交
+        form.on('submit(setting)', function (data) {
+
+            var checkStatus2 = table2.checkStatus('order_export_fields')
+                , fields_data2 = checkStatus2.data;
+            var key_arr2 = $.map(fields_data2, function (d) {
+                return d.field;
+            });//layer.alert(JSON.stringify(key_arr));
+            var key_str2 = key_arr2.join(",");//转为字符串
+            if (key_str2 == "") {
+                layer.msg('请选择导出表格的字段。', {icon: 2});
+                return false;
+            }
+            post_data=data.field;
+            post_data["order_export_fields"]=key_str2;
+
+
+            var checkStatus = table.checkStatus('order_repeat_check_fields')
+                , fields_data = checkStatus.data;
+            var key_arr = $.map(fields_data, function (d) {
+                return d.field;
+            });//layer.alert(JSON.stringify(key_arr));
+            var key_str = key_arr.join(",");//转为字符串
+            if (key_str == "") {
+                layer.msg('请选择作为检测重复订单依据的字段。', {icon: 2});
+                return false;
+            }
+            post_data["order_repeat_check_fields"]=key_str;
+
+            $.ajax({
+                type: "post",
+                url: '{:url(\'admin/web_config/save\')}',
+                data: post_data,
+                dataType: "json",
+                async: false,
+                success: function (res) {
+                    if (res.code == 1) {
+
+                        caozha_success=layer.alert(res.msg, {
+                            title:'成功提示',
+                            btn: ['确定'],
+                            closeBtn: 0,
+                            btnAlign: 'c',
+                            icon: 6,
+                        }, function(){
+                            window.location.reload();
+                            });
+
+                    } else {
+                        layer.msg(res.msg, {icon: 2});
+                    }
+                },
+                complete: function (res) {
+                }
+            });
+            return false;
+        });
+
+
+        form.on('select(tips_order_post_type)', function(data){
+            if(data.value==1){
+                $(".email_smtp_config").show();
+                $(".email_smtp_to").show();
+                $(".email_smtp_addcc").show();
+                $(".email_smtp_addbcc").show();
+                $(".email_smtp_subject").show();
+                $(".email_smtp_content").show();
+            }else if(data.value==3){
+                $(".email_smtp_config").hide();
+                $(".email_smtp_to").hide();
+                $(".email_smtp_addcc").hide();
+                $(".email_smtp_addbcc").hide();
+                $(".email_smtp_subject").hide();
+                $(".email_smtp_content").hide();
+            }
+        });
+
+    });
+</script>
+</body>
+</html>

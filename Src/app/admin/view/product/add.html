@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>添加 - Powered by __CAOZHA-SYS-NAME__ __CAOZHA-SYS-VERSION__</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="__CAOZHA-LAYUIMINI__/lib/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="__CAOZHA-LAYUIMINI__/css/public.css" media="all">
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+        .tips_url,.tips_text{display: none}
+    </style>
+    <script src="__CAOZHA-STATIC__/js/jquery-3.4.1.min.js"></script>
+    <script src="__CAOZHA-LAYUIMINI__/lib/layui/layui.js" charset="utf-8"></script>
+    <script src="__CAOZHA-STATIC__/js/all.js"></script>
+    <link rel="stylesheet" href="__CAOZHA-STATIC__/css/style.css" media="all">
+</head>
+<body>
+<form class="layui-form layuimini-form">
+
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">产品名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="pro_name" lay-verify="required" lay-reqtext="请输入产品名称" placeholder="请输入产品名称" value=""
+                   class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">产品标识符</label>
+        <div class="layui-input-block">
+            <input type="text" name="pro_sign" lay-verify="required" placeholder="请输入标识符，不能带空格或特殊字符，只能字母或数字" value=""
+                   class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label required">订购选项</label>
+        <div class="layui-input-block">
+            <textarea name="pro_options" lay-verify="required" class="layui-textarea" placeholder=""></textarea>
+            <tip>填写格式：选项描述||价格||是否选中（1为选中）||是否推荐（1为推荐）</tip>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">付款类型</label>
+        <div class="layui-input-block">
+            {foreach $order_payment as $key=>$vo }
+            <input type="checkbox" name="pro_payment[]" value="{$key}" title="{$vo}"{if $key==1} checked{/if}>
+            {/foreach}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">付款选中项</label>
+        <div class="layui-input-block">
+            <input type="text" name="pro_payment_checked" lay-verify="required" placeholder="填写数字" value=""
+                   class="layui-input">
+            <tip>付款类型的默认选中项，填写数字，如：1，则默认选中第一个</tip>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">审核状态</label>
+        <div class="layui-input-block">
+            <select name="status" lay-verify="required" lay-reqtext="请选择状态">
+                <option value=""></option>
+                {foreach $product_status as $key=>$vo }
+                <option value="{$key}">{$vo}</option>
+                {/foreach}
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">排序</label>
+        <div class="layui-input-block">
+            <input type="text" name="listorder" lay-verify="required" lay-reqtext="请输入排序号，必须数字" placeholder="请输入排序号，必须数字，值越大越靠前" value="0" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">下单页模板</label>
+        <div class="layui-input-block">
+            <select name="templates" lay-verify="required" lay-reqtext="请选择订单页模板">
+                <option value=""></option>
+                {foreach $order_templates as $key=>$vo }
+                <option value="{$vo}">{$vo}</option>
+                {/foreach}
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">下单成功后</label>
+        <div class="layui-input-block">
+            <select name="tips_type" lay-verify="required" lay-reqtext="请选择" lay-filter="tips_type">
+                <option value=""></option>
+                <option value="1">弹出提示框后跳转</option>
+                <option value="3">转到成功页后跳转</option>
+                <option value="2">直接跳转</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item tips_text">
+        <label class="layui-form-label required">提示语</label>
+        <div class="layui-input-block">
+            <input type="text" name="tips_text" placeholder="" value="订单提交成功！我们会尽快给您发货，谢谢您的支持！" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item tips_url">
+        <label class="layui-form-label required">跳转到URL</label>
+        <div class="layui-input-block">
+            <input type="text" name="tips_url" placeholder="留空则默认返回下单页（如页面不兼容请设置跳转URL）" value="" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">验证码</label>
+        <div class="layui-input-block">
+            <input type="checkbox" value="1" name="is_captcha" lay-skin="switch" lay-filter="switchTest"
+                   lay-text="启用|停用">
+            <div class="layui-unselect layui-form-switch layui-form-onswitch" lay-skin="_switch"><em>启用</em><i></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">防护设置</label>
+        <div class="layui-input-block">
+            同一个IP或手机号 <input type="text" name="anti_time" placeholder="" value="0" class="layui-input" style="width: 50px;display:inline;"> 分钟内最多允许提交 <input type="text" name="anti_num" placeholder="" value="0" class="layui-input" style="width: 50px;display:inline;"> 次订单
+            <br><tip>填写0或者留空则不开启此防护</tip>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">浏览数</label>
+        <div class="layui-input-block">
+            <input type="number" name="hits" lay-verify="required" lay-reqtext="请输入浏览数" placeholder="请输入浏览数" value="0" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item" style="display: none">
+        <div class="layui-input-block">
+            <button type="submit" class="layui-btn caozha-submit" lay-submit="" lay-filter="saveBtn">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary caozha-reset">重置</button>
+        </div>
+    </div>
+
+</form>
+<script>
+    layui.use(['form','laydate'], function () {
+
+        var form = layui.form,
+            layer = layui.layer;
+
+        layer_skin(layer);
+
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+
+            $.ajax({
+                type: "post",
+                url: '{:url(\'admin/product/addSave\')}',
+                data: data.field,
+                dataType: "json",
+                async: false,
+                success: function (res) {
+                    if (res.code == 1) {
+                        layer.msg(res.msg, {icon: 1});
+                        setTimeout(function(){
+                            // 关闭弹出层
+                            //layer.close(index);
+                            var iframeIndex = parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(iframeIndex);
+                            parent.location.reload();
+                        },800);
+                    } else {
+                        layer.msg(res.msg, {icon: 2});
+                    }
+                },
+                complete: function (res) {
+                }
+            });
+
+            return false;
+        });
+
+
+        form.on('select(tips_type)', function(data){
+            if(data.value==1 || data.value==3){
+                $(".tips_text").show();
+                $(".tips_url").show();
+            }else if(data.value==2){
+                $(".tips_text").hide();
+                $(".tips_url").show();
+            }
+        });
+
+
+    });
+
+</script>
+</body>
+</html>
