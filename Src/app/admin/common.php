@@ -7,6 +7,10 @@
  * Github：https://github.com/cao-zha/caozha-order   or   Gitee：https://gitee.com/caozha/caozha-order
  */
 
+// 应用公共文件
+
+if (version_compare(PHP_VERSION,"8.1.0",">=")) {error_reporting(0);} //解决php8.1时的错误问题
+
 use app\admin\model\Roles;
 use app\admin\model\WebConfig as WebConfigModel;
 use think\facade\Config;
@@ -17,7 +21,6 @@ use think\facade\Db;
 use think\facade\Cache;
 
 
-// 应用公共文件
 /*if(!function_exists('cz_error')){
     }*/
 

@@ -1,6 +1,6 @@
-# UEditor（PHP）
+# dc-UEditor 1.0.1
 
-caozha-UEditor，rich text 富文本编辑器，基于百度UEditor 1.4.3.3-utf8-php版修改。
+dc-UEditor，rich text 富文本编辑器，基于百度UEditor 1.4.3.3-utf8-php版修改。
 
 修复了Uploader.class.php的安全隐患。
 
@@ -25,6 +25,14 @@ caozha-UEditor，rich text 富文本编辑器，基于百度UEditor 1.4.3.3-utf8
  **单独调用上传的接口：** 
 
 参考示例文件：demo_upload.html，里面有详细调用说明和代码实例。
+
+
+### 更新说明：
+
+
+1、新版1.0.1：考虑到有时候编辑的内容需要保留<span>标签，因此删除了原编辑器自动过滤<span>标签的功能。
+
+2、使用时，调用ueditor.all.js是修改后的1.0.1版本，而调用ueditor.all.min.js是使用原自动过滤<span>标签的1.0.0版本，注意区分。
 
 
 ### 赞助支持：

@@ -13,7 +13,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 //应用的名称及版本
 $GLOBALS["caozha_common_config"] = [
     "name" => "caozha-order",
-    "version" => "1.8.0",
+    "version" => "1.8.1",
     "gitee" => "caozha/caozha-order",
     "github" => "cao-zha/caozha-order",
 ];
@@ -21,7 +21,7 @@ $GLOBALS["caozha_common_config"] = [
 //caozha-admin 程序名称及版本，用于标识和升级，勿删改
 $GLOBALS["caozha_admin_sys"] = array(
     "name" => "caozha-admin",
-    "version" => "1.8.2",
+    "version" => "1.8.3",
     "url" => "https://gitee.com/caozha/caozha-admin",
 );
 

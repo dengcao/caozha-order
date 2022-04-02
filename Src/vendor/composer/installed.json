@@ -50,36 +50,36 @@
     },
     {
         "name": "laminas/laminas-escaper",
-        "version": "2.9.0",
-        "version_normalized": "2.9.0.0",
+        "version": "2.10.0",
+        "version_normalized": "2.10.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/laminas/laminas-escaper.git",
-            "reference": "891ad70986729e20ed2e86355fcf93c9dc238a5f"
+            "reference": "58af67282db37d24e584a837a94ee55b9c7552be"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/laminas/laminas-escaper/zipball/891ad70986729e20ed2e86355fcf93c9dc238a5f",
-            "reference": "891ad70986729e20ed2e86355fcf93c9dc238a5f",
+            "url": "https://api.github.com/repos/laminas/laminas-escaper/zipball/58af67282db37d24e584a837a94ee55b9c7552be",
+            "reference": "58af67282db37d24e584a837a94ee55b9c7552be",
             "shasum": ""
         },
         "require": {
-            "php": "^7.3 || ~8.0.0 || ~8.1.0"
+            "ext-ctype": "*",
+            "ext-mbstring": "*",
+            "php": "^7.4 || ~8.0.0 || ~8.1.0"
         },
         "conflict": {
             "zendframework/zend-escaper": "*"
         },
         "require-dev": {
+            "infection/infection": "^0.26.6",
             "laminas/laminas-coding-standard": "~2.3.0",
-            "phpunit/phpunit": "^9.3",
-            "psalm/plugin-phpunit": "^0.12.2",
-            "vimeo/psalm": "^3.16"
+            "maglnet/composer-require-checker": "^3.8.0",
+            "phpunit/phpunit": "^9.5.18",
+            "psalm/plugin-phpunit": "^0.16.1",
+            "vimeo/psalm": "^4.22.0"
         },
-        "suggest": {
-            "ext-iconv": "*",
-            "ext-mbstring": "*"
-        },
-        "time": "2021-09-02T17:10:53+00:00",
+        "time": "2022-03-08T20:15:36+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -1125,8 +1125,8 @@
     },
     {
         "name": "symfony/polyfill-mbstring",
-        "version": "v1.24.0",
-        "version_normalized": "1.24.0.0",
+        "version": "v1.25.0",
+        "version_normalized": "1.25.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/polyfill-mbstring.git",
@@ -1160,12 +1160,12 @@
         },
         "installation-source": "dist",
         "autoload": {
-            "psr-4": {
-                "Symfony\\Polyfill\\Mbstring\\": ""
-            },
             "files": [
                 "bootstrap.php"
-            ]
+            ],
+            "psr-4": {
+                "Symfony\\Polyfill\\Mbstring\\": ""
+            }
         },
         "notification-url": "https://packagist.org/downloads/",
         "license": [
@@ -1193,8 +1193,8 @@
     },
     {
         "name": "symfony/polyfill-php72",
-        "version": "v1.24.0",
-        "version_normalized": "1.24.0.0",
+        "version": "v1.25.0",
+        "version_normalized": "1.25.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/polyfill-php72.git",
@@ -1222,12 +1222,12 @@
         },
         "installation-source": "dist",
         "autoload": {
-            "psr-4": {
-                "Symfony\\Polyfill\\Php72\\": ""
-            },
             "files": [
                 "bootstrap.php"
-            ]
+            ],
+            "psr-4": {
+                "Symfony\\Polyfill\\Php72\\": ""
+            }
         },
         "notification-url": "https://packagist.org/downloads/",
         "license": [
@@ -1254,23 +1254,23 @@
     },
     {
         "name": "symfony/polyfill-php80",
-        "version": "v1.24.0",
-        "version_normalized": "1.24.0.0",
+        "version": "v1.25.0",
+        "version_normalized": "1.25.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/polyfill-php80.git",
-            "reference": "57b712b08eddb97c762a8caa32c84e037892d2e9"
+            "reference": "4407588e0d3f1f52efb65fbe92babe41f37fe50c"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/polyfill-php80/zipball/57b712b08eddb97c762a8caa32c84e037892d2e9",
-            "reference": "57b712b08eddb97c762a8caa32c84e037892d2e9",
+            "url": "https://api.github.com/repos/symfony/polyfill-php80/zipball/4407588e0d3f1f52efb65fbe92babe41f37fe50c",
+            "reference": "4407588e0d3f1f52efb65fbe92babe41f37fe50c",
             "shasum": ""
         },
         "require": {
             "php": ">=7.1"
         },
-        "time": "2021-09-13T13:58:33+00:00",
+        "time": "2022-03-04T08:16:47+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1283,12 +1283,12 @@
         },
         "installation-source": "dist",
         "autoload": {
-            "psr-4": {
-                "Symfony\\Polyfill\\Php80\\": ""
-            },
             "files": [
                 "bootstrap.php"
             ],
+            "psr-4": {
+                "Symfony\\Polyfill\\Php80\\": ""
+            },
             "classmap": [
                 "Resources/stubs"
             ]
@@ -1322,17 +1322,17 @@
     },
     {
         "name": "symfony/var-dumper",
-        "version": "v4.4.36",
-        "version_normalized": "4.4.36.0",
+        "version": "v4.4.39",
+        "version_normalized": "4.4.39.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/var-dumper.git",
-            "reference": "02685c62fcbc4262235cc72a54fbd45ab719ce3c"
+            "reference": "35237c5e5dcb6593a46a860ba5b29c1d4683d80e"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/var-dumper/zipball/02685c62fcbc4262235cc72a54fbd45ab719ce3c",
-            "reference": "02685c62fcbc4262235cc72a54fbd45ab719ce3c",
+            "url": "https://api.github.com/repos/symfony/var-dumper/zipball/35237c5e5dcb6593a46a860ba5b29c1d4683d80e",
+            "reference": "35237c5e5dcb6593a46a860ba5b29c1d4683d80e",
             "shasum": ""
         },
         "require": {
@@ -1356,7 +1356,7 @@
             "ext-intl": "To show region name in time zone dump",
             "symfony/console": "To use the ServerDumpCommand and/or the bin/var-dump-server script"
         },
-        "time": "2021-12-29T09:28:53+00:00",
+        "time": "2022-02-25T10:38:15+00:00",
         "bin": [
             "Resources/bin/var-dump-server"
         ],
@@ -1461,23 +1461,23 @@
     },
     {
         "name": "topthink/think-captcha",
-        "version": "v3.0.3",
-        "version_normalized": "3.0.3.0",
+        "version": "v3.0.6",
+        "version_normalized": "3.0.6.0",
         "source": {
             "type": "git",
             "url": "https://github.com/top-think/think-captcha.git",
-            "reference": "1eef3717c1bcf4f5bbe2d1a1c704011d330a8b55"
+            "reference": "3b60feb4d484381ff7ddda4af7582a6b9be5dacf"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/top-think/think-captcha/zipball/1eef3717c1bcf4f5bbe2d1a1c704011d330a8b55",
-            "reference": "1eef3717c1bcf4f5bbe2d1a1c704011d330a8b55",
+            "url": "https://api.github.com/repos/top-think/think-captcha/zipball/3b60feb4d484381ff7ddda4af7582a6b9be5dacf",
+            "reference": "3b60feb4d484381ff7ddda4af7582a6b9be5dacf",
             "shasum": ""
         },
         "require": {
             "topthink/framework": "^6.0.0"
         },
-        "time": "2020-05-19T10:55:45+00:00",
+        "time": "2022-03-18T09:11:51+00:00",
         "type": "library",
         "extra": {
             "think": {
@@ -1491,12 +1491,12 @@
         },
         "installation-source": "dist",
         "autoload": {
-            "psr-4": {
-                "think\\captcha\\": "src/"
-            },
             "files": [
                 "src/helper.php"
-            ]
+            ],
+            "psr-4": {
+                "think\\captcha\\": "src/"
+            }
         },
         "notification-url": "https://packagist.org/downloads/",
         "license": [
@@ -1602,17 +1602,17 @@
     },
     {
         "name": "topthink/think-orm",
-        "version": "v2.0.51",
-        "version_normalized": "2.0.51.0",
+        "version": "v2.0.53",
+        "version_normalized": "2.0.53.0",
         "source": {
             "type": "git",
             "url": "https://github.com/top-think/think-orm.git",
-            "reference": "149d266acdc4b2f07c6a94f1733b6b97d340e0e2"
+            "reference": "06783eda65547a70ea686360a897759e1f873fff"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/top-think/think-orm/zipball/149d266acdc4b2f07c6a94f1733b6b97d340e0e2",
-            "reference": "149d266acdc4b2f07c6a94f1733b6b97d340e0e2",
+            "url": "https://api.github.com/repos/top-think/think-orm/zipball/06783eda65547a70ea686360a897759e1f873fff",
+            "reference": "06783eda65547a70ea686360a897759e1f873fff",
             "shasum": ""
         },
         "require": {
@@ -1626,16 +1626,16 @@
         "require-dev": {
             "phpunit/phpunit": "^7|^8|^9.5"
         },
-        "time": "2022-01-21T06:25:25+00:00",
+        "time": "2022-02-28T14:54:22+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
-            "psr-4": {
-                "think\\": "src"
-            },
             "files": [
                 "stubs/load_stubs.php"
-            ]
+            ],
+            "psr-4": {
+                "think\\": "src"
+            }
         },
         "notification-url": "https://packagist.org/downloads/",
         "license": [

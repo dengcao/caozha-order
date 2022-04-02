@@ -9,6 +9,8 @@
 
 // 应用公共文件
 
+if (version_compare(PHP_VERSION,"8.1.0",">=")) {error_reporting(0);} //解决php8.1时的错误问题
+
 use think\facade\Request;
 use app\index\model\WebConfig as WebConfigModel;
 use think\facade\Cache;

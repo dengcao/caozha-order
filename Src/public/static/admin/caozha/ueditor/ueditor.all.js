@@ -9990,7 +9990,8 @@ UE.plugins['defaultfilter'] = function () {
                 if (!dtd.$cdata[node.tagName] && me.options.autoClearEmptyNode && dtd.$inline[node.tagName] && !dtd.$empty[node.tagName] && (!node.attrs || utils.isEmptyObject(node.attrs))) {
                     if (!node.firstChild()) node.parentNode.removeChild(node);
                     else if (node.tagName == 'span' && (!node.attrs || utils.isEmptyObject(node.attrs))) {
-                        node.parentNode.removeChild(node, true)
+                        //取消默认过滤span标签
+                        //node.parentNode.removeChild(node, true)
                     }
                     return;
                 }
@@ -10145,7 +10146,8 @@ UE.plugins['defaultfilter'] = function () {
 
                     if (!node.firstChild()) node.parentNode.removeChild(node);
                     else if (node.tagName == 'span' && (!node.attrs || utils.isEmptyObject(node.attrs))) {
-                        node.parentNode.removeChild(node, true)
+                        //取消默认过滤span标签
+                        //node.parentNode.removeChild(node, true)
                     }
                     return;
                 }
