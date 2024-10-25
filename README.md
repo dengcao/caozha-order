@@ -283,15 +283,15 @@ caozha-admin、ThinkPHP、layui、layuimini、font-awesome、phpoffice、phpmail
 
 支持本程序，请到Gitee和GitHub给我们点Star！
 
-Gitee：https://gitee.com/caozha/caozha-order
+Gitee：https://gitee.com/dengzhenhua/caozha-order
 
-GitHub：https://github.com/cao-zha/caozha-order
+GitHub：https://github.com/dengcao/caozha-order
 
-### 关于开发者
+### 关于
 
-开发：邓草 www.caozha.com
+开发：[邓草博客 blog.5300.cn](http://blog.5300.cn)
 
-鸣谢：品络 www.pinluo.com  &ensp;  穷店 www.qiongdian.com
+赞助：[品络 www.pinluo.com](http://blog.5300.cn)  &ensp;  [AI工具箱 5300.cn](https://5300.cn)  &ensp;  [汉语言文学网 hyywx.com](https://hyywx.com)  &ensp;  [雄马 xiongma.cn](https://xiongma.cn) &ensp;  [优惠券 tm.gs](http://tm.gs)
 
 
 ### 界面预览
