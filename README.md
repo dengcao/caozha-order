@@ -41,7 +41,7 @@ caozha-order是一个通用的广告（推广）竞价页订单管理系统，�
 
 **开发环境**
 
-本人开发此系统使用的本地环境是：[phpstudy8.1集成工具（已集成php8.0.14nts/php8.1.1nts，有需要点击下载）](https://gitee.com/caozha/php8.0-8.1-for-phpstudy)，phpMyAdmin 4.8.5，Apache2.4.39（或Nginx1.15.11），PHP8.0.14，MySQL5.7.26。
+本人开发此系统使用的本地环境是：[phpstudy8.1集成工具（已集成php8.0.14nts/php8.1.1nts，有需要点击下载）](https://gitee.com/dengzhenhua/php8.0-8.1-for-phpstudy)，phpMyAdmin 4.8.5，Apache2.4.39（或Nginx1.15.11），PHP8.0.14，MySQL5.7.26。
 
 事实上，您不需要使用跟以上完全一致的环境也可以正常运行本系统，理论上只要PHP>=8.0即可。如有不兼容，建议模拟本环境测试，并欢迎您提建议和反馈BUG。
 
@@ -101,9 +101,9 @@ caozha-order是一个通用的广告（推广）竞价页订单管理系统，�
 
 本系统基于caozha-admin开发，二次开发可参考此手册。
 
-码云Wiki：[https://gitee.com/caozha/caozha-admin/wikis](https://gitee.com/caozha/caozha-admin/wikis)
+码云Wiki：[https://gitee.com/dengzhenhua/caozha-admin/wikis](https://gitee.com/dengzhenhua/caozha-admin/wikis)
 
-GitHub Wiki：[https://github.com/cao-zha/caozha-admin/wiki](https://github.com/cao-zha/caozha-admin/wiki)
+GitHub Wiki：[https://github.com/dengcao/caozha-admin/wiki](https://github.com/dengcao/caozha-admin/wiki)
 
 
 ### 更新方法
