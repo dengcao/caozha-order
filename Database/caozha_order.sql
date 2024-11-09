@@ -53,7 +53,7 @@ CREATE TABLE `cz_administrators` (
 --
 
 INSERT INTO `cz_administrators` (`admin_id`, `admin_name`, `admin_password`, `admin_password_rnd`, `role_id`, `is_enabled`, `real_name`, `tel`, `email`, `wechat`, `qq`, `last_login_ip`, `last_login_time`, `last_logout_time`, `login_times`, `admin_remarks`, `pro_signs`) VALUES
-(1, 'caozha', '5fd9cd58f4e516bae46557b355c5208a', NULL, 1, 1, '草札', '1320000000', 'dzh188@qq.com', 'wx', '123456', '127.0.0.1', '2020-07-07 19:08:18', '2020-07-07 18:23:50', 95, 'caozha.com', '');
+(1, 'dengcao', '5fd9cd58f4e516bae46557b355c5208a', NULL, 1, 1, '邓草', '1320000000', 'dzh188@qq.com', 'wx', '123456', '127.0.0.1', '2020-07-07 19:08:18', '2020-07-07 18:23:50', 95, '5300.cn', '');
 
 -- --------------------------------------------------------
 

@@ -394,13 +394,10 @@ if (!function_exists('echo_value')) {
     <?php } ?>
 
     <div class="copyright">
-        <a title="官方网站" href="http://www.thinkphp.cn">ThinkPHP</a>
-        <span>V<?php echo \think\facade\App::version(); ?></span>
-        <span> <a title="官方手册" href="https://www.kancloud.cn/manual/thinkphp6_0/content">手册</a></span>
-        <span> - </span>
-        Powered by <a href="<?php echo $GLOBALS["caozha_admin_sys"]["url"];?>" target="_blank"><?php echo $GLOBALS["caozha_admin_sys"]["name"];?></a> <?php echo $GLOBALS["caozha_admin_sys"]["version"];?>
-        <span> - </span>
-        <a href="http://caozha.com" target="_blank">官方网站</a>
+        <a title="官方网站" href="http://www.thinkphp.cn">ThinkPHP</a> 
+        <span>V<?php echo \think\facade\App::version(); ?></span> 
+        <span>{ 十年磨一剑-为API开发设计的高性能框架 }</span>
+        <span>- <a title="官方手册" href="https://www.kancloud.cn/manual/thinkphp6_0/content">官方手册</a></span>
     </div>
     <?php if (\think\facade\App::isDebug()) { ?>
     <script>
@@ -495,7 +492,7 @@ if (!function_exists('echo_value')) {
                 }
             })();
 
-            $.getScript('//cdn.bootcss.com/prettify/r298/prettify.min.js', function(){
+            $.getScript('//cdn.bootcdn.net/ajax/libs/prettify/r298/prettify.min.js', function(){
                 prettyPrint();
             });
         })();

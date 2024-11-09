@@ -1,4 +1,4 @@
-# caozha-order 广告竞价页订单管理系统 1.8.1
+# caozha-order 广告竞价页订单管理系统 1.9.0
 
 caozha-order是一个通用的广告（推广）竞价页订单管理系统，基于开源的caozha-admin开发，支持订单管理、订单回收站、产品管理、批量上传订单、批量导出订单（支持导出格式：.xls，.xlsx，.csv）、检测订单重复、竞价页的下单表单调用、客户下单时给管理员发邮件（短信）提醒等功能，内置灵活的查看订单权限设置机制。系统特点：易上手，零门槛，拿来即用，界面清爽极简，极便于二次开发。
 
@@ -41,7 +41,7 @@ caozha-order是一个通用的广告（推广）竞价页订单管理系统，�
 
 **开发环境**
 
-本人开发此系统使用的本地环境是：[phpstudy8.1集成工具（已集成php8.0.14nts/php8.1.1nts，有需要点击下载）](https://gitee.com/caozha/php8.0-8.1-for-phpstudy)，phpMyAdmin 4.8.5，Apache2.4.39（或Nginx1.15.11），PHP8.0.14，MySQL5.7.26。
+本人开发此系统使用的本地环境是：[phpstudy8.1集成工具（已集成php8.0.14nts/php8.1.1nts，有需要点击下载）](https://gitee.com/dengzhenhua/php8.0-8.1-for-phpstudy)，phpMyAdmin 4.8.5，Apache2.4.39（或Nginx1.15.11），PHP8.0.14，MySQL5.7.26。
 
 事实上，您不需要使用跟以上完全一致的环境也可以正常运行本系统，理论上只要PHP>=8.0即可。如有不兼容，建议模拟本环境测试，并欢迎您提建议和反馈BUG。
 
@@ -56,7 +56,7 @@ caozha-order是一个通用的广告（推广）竞价页订单管理系统，�
 
 4、修改文件/config/database.php，配置您的数据库信息（如果测试时启用了/.env，还需要修改文件/.env，系统会优先使用此配置文件）。
 
-5、后台访问地址：http://您的域名/admin/index/login   (账号：caozha   密码：123456)
+5、后台访问地址：http://您的域名/admin/index/login   (账号：dengcao   密码：123456)
 
 
 **伪静态设置**
@@ -101,9 +101,9 @@ caozha-order是一个通用的广告（推广）竞价页订单管理系统，�
 
 本系统基于caozha-admin开发，二次开发可参考此手册。
 
-码云Wiki：[https://gitee.com/caozha/caozha-admin/wikis](https://gitee.com/caozha/caozha-admin/wikis)
+码云Wiki：[https://gitee.com/dengzhenhua/caozha-admin/wikis](https://gitee.com/dengzhenhua/caozha-admin/wikis)
 
-GitHub Wiki：[https://github.com/cao-zha/caozha-admin/wiki](https://github.com/cao-zha/caozha-admin/wiki)
+GitHub Wiki：[https://github.com/dengcao/caozha-admin/wiki](https://github.com/dengcao/caozha-admin/wiki)
 
 
 ### 更新方法
@@ -270,6 +270,13 @@ ALTER TABLE `cz_product` CHANGE `updatetime` `updatetime` DATETIME NULL DEFAULT 
 2、更新了ThinkPHP框架到最新版。
 
 
+**版本1.9.0，主要更新：**
+
+1、为了系统安全，更新TP框架到6.0系列的最新版本：ThinkPHP6.0.15。
+
+2、修改了后台若干错误链接。
+
+
 
 ### 特别鸣谢
 
@@ -283,15 +290,15 @@ caozha-admin、ThinkPHP、layui、layuimini、font-awesome、phpoffice、phpmail
 
 支持本程序，请到Gitee和GitHub给我们点Star！
 
-Gitee：https://gitee.com/caozha/caozha-order
+Gitee：https://gitee.com/dengzhenhua/caozha-order
 
-GitHub：https://github.com/cao-zha/caozha-order
+GitHub：https://github.com/dengcao/caozha-order
 
-### 关于开发者
+### 关于
 
-开发：邓草 www.caozha.com
+开发：[邓草博客 blog.5300.cn](http://blog.5300.cn)
 
-鸣谢：品络 www.pinluo.com  &ensp;  穷店 www.qiongdian.com
+赞助：[品络互联 www.pinluo.com](http://www.pinluo.com)  &ensp;  [AI工具箱 5300.cn](http://5300.cn)  &ensp;  [汉语言文学网 hyywx.com](http://hyywx.com)  &ensp;  [雄马 xiongma.cn](http://xiongma.cn) &ensp;  [优惠券 tm.gs](http://tm.gs)
 
 
 ### 界面预览

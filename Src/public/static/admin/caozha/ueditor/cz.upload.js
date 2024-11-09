@@ -2,7 +2,7 @@
 
 单独调用上传接口插件，欢迎访问：www.caozha.com
 
-代码仓库: https://gitee.com/caozha/ueditor
+代码仓库: https://gitee.com/dengzhenhua/ueditor
 
 */
 var _editor;

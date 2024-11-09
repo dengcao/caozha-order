@@ -431,8 +431,8 @@ layui.define(["jquery", "layer"], function (exports) {
                     '</div>\n' +
                     '<div class="more-menu-list">\n' +
                     '<a class="more-menu-item" href="https://gitee.com/'+caozha_sys_gitee+'" target="_blank"><i class="layui-icon layui-icon-read" style="font-size: 19px;"></i> '+caozha_sys_name+'  '+caozha_sys_version+'</a>\n' +
-                    '<a class="more-menu-item" href="http://caozha.com" target="_blank"><i class="layui-icon layui-icon-tabs" style="font-size: 16px;"></i> 邓草官网</a>\n' +
-                    '<a class="more-menu-item" href="http://diannao.wang/tool/" target="_blank"><i class="layui-icon layui-icon-theme"></i> 工具大全</a>\n' +
+                    '<a class="more-menu-item" href="http://blog.5300.cn" target="_blank"><i class="layui-icon layui-icon-tabs" style="font-size: 16px;"></i> 邓草官网</a>\n' +
+                    '<a class="more-menu-item" href="http://5300.cn/tool/" target="_blank"><i class="layui-icon layui-icon-theme"></i> 工具大全</a>\n' +
                     '</div>' +
                     '</div>';
                 layer.open({

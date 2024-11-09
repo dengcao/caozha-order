@@ -1,7 +1,7 @@
 <?php
 /**
  * Modify: caozha.com
- * 代码仓库: https://gitee.com/caozha/ueditor
+ * 代码仓库: https://gitee.com/dengzhenhua/ueditor
  * User: Jinqn
  * Date: 5-11-2020
  * UEditor编辑器通用上传类
